@@ -1,0 +1,250 @@
+/* used in map view - custom controls overlaying google maps, detail - controls below map image */
+
+/*** map canvas -cng ***/
+html, body ,#map_canvas{
+	height: 100%; 
+	margin: 0; 
+	padding: 0 
+}
+
+#map_canvas{
+	/*position: relative;*/
+	top: 0;
+	left:0;
+	width: 100%;
+	min-height: 500px;
+}
+/*** slide out menu  -cng ***/ 
+#slideout{
+	position: fixed;
+  	left: 0;
+  	-webkit-transition-duration: 0.3s;
+  	-moz-transition-duration: 0.3s;
+  	-o-transition-duration: 0.3s;
+  	transition-duration: 0.3s;
+  	opacity: 0.9;
+}
+
+#slideout #pulltab {
+	background-color: black;
+	position: fixed;
+	width: 30%;
+	left:35%;
+	padding:2px;
+	bottom: 0%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 60%;
+	color:white;
+	border-radius: 5px 5px 0 0;
+
+	-webkit-transition-duration: 0.3s;
+  	-moz-transition-duration: 0.3s;
+  	-o-transition-duration: 0.3s;
+  	transition-duration: 0.3s;
+}
+
+#slideout_inner{
+	position: fixed;
+  	bottom: -30%;
+  	width: 100%;
+  	height:30%;
+  	background-color: black;
+  	-webkit-transition-duration: 0.3s;
+  	-moz-transition-duration: 0.3s;
+  	-o-transition-duration: 0.3s;
+  	transition-duration: 0.3s;
+}
+
+#slideout_inner.expand{
+  	bottom:0;
+}
+
+#slideout #pulltab.expand{
+  	bottom:30%;
+}
+
+#slideout_inner button {
+	width:40%;
+	padding: 3%;
+	margin:5%;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+	text-align: right;
+}
+
+#buzzLife{
+	background-color: #689114;
+	background: url(/modules/buzz/images/icons/life-button.png) no-repeat left;
+}
+#buzzClub{
+	background-color: #9c4c15;
+	background: url(/modules/buzz/images/icons/club-button.png) no-repeat left;
+}
+#buzzWellbeing{
+	background-color: #c0382e;
+	background: url(/modules/buzz/images/icons/health-button.png) no-repeat left;
+}
+#buzzLeisure{
+	background-color: #236e87;
+	background: url(/modules/buzz/images/icons/leisure-button.png) no-repeat left;
+}
+
+
+
+
+/***** pie chart pins ****/
+
+.pieContainer{
+	/*height: 100px;*/
+	z-index: 9999;
+	/*background-color: grey;*/
+}
+
+.pieBackground {
+    background-color: grey;
+    position: absolute;
+/*    width: 100px;
+    height: 100px;*/
+   /* -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -o-border-radius: 50px;
+    border-radius: 50px;*/
+    -moz-box-shadow: -1px 1px 3px #000;
+    -webkit-box-shadow: -1px 1px 3px #000;
+    -o-box-shadow: -1px 1px 3px #000;
+    box-shadow: -1px 1px 3px #000;
+} 
+
+.numText{
+
+	position: relative;
+	color: white;
+	font-weight: bold;
+	/*padding: 10px;*/
+}
+
+.pie {
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          -moz-border-radius: 50px;
+          -webkit-border-radius: 50px;
+          -o-border-radius: 50px;
+          border-radius: 50px;
+          /*clip: rect(0px, 50px, 100px, 0px);*/
+
+          -webkit-transform:rotate(70deg);
+          /*-moz-transform:rotate(70deg);*/
+          /*-o-transform:rotate(70deg);*/
+          /*transform:rotate(70deg);*/
+     }
+     .hold {
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          -moz-border-radius: 50px;
+          -webkit-border-radius: 50px;
+          -o-border-radius: 50px;
+          border-radius: 50px;
+          clip: rect(0px, 100px, 100px, 50px);
+          /*background-color: red;*/
+     }
+     #pieSlice1 .pie {
+          background-color: #1b458b;
+          -webkit-transform:rotate(50deg);
+          -moz-transform:rotate(50deg);
+          -o-transform:rotate(50deg);
+          transform:rotate(50deg);
+     }
+
+.slice_life{
+	background-color: #38df64;
+}
+
+.slice_health{
+	background-color: #ff4040;
+}
+
+.slice_club{
+	background-color: #ff9640;
+}
+
+.slice_leisure{
+	background-color: #3f8fd2;
+
+}
+
+
+/*** toggle buttons bar -cng ***/
+#togglebar input[type="button"]{
+	width: 50%;
+	height:48px;
+	float: left;
+	/*text-align: center;*/
+	padding-top: 10px;
+
+
+	background: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.25)), to(rgba(128,128,128,0.2)));
+	/*border: 1px solid #eee;*/
+	border: 1px solid rgba(0,0,0,0.25);
+	/*border-bottom-color: rgba(0,0,0,0.4);*/
+	color: #444;
+	font-size: 75%;
+	text-transform: uppercase;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+
+#buzztip{
+  	width: 0; 
+	height: 0; 
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	
+	border-top: 20px solid #7A914B;
+	position: absolute;
+	
+	left: 20%;
+	top:93px; 
+	z-index: 1;
+	display:none;
+
+}
+
+#newstip{
+  	width: 0; 
+	height: 0; 
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	
+	border-top: 20px solid #3e7748;
+	position: absolute;
+	
+	left: 70%; 
+	top:93px; 
+	z-index: 1;
+	display:none;
+
+}
+
+
+#buzzbutton input[type="button"]{
+	background-color: #739333;
+}
+#newsbutton input[type="button"]{
+	background-color: #2A7938;
+}
+
+#buzztip.show {
+    display: block;
+}
+
+#newstip.show {
+    display: block;
+}
+
+
