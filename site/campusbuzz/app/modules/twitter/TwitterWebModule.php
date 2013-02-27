@@ -15,7 +15,7 @@ class TwitterWebModule extends WebModule
 	$user = $this->getModuleVar('TWITTER_USER');
 
 	//get the tweets
-	$tweets = $this->controller->tweets($user);
+	$tweets = $this->controller->getTweetsByUser($user);
 
 	//prepare the list
 	$tweetList = array();
@@ -35,7 +35,7 @@ class TwitterWebModule extends WebModule
 
       case 'detail':
 	$id = $this->getArg('id');
-	if ($tweet = $this->controller->getItem($id)) {
+	if ($tweet = $this->controller->getTweetById($id)) {
 	  $this->assign('tweetText', $tweet['text']);
 	  $this->assign('tweetPost', $tweet['created_at']);
 	} else {
