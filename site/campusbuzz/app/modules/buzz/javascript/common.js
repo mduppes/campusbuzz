@@ -2,20 +2,22 @@
 var map;
 var buzzPinsArray = [];
 var newsPinsArray = [];
-var mode=0; // StudentBuzz: 0, CampusNews: 1
+var buzzMarkers = [];
+var newsMarkers = [];
+var buzzMarkerCluster;
+var newsMarkerCluster;
+var mode=0; // Unofficial: 0, Official: 1
 // var overlay;
 var pieData = []; // total: 17
+
+var campusCenter= new google.maps.LatLng(49.26646,-123.250551);
+var searchRadius= 2000; //in metres
 
 pieOverlay.prototype = new google.maps.OverlayView(); 
 
 function initializeMap(){
-    
-    
-
-    // var myLatLng = new google.maps.LatLng(62.323907, -150.109291);
     var mapOptions = {
-          center: new google.maps.LatLng(49.26646,-123.250551),
-          // center: myLatLng,
+          center: campusCenter,
           zoom: 13,
           panControl: true,
           zoomControl: true,
@@ -31,15 +33,31 @@ function initializeMap(){
     };
     map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
 
+    //create bounding area circle
+    var boundingCircleOptions = {
+      strokeColor: "white",
+      strokeOpacity: 0.5,
+      strokeWeight: 2,
+      fillColor: "#ccc",
+      fillOpacity: 0.2,
+      map: map,
+      center: campusCenter,
+      radius: searchRadius
+    };
+    mapCircle = new google.maps.Circle(boundingCircleOptions);
 
-      // overlay = new pieOverlay(bounds, map);
+    //create marker clusterer obj
+    buzzMarkerCluster = new MarkerClusterer(map, buzzMarkers);
+    newsMarkerCluster = new MarkerClusterer(map, newsMarkers);
+
+    // overlay = new pieOverlay(bounds, map);
 
     //add marker to center
-    var marker = new google.maps.Marker({
-        position: map.getCenter(),
-        map: map,
-        title: 'Click to zoom'
-    });
+    // var marker = new google.maps.Marker({
+    //     position: map.getCenter(),
+    //     map: map,
+    //     title: 'Click to zoom'
+    // });
   
     // event listeners
     google.maps.event.addListener(map, 'dblclick', function(event) {
@@ -73,15 +91,90 @@ function initializeMap(){
       pieData=[];
 
     });
-    google.maps.event.addListener(marker, 'click', function() {
-        // marker.setMap(null);
-        // marker=null;
-        clearOverlays(buzzPinsArray);
-    });
+    // google.maps.event.addListener(marker, 'click', function() {
+    //     // marker.setMap(null);
+    //     // marker=null;
+    //     clearOverlays(buzzPinsArray);
+    // });
 
 
-    //draw piechart pin
-    //drawPin(pieData);
+    //draw piechart pins on map
+    loadMapPins();
+
+}
+
+function loadMapPins (){
+  //clear all pins on map
+
+  makeAPICall(
+    'GET', 'buzz', 'getMapPins', 
+    {"isOfficial":mode, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
+    function(response){
+      
+      //iterate and plot pins
+      var json = $.parseJSON(response);
+      $(json.docs).each(function(i,data){
+        
+          var locArray = data.locationGeo.split(',');
+          var loc= new google.maps.LatLng(locArray[0],locArray[1]);
+          var category;
+
+          if (mode==0){//buzz mode
+            switch (data.category){
+              case "life":
+                category=1;
+                break;
+              case "club":
+                category=2;
+                break;
+              case "health":
+                category=3;
+                break;
+              case "leisure":
+                category=4;
+                break;
+            }
+          }else{
+            //news mode
+            switch (data.category){
+              case "event":
+                category=1;
+                break;
+              case "career":
+                category=2;
+                break;
+              case "recreation":
+                category=3;
+                break;
+              case "learning":
+                category=4;
+                break;
+            }
+          }
+
+          var marker = new google.maps.Marker({
+              position: loc,
+              map: map
+          });  
+          marker.set("category", category);
+          console.log ("category; "+marker.get("category"));
+
+          if (mode==0){
+            buzzMarkers.push(marker);
+            buzzMarkerCluster.addMarker(marker);
+
+          }else{
+            newsMarkers.push(marker);
+            newsMarkerCluster.addMarker(marker);
+          }
+
+          //try to caluclate the number of 
+            
+      });
+
+      //cluster pins
+
+  });
 
 }
 
@@ -390,7 +483,6 @@ function expandSlideMenu(){
     
 }
 
-
 ////// switching modes (student buzz OR campus news) -cng
 
 function campusNewsMode(){
@@ -427,4 +519,7 @@ function studentBuzzMode(){
 function goToDetailView(){
 
   redirectTo("detail");
+
+  //make API call to query solr for feed details
+
 }
