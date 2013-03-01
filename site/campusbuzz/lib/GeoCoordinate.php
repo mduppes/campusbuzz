@@ -12,4 +12,8 @@ class GeoCoordinate
     $this->latitude = $lat;
     $this->longitude = $long;
   }
+
+  public function __toString() {
+    return "{$this->latitute},{$this->longitude}";
+  }
 }

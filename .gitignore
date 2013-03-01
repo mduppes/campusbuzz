@@ -9,3 +9,4 @@ site/*/logs/*
 *-local.ini
 nbrproject
 nbproject/*
+site/campusbuzz/app/modules/aggregation/config/feeds.json

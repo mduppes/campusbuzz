@@ -4,9 +4,9 @@
 // Represents a basic feed item such as an item in an RSS feed, or a post in Facebook, or a tweet in Twitter.
 class FeedItem
 {
-  private $dataMap = array();
-  private $geoCoord;
-  private $config;
+  protected $dataMap = array();
+  protected $geoCoord;
+  protected $config;
 
   public function __construct($sourceConfig) {
     $this->config = $sourceConfig;
@@ -48,6 +48,8 @@ class FeedItem
       $date = $dateTime->format('Y-m-d\TH:i:s\Z'); 
     }
   }
+
+  
 
   // Obtains the json necessary to perform a solr update from an already populated FeedItem
   public function getSolrUpdateJson() {
@@ -102,6 +104,9 @@ class FeedItem
     }
     
     //TODO: Source location validation and map to GPS coord
+    if ($feedMap["locationGeo"] == null) {
+
+    }
 
     //Simply mark testing data as testing
     $feedMap["testing"] = (Tester::isTesting()) ? true : false;

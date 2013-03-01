@@ -118,5 +118,5 @@ def aaa():
 
 
 
-#mapLocationsToGeoCoords()
+mapLocationsToGeoCoords()
 mapLocationsWithBuildingCodesToGeoCoords()

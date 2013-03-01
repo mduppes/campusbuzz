@@ -8,8 +8,8 @@ class DataSourceConfig
   private $configMap;
 
   // Get configs
-  public function getTitle() {
-    return isset($this->configMap["title"]) ? $this->configMap["title"] : null;
+  public function getName() {
+    return isset($this->configMap["name"]) ? $this->configMap["name"] : null;
   }
 
   public function getSourceUrl() {
@@ -42,7 +42,7 @@ class DataSourceConfig
 
   // Validation Mappings
   private function getConfigValidateMap() {
-    return array("title" =>"validateAndSetString",
+    return array("name" =>"validateAndSetString",
                  "sourceUrl" => "validateAndSetString",
                  "sourceImageUrl" => "validateAndSetOptionalString",
                  "sourceType" => "validateAndSetSourceType",
@@ -67,7 +67,8 @@ class DataSourceConfig
           "endDate" => "validateAndSetOptionalString",
           "category" => "validateAndSetOptionalString",
           "locationName" => "validateAndSetOptionalString",
-          "locationGeo" => "validateAndSetOptionalString"
+          "locationGeo" => "validateAndSetOptionalString",
+          "author" => "validateAndSetOptionalString"       
           );
   }
 
@@ -137,7 +138,7 @@ class DataSourceConfig
     // RSS feeds have custom mappings dependent on feed and must have labelMap
     if ($this->configMap['sourceType'] == "RSS") {
       if ($this->configMap['labelMap'] == null) {
-        throw new KurogoConfigurationException("Invalid label mappings for source {$configDecoded->title}");
+        throw new KurogoConfigurationException("RSS sources need a label mapping");
       }
     }
   }
