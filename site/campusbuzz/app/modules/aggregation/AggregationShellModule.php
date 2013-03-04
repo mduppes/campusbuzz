@@ -1,6 +1,7 @@
 <?php
 
 class AggregationShellModule extends ShellModule {
+  //deploytest
   protected $id='aggregation';
 
   // the 2nd argument can specify parameters for the dataretriever
