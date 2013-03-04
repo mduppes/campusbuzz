@@ -1,6 +1,3 @@
-<script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0U2xGsOkbSbKMppsuJPUp3Tbud_U1GgY&sensor=true">
-</script>
 {include file="findInclude:common/templates/header.tpl"}
 
 {include file="findInclude:modules/buzz/templates/togglebar.tpl"}

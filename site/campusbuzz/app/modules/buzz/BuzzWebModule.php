@@ -5,21 +5,11 @@ class BuzzWebModule extends WebModule
   protected $id='buzz';
   protected function initializeForPage() {
 
-    // $this->assign('message', 'CampussBuzz!');
-
-    // find tweets/facebook/rss for both mode (make a loader)
-     
-
-    // switch ($this->page)
-    // {
-    // 	case 'index':
-    // 		break;
-    // 	case 'detail':
-    // 		break;
-    // 	case 'help':
-    // 		break;
-    // }
-
+    $this->addExternalJavascript('https://maps.googleapis.com/maps/api/js?key=AIzaSyC0U2xGsOkbSbKMppsuJPUp3Tbud_U1GgY&sensor=true');
+    $this->addExternalJavascript('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markermanager/src/markermanager.js');
+    $this->addExternalJavascript('//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
+    $this->addInternalJavascript("/modules/buzz/javascript/markerclusterer.js");
+    
     $this->controller = DataRetriever::factory('TwitterDataRetriever', array());
 
      switch ($this->page)
@@ -30,7 +20,7 @@ class BuzzWebModule extends WebModule
              $user = 'ubcnews';
 
              //get the tweets
-             $tweets = $this->controller->tweets($user);
+             $tweets = $this->controller->getTweetsByUser($user);
 
              //prepare the list
              $tweetList = array();
