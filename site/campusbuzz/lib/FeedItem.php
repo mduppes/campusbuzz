@@ -7,9 +7,22 @@ class FeedItem
   protected $dataMap = array();
   protected $geoCoord;
   protected $config;
+  protected $validated = false;
+  protected $sourceType;
+  protected $createdFrom;
 
-  public function __construct($sourceConfig) {
-    $this->config = $sourceConfig;
+  // Factory method to create from config file
+  public static function createFromConfig(DataSourceConfig $config) {
+    $feedItem = new FeedItem();
+    $feedItem->config = $config;
+    $feedItem->createdFrom = "config";
+    return $feedItem;
+  }
+
+  public static function createFromSolr($solrResponse) {
+    $feedItem = new FeedItem();
+    $feedItem->createdFrom = "solr";
+    return $feedItem;
   }
 
   public function getLabel($key) {
@@ -22,6 +35,10 @@ class FeedItem
 
   public function addGeoCoordinate($coordinate) {
     $this->geoCoord = $coordinate;
+  }
+
+  public function isValidated() {
+    return $this->validated;
   }
 
   public function addAndValidateStringLabel($key, $value, $errorMessage) {
@@ -48,17 +65,21 @@ class FeedItem
       $date = $dateTime->format('Y-m-d\TH:i:s\Z'); 
     }
   }
-
   
-
-  // Obtains the json necessary to perform a solr update from an already populated FeedItem
-  public function getSolrUpdateJson() {
+  public function validateFeedItem() {
     // create new map every time. May be better to memoize.
     $feedMap = $this->dataMap;
 
+    print_r($feedMap);
     // Add other metadata
-    $feedMap["officialSource"] = $this->config->isOfficialSource();
-    $feedMap["sourceType"] = $this->config->getSourceType();
+    
+
+    if ($feedMap["officialSource"] == null) {
+      $feedMap["officialSource"] = $this->config->isOfficialSource();
+    }
+    if ($feedMap["sourceType"] == null) {
+      $feedMap["sourceType"] = $this->config->getSourceType();
+    }
 
     // Use the hash of the url to distinguish between feed items (the unique key in the db)
     if ($feedMap["url"] != null) {
@@ -102,16 +123,30 @@ class FeedItem
     if ($feedMap["pubDate"] == null && $feedMap["startDate"] != null) {
       $feedMap["pubDate"] = $feedMap["startDate"];
     }
+
+    if ($feedMap["locationName"] == null) {
+      $feedMap["locationName"] = $this->config->getSourceLocation();
+    }
     
     //TODO: Source location validation and map to GPS coord
     if ($feedMap["locationGeo"] == null) {
-
+      $geoCoord = LocationMapper::getLocationMapper()->locationSearch($feedMap["locationName"]);
+      print "GEOCOORD: ";
+      print_r($geoCoord);
+      print "\n";
     }
 
     //Simply mark testing data as testing
     $feedMap["testing"] = (Tester::isTesting()) ? true : false;
-    
-    return json_encode($feedMap);
+
+    $this->dataMap = $feedMap;
+    $this->validate = true;
+  }
+
+  // Obtains the json necessary to perform a solr update from an already populated FeedItem
+  public function getSolrUpdateJson() {
+    $this->validateFeedItem();
+    return json_encode($this->dataMap);
   }
 
   private function addCategory($category) {

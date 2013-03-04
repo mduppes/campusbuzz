@@ -25,6 +25,7 @@ class SearchQueryFactory {
     $searchQuery = new SearchQuery();
     $searchQuery->addKeyword($locationName);
     return $searchQuery;
+
   }
 
 

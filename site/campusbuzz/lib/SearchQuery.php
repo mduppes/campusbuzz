@@ -39,7 +39,7 @@ class SearchQuery {
 
     // Do a AND search of label keywords, for most anticipated cases this shouldn't matter
     // Since we will do a general search on the catchall solr schema label
-    $searchParams["q"] = implode(" AND ", $keywords);
+    $searchParams["q"] = implode(" ", $keywords);
     
     if ($this->returnFields != null) {
       $searchParams["fl"] = implode(',', $this->returnFields);

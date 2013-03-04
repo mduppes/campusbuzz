@@ -27,12 +27,15 @@ class RSSDataRetriever extends URLDataRetriever
     if ($labelMap == null) {
       throw new KurogoConfigurationException("Label map creating new feed item is null");
     }
+    print "config?\n";
+    print_r($dataSourceConfig);
 
     $numFeedItems = count($parsedXML->channel->item);
     $feedItems = array();
     foreach($parsedXML->channel->item as $xmlItem) {
       try {
-        $newFeedItem = new FeedItem($dataSourceConfig);
+        $newFeedItem = FeedItem::createFromConfig($dataSourceConfig);
+        print_r($newFeedItem);
         foreach($labelMap as $schemaLabel => $xpath) {
           print "Searching: ". $schemaLabel. " => ". $xpath. "\n";
           if (isset($xpath)) {

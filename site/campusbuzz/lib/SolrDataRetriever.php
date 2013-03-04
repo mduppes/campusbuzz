@@ -4,16 +4,17 @@
 class SolrDataRetriever extends URLDataRetriever {
   protected $DEFAULT_PARSER_CLASS = "JSONDataParser";
 
-  private $solrFeedItemsUrl = "http://localhost:8983/solr/core0/";
-  private $solrLocationMapUrl = "http://localhost:8983/solr/core1/";
+  private $feedItemsUrl = "http://localhost:8983/solr/FeedItems/";
+  private $locationMapUrl = "http://localhost:8983/solr/LocationMap/";
+  private $queryLogUrl = "http://localhost:8983/solr/QueryLog/";
 
   // Do a search
   public function queryFeedItem(SearchQuery $searchQuery) {
-    return $this->_query($this->solrFeedItemsUrl);
+    return $this->_query($searchQuery, $this->feedItemsUrl);
   }
 
   public function queryLocationMap(SearchQuery $searchQuery) {
-    return $this->_query($this->solrLocationMapUrl);
+    return $this->_query($searchQuery, $this->locationMapUrl);
   }
 
   // internal function to retrieve query
@@ -38,7 +39,6 @@ class SolrDataRetriever extends URLDataRetriever {
 
   // insert an array of FeedItem into solr
   public function persistFeedItems($feedItems) {
-    print_r($feedItems);
 
     $jsonUpdate = array();
     foreach ($feedItems as $feedItem) {
@@ -47,7 +47,7 @@ class SolrDataRetriever extends URLDataRetriever {
     $jsonUpdate = '['. implode(',', $jsonUpdate). ']';
     // trim trailing comma and add closing bracket
     
-    $this->setBaseURL($this->solrFeedItemsUrl. "update/json");
+    $this->setBaseURL($this->feedItemsUrl. "update/json");
     $this->addHeader("Content-type", "application/json");
     // immediately make data searchable
     $this->addParameter("commit", "true");
@@ -65,7 +65,7 @@ class SolrDataRetriever extends URLDataRetriever {
 
   // delete all documents in solr
   public function deleteAllFeedItems() {
-    $this->deleteAll($this->solrFeedItemsUrl);
+    $this->deleteAll($this->feedItemsUrl);
   }
 
   private function deleteAll($solrBaseUrl) {
@@ -82,7 +82,7 @@ class SolrDataRetriever extends URLDataRetriever {
 
   // delete all mapping information
   public function deleteAllLocationMappings() {
-    $this->deleteAll($this->solrLocationMapUrl);
+    $this->deleteAll($this->locationMapUrl);
   }
 
 }

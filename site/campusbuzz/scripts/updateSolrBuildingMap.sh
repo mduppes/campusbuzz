@@ -1,1 +1,1 @@
-curl 'http://localhost:8983/solr/core1/update/json?commit=true' --data-binary @buildingmap.json -H 'Content-type:application/json';
+curl 'http://localhost:8983/solr/LocationMap/update/json?commit=true' --data-binary @buildingmap.json -H 'Content-type:application/json';

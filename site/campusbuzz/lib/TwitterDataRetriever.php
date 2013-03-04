@@ -68,7 +68,7 @@ class TwitterDataRetriever extends URLDataRetriever
     $feedItems = array();
     foreach ($feedMap as $jsonFeedItem) {
       try {
-        $newFeedItem = new FeedItem($config);        
+        $newFeedItem = FeedItem::createFromConfig($config);        
         $this->populateFeedItem($newFeedItem, $jsonFeedItem);
         $feedItems[] = $newFeedItem;
       } catch (Exception $e) {

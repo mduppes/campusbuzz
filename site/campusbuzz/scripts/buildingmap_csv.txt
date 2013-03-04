@@ -655,5 +655,5 @@ West Mall Annex,1933 West Mall,49.2667435,-123.2572848,WMAX
 West Mall Swing Space,2175 West Mall V6T 1Z4,49.2626531,-123.2539451,SWNG
 Woodward (Instructional Resources Centre-IRC),2194 Health Sciences Mall,49.2647801,-123.2467318,WOOD
 
+UBC, 2329 W Mall V6T 1Z4, 49.26487850, -123.25249630
 1712 Acadia Rd,1712 Acadia Rd,49.272302,-123.241695
-

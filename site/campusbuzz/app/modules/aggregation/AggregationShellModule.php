@@ -97,7 +97,6 @@ class AggregationShellModule extends ShellModule {
       } else {
         // Now persist FeedItems into solr
         try {
-          print_r($feedItems);
           $this->solrController->persistFeedItems($feedItems);
         } catch (Exception $e) {
           print "Error persisting feed for source {$dataSourceConfig->getName()}. ".$e->getMessage(). "\n";
