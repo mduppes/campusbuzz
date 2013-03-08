@@ -108,7 +108,7 @@
        "resourcename": From SolrCell request param resource.name
    -->
    <field name="title" type="text_en" indexed="true" stored="true"/>
-   <field name="author" type="string" indexed="true" stored="true"/>
+   <field name="name" type="string" indexed="true" stored="true"/>
    <field name="officialSource" type="boolean" indexed="true" stored="true"/>
    <field name="sourceType" type="string" indexed="false" stored="true"/>
    <field name="url" type="string" indexed="false" stored="true"/>
@@ -146,9 +146,7 @@
    <!-- Uncommenting the following will create a "timestamp" field using
         a default value of "NOW" to indicate when each document was indexed.
      -->
-   <!--
-   <field name="timestamp" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
-     -->
+   <field name="createDate" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
 
 
    <!-- uncomment the following to ignore any fields that don't already match an existing 

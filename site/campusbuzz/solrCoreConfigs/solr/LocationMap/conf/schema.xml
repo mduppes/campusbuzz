@@ -121,7 +121,6 @@
    <!-- catchall field, containing all other searchable text fields (implemented
         via copyField further on in this schema  -->
    <field name="text" type="text_en" indexed="true" stored="false" multiValued="true"/>
-   <field name="textExact" type="string" indexed="true" stored="false"/>
 
    <!-- catchall text field that indexes tokens both normally and in reverse for efficient
         leading wildcard queries. -->
@@ -178,12 +177,6 @@
    <copyField source="locationName" dest="text"/>
    <copyField source="locationCode" dest="text"/>
    <copyField source="address" dest="text"/>
-
-   <copyField source="locationName" dest="textExact"/>
-   <copyField source="locationCode" dest="textExact"/>
-   <copyField source="address" dest="textExact"/>
-
-
 	
    <!-- Above, multiple source fields are copied to the [text] field. 
 	  Another way to map multiple source fields to the same 

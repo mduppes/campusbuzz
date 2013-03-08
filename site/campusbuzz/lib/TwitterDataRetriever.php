@@ -70,6 +70,7 @@ class TwitterDataRetriever extends URLDataRetriever
       try {
         $newFeedItem = FeedItem::createFromConfig($config);        
         $this->populateFeedItem($newFeedItem, $jsonFeedItem);
+        $newFeedItem->addMetaData();
         $feedItems[] = $newFeedItem;
       } catch (Exception $e) {
         print "Failed to populate feed item: ". $e->getMessage(). "\n";

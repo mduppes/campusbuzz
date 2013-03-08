@@ -22,6 +22,6 @@ class GeoCoordinate
   }
 
   public function __toString() {
-    return "{$this->latitute},{$this->longitude}";
+    return "{$this->latitude},{$this->longitude}";
   }
 }

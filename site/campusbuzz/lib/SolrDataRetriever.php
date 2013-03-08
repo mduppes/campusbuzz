@@ -1,88 +1,103 @@
 <?php
 
 
-class SolrDataRetriever extends URLDataRetriever {
+abstract class SolrDataRetriever extends URLDataRetriever {
   protected $DEFAULT_PARSER_CLASS = "JSONDataParser";
+  protected $DEFAULT_CACHE_LIFETIME = 300; // 5 min
 
-  private $feedItemsUrl = "http://localhost:8983/solr/FeedItems/";
-  private $locationMapUrl = "http://localhost:8983/solr/LocationMap/";
-  private $queryLogUrl = "http://localhost:8983/solr/QueryLog/";
+  abstract protected function getSolrBaseUrl();
 
-  // Do a search
-  public function queryFeedItem(SearchQuery $searchQuery) {
-    return $this->_query($searchQuery, $this->feedItemsUrl);
+  protected function init($args) {
+    parent::init($args);
+
+    $this->clearCache();
   }
 
   public function queryLocationMap(SearchQuery $searchQuery) {
-    return $this->_query($searchQuery, $this->locationMapUrl);
+    return $this->query($searchQuery, self::LOCATION_MAP_URL);
   }
 
   // internal function to retrieve query
-  private function _query(SearchQuery $searchQuery, $baseUrl) {
-    $this->setBaseURL($baseUrl. "select");
+  public function query(SearchQuery $searchQuery) {
+    $this->setBaseURL($this->getSolrBaseUrl(). "select");
     $queryParams = $searchQuery->getQueryParams();
-    print_r($queryParams);
-    foreach ($queryParams as $key => $value) {
-      $this->addParameter($key, $value);
+    foreach ($queryParams as $queryParam) {
+      foreach ($queryParam as $key => $value) {
+        $this->addParameter($key, $value);
+      }
     }
 
     $this->addParameter("wt", "json");
     $this->setMethod("GET");
     $data = $this->getData();
 
-    if ($data === null) {
-      throw new KurogoDataException("Failed search query");
-    }
+    $this->_checkResponseQuery($data);
 
+    //print "RESULT\n";
+    //print_r($data);
     return $data;    
   }
 
-  // insert an array of FeedItem into solr
-  public function persistFeedItems($feedItems) {
-
-    $jsonUpdate = array();
-    foreach ($feedItems as $feedItem) {
-      $jsonUpdate[] = $feedItem->getSolrUpdateJson();
-    }
-    $jsonUpdate = '['. implode(',', $jsonUpdate). ']';
-    // trim trailing comma and add closing bracket
-    
-    $this->setBaseURL($this->feedItemsUrl. "update/json");
+  /**
+   * Persists an already formatted json to solr
+   * @param string Valid Json that can be used to update solr
+   */
+  public function persist($jsonData) {
+    $this->clearCache();
+    $this->setBaseURL($this->getSolrBaseUrl(). "update/json");
     $this->addHeader("Content-type", "application/json");
     // immediately make data searchable
     $this->addParameter("commit", "true");
-    $this->setData($jsonUpdate);
+    $this->setData($jsonData);
     $this->setMethod("POST");
     $data = $this->getData();
+    $this->clearCache();
 
-    if ($data === null) {
-      throw new KurogoDataException("Failed to persist feed items, no data returned");
-    }
+    $this->_checkResponseUpdate($data);
+  }
+  
 
-    print "Solr response\n";
+  private function _checkResponseHeader($data) {
+    print "response: \n";
     print_r($data);
+
+    if ($data == null) {
+      throw new KurogoDataException("Entire response is null");
+    }
+    if (isset($data["responseHeader"])) {
+      if ($data["responseHeader"]["status"] !== 0) {
+        throw new KurogoDataException("Error in solr response");
+      }
+    }
   }
 
-  // delete all documents in solr
-  public function deleteAllFeedItems() {
-    $this->deleteAll($this->feedItemsUrl);
+  private function _checkResponseQuery($data) {
+    $this->_checkResponseHeader($data);
+    if (!isset($data["response"])) {
+      throw new KurogoDataException("No query response found although header returned");
+    }
+    if (!isset($data["response"]["numFound"])) {
+      throw new KurogoDataException("Not a proper response, numFound is not there");
+    }
   }
 
-  private function deleteAll($solrBaseUrl) {
-    $this->setBaseURL($solrBaseUrl. "update/json");
+  private function _checkResponseUpdate($data) {
+    $this->_checkResponseHeader($data);
+  }
+
+  public function deleteAll() {
+    $this->setBaseURL($this->getSolrBaseUrl(). "update/json");
     $this->addHeader("Content-type", "application/json");
     // immediately make data searchable
     $this->addParameter("commit", "true");
     $this->setData('{"delete":{"query":"*:*"}}');
     $this->setMethod("POST");
     $data = $this->getData();
-    print "Solr response\n";
-    print_r($data);    
-  }
 
-  // delete all mapping information
-  public function deleteAllLocationMappings() {
-    $this->deleteAll($this->locationMapUrl);
+    $this->_checkResponseUpdate($data);
   }
-
+  
+  public function getData() {
+    return parent::getData();
+  }
 }

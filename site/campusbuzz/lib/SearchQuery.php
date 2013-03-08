@@ -7,6 +7,7 @@ class SearchQuery {
   protected $categies = array();
   protected $filters = array();
   protected $returnFields = array();
+  protected $rows;
 
   public function addFilter($filter) {
     array_push($this->filters, $filter);
@@ -24,6 +25,10 @@ class SearchQuery {
     $this->keywordMap[$field] = $keyword;
   }
 
+  public function setMaxItems($max) {
+    $this->rows = $max;
+  }
+
   // Return query parameters as an associative array of key to value
   public function getQueryParams() {
     $searchParams  = array();
@@ -37,24 +42,30 @@ class SearchQuery {
       array_push($keywords, "*:*");
     }
 
-    // Do a AND search of label keywords, for most anticipated cases this shouldn't matter
+    // Do a OR search of label keywords, for most anticipated cases this shouldn't matter
     // Since we will do a general search on the catchall solr schema label
-    $searchParams["q"] = implode(" ", $keywords);
+    array_push($searchParams, 
+               array( "q" => implode(" ", $keywords)));
     
     if ($this->returnFields != null) {
-      $searchParams["fl"] = implode(',', $this->returnFields);
+      array_push($searchParams,
+                 array("fl" => implode(',', $this->returnFields)));
+    }
+
+    // set number of max items to return
+    if ($this->rows !== null) {
+      array_push($searchParams,
+                 array("rows" => $this->rows));
     }
 
     // Add filters
     foreach ($this->filters as $filter) {
       // check if intersect
       $filterParams = $filter->getQueryParams();
-      $duplicateKeys = array_intersect_key($searchParams, $filterParams);
-      if ($duplicateKeys != null) {
-        print "filter is intersecting params:\n";
-        print_r($duplicateKeys);
+      foreach ($filterParams as $attribute => $value) {
+        array_push($searchParams,
+                   array($attribute => $value));
       }
-      $searchParams = array_merge($searchParams, $filterParams);
     }
 
     return $searchParams;

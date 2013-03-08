@@ -68,7 +68,7 @@ class DataSourceConfig
           "category" => "validateAndSetOptionalString",
           "locationName" => "validateAndSetOptionalString",
           "locationGeo" => "validateAndSetOptionalString",
-          "author" => "validateAndSetOptionalString"       
+          "name" => "validateAndSetOptionalString"       
           );
   }
 
