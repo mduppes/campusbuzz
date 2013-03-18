@@ -757,6 +757,7 @@ MarkerClusterer.prototype.addToClosestCluster_ = function(marker) {
   }
 
   var category=marker['category'];
+  var isOfficial= marker['isOfficial'];
   if (clusterToAddTo && clusterToAddTo.isMarkerInClusterBounds(marker)) {
     clusterToAddTo.addMarker(marker);
       
@@ -1074,6 +1075,7 @@ function ClusterIcon(cluster, styles, opt_padding) {
   this.parent_=null;
   this.container_=null;
   this.background_=null;
+  this.cloud_=null;
   this.slice_=null;
   this.group1Num=0;
   this.group2Num=0;
@@ -1090,18 +1092,37 @@ function ClusterIcon(cluster, styles, opt_padding) {
 /**
  * Triggers the clusterclick event and zoom's if the option is set.
  */
-ClusterIcon.prototype.triggerClusterClick = function() {
+ClusterIcon.prototype.triggerClusterClick = function(event) {
   var markerClusterer = this.cluster_.getMarkerClusterer();
 
   // Trigger the clusterclick event.
   google.maps.event.trigger(markerClusterer, 'clusterclick', this.cluster_);
+ 
+  $('html').one('click',function() {
+    // Hide the menus
+    console.log ("hide menu");
+    removeClass(that.cloud_, "show");
+    addClass(that.cloud_, "hidden");
+  });
 
-  console.log ("clicked on cluster!");
-
+  event.stopPropagation();
   // append clouds to overlay
+  // var bounds = new google.maps.LatLngBounds(
+  //   this.center_,
+  //   this.center_);
+  // bounds.extend(new google.maps.LatLng(49.26948 ,-123.25536));
 
+  // var bubble = new google.maps.GroundOverlay(
+  //   "/modules/buzz/images/map_icons/left_bubble.png",
+  //   bounds);
+  // bubble.setMap(this.map_);
+  // this.map_.setCenter(new google.maps.LatLng(40.740, -74.18));
+  var that= this;
+  displayClouds(that);
+  
+  
+  // goToDetailView();
 
-  goToDetailView();
   // if (markerClusterer.isZoomOnClick()) {
   //   // Zoom into the cluster.
   //   this.map_.fitBounds(this.cluster_.getBounds());
@@ -1118,6 +1139,7 @@ ClusterIcon.prototype.onAdd = function() {
   this.div_ = document.createElement('DIV');//text
   this.container_ = document.createElement('DIV');
   this.background_ = document.createElement('DIV');
+  this.cloud_ = document.createElement('DIV');
 
  if (this.visible_) {
   var pos = this.getPosFromLatLng_(this.center_);
@@ -1242,21 +1264,56 @@ ClusterIcon.prototype.onAdd = function() {
         this.container_.appendChild(slice);
 
 
+        //****append clouds here*****//
+
+        //this.cloud_ = document.createElement('DIV');
+        var cloud=document.createElement('DIV');
+
         switch (i)
         {
             case 0:
                 addClass (pie, "slice_life");
+                cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/student.png')";
+                cloud.style.top = (pos.y-50)+ 'px';
+                cloud.style.left= (pos.x-50)+ 'px';
+                addClass(cloud, "rightBottom");
                 break;
             case 1:
                 addClass (pie, "slice_club");
+                cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/clubs.png')";
+                cloud.style.top = (pos.y-50)+ 'px';
+                cloud.style.left= (pos.x+50)+ 'px';
+                addClass(cloud, "leftBottom");
                 break;
             case 2:
                 addClass (pie, "slice_health");
+                cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/health.png')";
+                cloud.style.top = (pos.y+50)+ 'px';
+                cloud.style.left= (pos.x-50)+ 'px';
+                addClass(cloud, "rightTop");
                 break;
             case 3:
                 addClass (pie, "slice_leisure");
+                cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/leisure.png')";
+                cloud.style.top = (pos.y+55)+ 'px';
+                cloud.style.left= (pos.x+55)+ 'px';
+                addClass(cloud, "leftTop");
                 break;
         }
+
+        if (degree>0){
+          addClass(cloud, "cloud");
+          //attach click event
+          var cid= $(cloud).attr('id');
+          console.log ("id: "+cid);
+          $(cloud).click(function(event){
+            
+            categoryCloudClickHandler($(this).attr('id'));
+          });
+          this.cloud_.appendChild(cloud);
+        }
+        
+
         //rotate slice (starting pos)
         slice.style.webkitTransform = "rotate("+startDeg+"deg)";
         startDeg+=degree;
@@ -1265,27 +1322,31 @@ ClusterIcon.prototype.onAdd = function() {
         //pie.style.transform = "rotate("+proportionArr[i]+"deg)"
         pie.style.webkitTransform = "rotate("+degree+"deg)";
         slice.appendChild(pie);
-        this.container_.appendChild(slice);        
+        this.container_.appendChild(slice);   
+
+        
   }
   this.container_.style.opacity= 0.8;
 
 
   this.container_.appendChild(this.div_);
   this.parent_.appendChild(this.container_);
-
+  this.parent_.appendChild(this.cloud_);
+  addClass(this.cloud_, "hidden");
 
  
     
     this.div_.style.cssText = this.createCss(pos);
     this.div_.innerHTML = this.sums_.text;
-  }
+  }//end if visible
+
 
   var panes = this.getPanes();
   panes.overlayMouseTarget.appendChild(this.parent_);
 
   var that = this;
-  google.maps.event.addDomListener(this.parent_, 'click', function() {
-    that.triggerClusterClick();
+  google.maps.event.addDomListener(this.parent_, 'click', function(event) {
+    that.triggerClusterClick(event);
   });
 };
 

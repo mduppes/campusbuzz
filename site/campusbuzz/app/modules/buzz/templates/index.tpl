@@ -4,13 +4,23 @@
 
 	
 <div id="map_canvas" >
-<img onload= "initializeMap()" src="/modules/buzz/images/icons/leisure-button.png"> </img>
+<img onload= "studentBuzzMode()" src="/modules/buzz/images/loader_img.png"> </img>
 </div>
 
-<!-- <div id="pieContainer">
-     <div class="pieBackground"></div>
-     <div id="pieSlice1" class="hold"><div class="pie"></div></div>
-</div> -->
+<div id="searchbar">
+	<form class="form-wrapper cf">
+        <input type="text" placeholder="Search by keywords..." required>
+        <button type="submit">Search</button>
+        <div id="searchButton" onclick="expandSearchBar(event)">
+			<!-- <input type="button" onclick="expandSearchBar()" value={"SEARCH_TITLE"|getLocalizedString} /> -->
+			<img src="/modules/buzz/images/search.png"> </img>
+		</div>
+    </form>  
+</div>
+
+<div id="gpsButton" >
+	<img src="/modules/buzz/images/gps.png"> </img>
+</div>
 
 {include file="findInclude:modules/buzz/templates/slidemenu.tpl"}
 

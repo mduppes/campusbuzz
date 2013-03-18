@@ -2,12 +2,17 @@
 
   <div id="slideout_inner">
 
-    <button id="buzzLife" type="button" onclick="goToDetailView()">Student Life</button>
-    <button id="buzzClub" type="button" onclick="expandSlideMenu()">Clubs</button>
-    <button id="buzzWellbeing" type="button" onclick="expandSlideMenu()">Well Being</button>
-    <button id="buzzLeisure" type="button" onclick="expandSlideMenu()">Leisure</button>
+    <button class= "buzzCategory" id="buzzLife" type="button" onclick="filterCategory(this)">Student Life</button>
+    <button class= "buzzCategory" id="buzzClub" type="button" onclick="filterCategory(this)">Clubs</button>
+    <button class= "buzzCategory" id="buzzWellbeing" type="button" onclick="filterCategory(this)">Well Being</button>
+    <button class= "buzzCategory" id="buzzLeisure" type="button" onclick="filterCategory(this)">Leisure</button>
+
+    <button class= "newsCategory" id="newsNews" type="button" onclick="filterCategory(this)">UBC News</button>
+    <button class= "newsCategory" id="newsCareer" type="button" onclick="filterCategory(this)">Career</button>
+    <button class= "newsCategory" id="newsLearning" type="button" onclick="filterCategory(this)">Learning</button>
+    <button class= "newsCategory" id="newsLeisure" type="button" onclick="filterCategory(this)">Leisure</button>
   </div>
 
-  	<input id="pulltab" type="button" onclick="expandSlideMenu()"  ontouchstart="this.className='pressedaction'" ontouchend="this.className=''" value={"SLIDE_OUT_TITLE"|getLocalizedString} />
+  	<input id="pulltab" type="button" onclick="expandSlideMenu(event)"  ontouchstart="this.className='pressedaction'" ontouchend="this.className=''" value="Filter By Categories" />
   <div>
 </div>

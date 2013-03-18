@@ -13,25 +13,67 @@ var pieData = []; // total: 17
 var campusCenter= new google.maps.LatLng(49.26646,-123.250551);
 var searchRadius= 2000; //in metres
 
+//geolocation vars
+var browserSupportFlag =  new Boolean();
+var initialLocation;
+
 pieOverlay.prototype = new google.maps.OverlayView(); 
 
 function initializeMap(){
+
+  //set up ui for default buzz mode
+  // studentBuzzMode();
+
+
     var mapOptions = {
           center: campusCenter,
           zoom: 13,
-          panControl: true,
+          panControl: false,
           zoomControl: true,
-          mapTypeControl: true,
-          mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.RIGHT_TOP
+          zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
             },
           scaleControl: false,
           streetViewControl: false,
+          mapTypeControl: false,
           overviewMapControl: false,
           mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+
+    //delete overlays
+    deleteOverlays(buzzMarkers);
+    deleteOverlays(newsMarkers);
+
+    // Try W3C Geolocation (Preferred)
+  if(navigator.geolocation) {
+    browserSupportFlag = true;
+    navigator.geolocation.getCurrentPosition(function(position) {
+      initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+
+      // check if location is within campus area, yes -> center current loc, no -> set ubc centre
+      // map.setCenter(initialLocation);
+    }, function() {
+      handleNoGeolocation(browserSupportFlag);
+    });
+  }
+  // Browser doesn't support Geolocation
+  else {
+    browserSupportFlag = false;
+    handleNoGeolocation(browserSupportFlag);
+  }
+
+  function handleNoGeolocation(errorFlag) {
+    if (errorFlag == true) {
+      alert("Geolocation service failed.");
+      initialLocation = campusCenter;
+    } else {
+      alert("Your browser doesn't support geolocation. We've placed you in UBC.");
+      initialLocation = campusCenter;
+    }
+    map.setCenter(initialLocation);
+  }
+
 
     //create bounding area circle
     var boundingCircleOptions = {
@@ -118,7 +160,7 @@ function loadMapPins (){
           var locArray = data.locationGeo.split(',');
           var loc= new google.maps.LatLng(locArray[0],locArray[1]);
           var category;
-
+          console.log ("data's category; "+data.category);
           if (mode==0){//buzz mode
             switch (data.category){
               case "life":
@@ -137,36 +179,43 @@ function loadMapPins (){
           }else{
             //news mode
             switch (data.category){
-              case "event":
+              case "news":
                 category=1;
                 break;
               case "career":
                 category=2;
                 break;
-              case "recreation":
+              case "learning":
                 category=3;
                 break;
-              case "learning":
+              case "leisure":
                 category=4;
                 break;
             }
           }
 
-          var marker = new google.maps.Marker({
+          if (category!=null){
+            var marker = new google.maps.Marker({
               position: loc,
               map: map
-          });  
-          marker.set("category", category);
-          console.log ("category; "+marker.get("category"));
+            });  
+            marker.set("category", category);
+            console.log ("category; "+marker.get("category"));
 
-          if (mode==0){
-            buzzMarkers.push(marker);
-            buzzMarkerCluster.addMarker(marker);
+            if (mode==0){
+              buzzMarkers.push(marker);
+              buzzMarkerCluster.addMarker(marker);
+              marker.set("isOfficial", false);
 
-          }else{
-            newsMarkers.push(marker);
-            newsMarkerCluster.addMarker(marker);
+
+            }else{
+              newsMarkers.push(marker);
+              newsMarkerCluster.addMarker(marker);
+              marker.set("isOfficial", true);
+            }
+            console.log ("official; "+marker.get("isOfficial"));
           }
+          
 
           //try to caluclate the number of 
             
@@ -454,7 +503,7 @@ function showOverlays(pinArray) {
 }
 
 // Deletes all markers in the array by removing references to them
-function deleteOverlays() {
+function deleteOverlays(markersArray) {
   if (markersArray) {
     for (i in markersArray) {
       markersArray[i].setMap(null);
@@ -466,10 +515,12 @@ function deleteOverlays() {
 
 ////// Show/hide slide menu
 
-function expandSlideMenu(){
+function expandSlideMenu(event){
+
 
     var menu = document.getElementById("slideout_inner");
     var button = document.getElementById("pulltab");
+
 
     var className= button.className;
 
@@ -486,10 +537,37 @@ function expandSlideMenu(){
 ////// switching modes (student buzz OR campus news) -cng
 
 function campusNewsMode(){
+    //button state
+    var button = document.getElementById("newstoggle");
+    addClass(button, "pressed");
+    removeClass(document.getElementById("buzztoggle"), "pressed");
 
+    //button tip
     var tip = document.getElementById("newstip");
     addClass(tip, "show");
     removeClass(document.getElementById("buzztip"), "show");
+
+    //change slidemenu color
+    var menu = document.getElementById("slideout_inner");
+    var tab = document.getElementById("pulltab");
+    removeClass(menu, "buzzMode");
+    removeClass(tab, "buzzMode");
+    addClass(tab, "newsMode");
+    addClass(menu, "newsMode");
+
+    //hide buzz filter buttons
+    var list = document.getElementsByClassName("buzzCategory");
+    for (var i = 0; i < list.length; i++) {
+        // list[i] is a node with the desired class name
+        addClass(list[i], "hidden");
+    }
+    //show news filter buttons
+    var list2 = document.getElementsByClassName("newsCategory");
+    for (var i = 0; i < list2.length; i++) {
+        // list[i] is a node with the desired class name
+        removeClass(list2[i], "hidden");
+    }
+
     //set mode
     mode=1;
 
@@ -497,12 +575,41 @@ function campusNewsMode(){
     showOverlays(newsPinsArray);
     //hide buzz overlays
     clearOverlays(buzzPinsArray);
+
+    initializeMap();
 }
 
 function studentBuzzMode(){
+    //button state
+    var button = document.getElementById("buzztoggle");
+    addClass(button, "pressed");
+    removeClass(document.getElementById("newstoggle"), "pressed");
+
+    //button tip
     var tip = document.getElementById("buzztip");
     addClass(tip, "show");
     removeClass(document.getElementById("newstip"), "show");
+
+    //change slidemenu color
+    var menu = document.getElementById("slideout_inner");
+    removeClass(menu, "newsMode");
+    addClass(menu, "buzzMode");
+    var tab = document.getElementById("pulltab");
+    removeClass(tab, "newsMode");
+    addClass(tab, "buzzMode");
+
+    //hide news filter buttons
+    var list = document.getElementsByClassName("newsCategory");
+    for (var i = 0; i < list.length; i++) {
+        // list[i] is a node with the desired class name
+        addClass(list[i], "hidden");
+    }
+    //show buzz filter buttons
+    var list2 = document.getElementsByClassName("buzzCategory");
+    for (var i = 0; i < list2.length; i++) {
+        // list[i] is a node with the desired class name
+        removeClass(list2[i], "hidden");
+    }
 
     //set mode
     mode=0;
@@ -511,6 +618,26 @@ function studentBuzzMode(){
     showOverlays(buzzPinsArray);
     //hide news overlays
     clearOverlays(newsPinsArray);
+
+    initializeMap();
+    
+}
+
+////// Show/hide search bar
+
+function expandSearchBar(event){
+
+    var search = document.getElementById("searchbar");
+
+    var className= search.className;
+
+
+
+    if (className.indexOf("expand")>-1){
+        removeClass(search, "expand");
+    }else{
+        addClass(search, "expand");
+    }
     
 }
 
@@ -523,3 +650,6 @@ function goToDetailView(){
   //make API call to query solr for feed details
 
 }
+
+
+
