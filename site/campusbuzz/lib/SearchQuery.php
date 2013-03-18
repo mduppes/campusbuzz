@@ -6,15 +6,27 @@ class SearchQuery {
   protected $keywordMap = array();
   protected $categies = array();
   protected $filters = array();
+  protected $geoFilters = array();
   protected $returnFields = array();
   protected $rows;
+  protected $sorts = array();
 
   public function addFilter($filter) {
-    array_push($this->filters, $filter);
+    // Due to problem specific to geospatial queries separating them.
+    if ($filter instanceof GeoRadiusSearchFilter ||
+        $filter instanceof BoundingBoxSearchFilter) {
+      array_push($this->geoFilters, $filter);
+    } else {
+      array_push($this->filters, $filter);
+    }
   }
-  
-  public function addReturnFields($field) {
+
+  public function addReturnField($field) {
     array_push($this->returnFields, $field);
+  }
+
+  public function addSort(SearchSort $sort) {
+    $this->sorts[] = $sort;
   }
 
   public function addCategory($category) {
@@ -22,6 +34,7 @@ class SearchQuery {
   }
 
   public function addKeyword($keyword, $field = "text") {
+    // False booleans print out as "", we don't want that
     $this->keywordMap[$field] = $keyword;
   }
 
@@ -32,7 +45,7 @@ class SearchQuery {
   // Return query parameters as an associative array of key to value
   public function getQueryParams() {
     $searchParams  = array();
-  
+
     $keywords = array();
     foreach ($this->keywordMap as $searchField => $keyword) {
       array_push($keywords, "{$searchField}:{$keyword}");
@@ -44,30 +57,45 @@ class SearchQuery {
 
     // Do a OR search of label keywords, for most anticipated cases this shouldn't matter
     // Since we will do a general search on the catchall solr schema label
-    array_push($searchParams, 
-               array( "q" => implode(" ", $keywords)));
-    
+    $searchParams["q"] = implode(" ", $keywords);
+
     if ($this->returnFields != null) {
-      array_push($searchParams,
-                 array("fl" => implode(',', $this->returnFields)));
+      $searchParams["fl"] = implode(',', $this->returnFields);
     }
 
     // set number of max items to return
     if ($this->rows !== null) {
-      array_push($searchParams,
-                 array("rows" => $this->rows));
+      $searchParams["rows"] = $this->rows;
     }
 
     // Add filters
+    $fq = array();
     foreach ($this->filters as $filter) {
-      // check if intersect
-      $filterParams = $filter->getQueryParams();
-      foreach ($filterParams as $attribute => $value) {
-        array_push($searchParams,
-                   array($attribute => $value));
-      }
+      $fq[] = $filter->getQueryString();
     }
 
+    // Add geo filters separately (For some reason query is incorrect if placed before
+    foreach ($this->geoFilters as $filter) {
+      $fq[] = $filter->getQueryString();
+    }
+
+    // Although solr allows multiple fields such as fq, Kurogo's representation uses a PHP array
+    // So cannot have multiple fields. To workaround we combine all fq's with logical and
+    if (!empty($fq)) {
+      $searchParams["fq"] = implode(" AND ", $fq);
+    }
+
+    // Add sort of the query
+    $sortParams = array();
+    foreach ($this->sorts as $sort) {
+      $sortParams[] = $sort->getQueryString();
+    }
+
+    if (!empty($sortParams)) {
+      $searchParams["sort"] = implode(", ", $sortParams);
+    }
+
+    Kurogo::log(1, "search params: ". print_r($searchParams, true), "SearchParams");
     return $searchParams;
   }
 }

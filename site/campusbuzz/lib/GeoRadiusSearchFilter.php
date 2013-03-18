@@ -9,14 +9,18 @@ class GeoRadiusSearchFilter {
   // Field to filter on solr schema
   private $field;
 
-  public function getQueryParams() {
-    return array("fq" => "{!geofilt}",
-                 "pt" => (string)$geoCoordinate,
-                 "sfield" => $field,
-                 "d" => $radius);                 
+  public function getQueryString() {
+    $filterString = "{!geofilt";
+    $filterString .= " pt=". (string)$this->geoCoordinate;
+    $filterString .= " sfield=". $this->field;
+    $filterString .= " d=". $this->radius;
+    $filterString .= "}";
+
+    return $filterString;
+
   }
 
-  public function __construct($geoCoordinate, $radius, $field = 'geoLocation') {
+  public function __construct($geoCoordinate, $radius, $field = 'locationGeo') {
     $this->geoCoordinate = $geoCoordinate;
     $this->radius = $radius;
     $this->field = $field;

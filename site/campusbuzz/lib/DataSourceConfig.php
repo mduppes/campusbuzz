@@ -1,14 +1,14 @@
 <?php
 
 
-// Class that represents a geocoordinate consisting of 
+// Class that represents a geocoordinate consisting of
 // float latitude, float longitude
 class DataSourceConfig
 {
   private $configMap;
 
   // Get configs
-  public function getName() {
+  public function getSourceName() {
     return isset($this->configMap["name"]) ? $this->configMap["name"] : null;
   }
 
@@ -52,23 +52,23 @@ class DataSourceConfig
                  "sourceCategory" => "validateAndSetOptionalString",
           );
   }
-  
+
   private function getValidSourceTypes() {
-    return array("Facebook", "RSS", "Twitter");
+    return array("Facebook", "RSS", "Twitter", "TwitterGeoSearch");
   }
 
   private function getLabelValidateMap() {
     return array("title" => "validateAndSetString",
-          "content" => "validateAndSetOptionalString",
-          "url" => "validateAndSetString",
-          "imageUrl" => "validateAndSetOptionalString",
-          "pubDate" => "validateAndSetOptionalString",
-          "startDate" => "validateAndSetOptionalString",
-          "endDate" => "validateAndSetOptionalString",
-          "category" => "validateAndSetOptionalString",
-          "locationName" => "validateAndSetOptionalString",
-          "locationGeo" => "validateAndSetOptionalString",
-          "name" => "validateAndSetOptionalString"       
+                 "name" => "validateAndSetOptionalString",
+                 "content" => "validateAndSetOptionalString",
+                 "url" => "validateAndSetString",
+                 "imageUrl" => "validateAndSetOptionalString",
+                 "pubDate" => "validateAndSetOptionalString",
+                 "startDate" => "validateAndSetOptionalString",
+                 "endDate" => "validateAndSetOptionalString",
+                 "category" => "validateAndSetOptionalString",
+                 "locationName" => "validateAndSetOptionalString",
+                 "locationGeo" => "validateAndSetOptionalString"
           );
   }
 
@@ -83,7 +83,7 @@ class DataSourceConfig
     if ($this->isValidString($value)) {
       $output = $value;
     } else {
-      throw new KurogoConfigurationException("Invalid String");
+      throw new KurogoConfigurationException("Invalid String: {$value}");
     }
   }
 
@@ -127,12 +127,14 @@ class DataSourceConfig
     }
   }
 
-  private function validateAndSetConfig($configDecoded) {    
-    
+  private function validateAndSetConfig($configDecoded) {
+
     $this->configMap = array();
     foreach ($this->getConfigValidateMap() as $key => $validateAndSetFunction) {
       $this->configMap[$key] = null;
-      $this->{$validateAndSetFunction}($this->configMap[$key], $configDecoded[$key]);
+
+      // reflection call to function that validates and populates this required / optional field
+      $this->{$validateAndSetFunction}($this->configMap[$key], @$configDecoded[$key]);
     }
 
     // RSS feeds have custom mappings dependent on feed and must have labelMap

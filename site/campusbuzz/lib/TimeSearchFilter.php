@@ -8,14 +8,14 @@ class TimeSearchFilter {
 
   private $solrFormatString = "Y-m-d\TH:i:s\Z";
 
-  public function getQueryParams() {
+  public function getQueryString() {
     $queryString = "[";
     $queryString .= (isset($this->startTime)) ? $this->startTime->format($this->solrFormatString) :"*";
     $queryString .= " TO ";
     $queryString .= (isset($this->endTime)) ? $this->endTime->format($this->solrFormatString) : "*";
     $queryString .= "]";
-      
-    return array("fq" => $queryString);
+
+    return $this->field. ":". $queryString;
   }
 
   public function __construct($startTime, $endTime, $field) {

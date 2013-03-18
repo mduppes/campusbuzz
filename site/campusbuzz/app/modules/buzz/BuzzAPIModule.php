@@ -5,13 +5,12 @@ class BuzzAPIModule extends APIModule
   protected $id='buzz';
 
   protected $vmin= 1;
-  protected $vmax= 1;
+  protected $vmax= 1;          
 
   public function initializeForCommand(){
-
     //instantiate controller
-    $this->controller = DataRetriever::factory('SolrDataRetriever', array());
-    $this->controller = DataRetriever::factory('TwitterDataRetriever', array());
+
+    $feedItemSolrController = DataRetriever::factory('FeedItemSolrDataRetriever', array());
 
     switch ($this->command){
         case 'index':
@@ -24,17 +23,61 @@ class BuzzAPIModule extends APIModule
         case 'getPosts':
         break;
         case 'getMapPins':
-            $isOfficial=$this->getArg('isOfficial',0);
-            $lat = $this->getArg('lat', 0);
-            $lon = $this->getArg('lon', 0);
-            $radius= $this->getArg('distance',0); // in metres
+          $isOfficial=$this->getArg('isOfficial',0);
+          $lat = $this->getArg('lat', 0);
+          $lon = $this->getArg('lon', 0);
+          $radius= $this->getArg('distance',0); // in metres
 
+          // Change this for # of results returned
+          $numResultsReturned = 50;
 
-            //call solr search function to get pins(official/unofficial)
-            // $pins = $this->controller->search($query);
-            // $tweets = $this->controller->getTweetsByUser($user);
-            //test data with locations
-            $pins= '{
+          // for now since everything is official
+          $isOfficial = true;
+          
+          // $category, $keywords, etc TODO
+          $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon, $radius);
+          $mapPinsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
+          $mapPinsSearchQuery->setMaxItems($numResultsReturned);
+
+          // Fields we want returned from solr
+          //$mapPinsSearchQuery->addReturnField("title");
+          $mapPinsSearchQuery->addReturnField("id");
+          $mapPinsSearchQuery->addReturnField("officialSource");
+          $mapPinsSearchQuery->addReturnField("category");
+          $mapPinsSearchQuery->addReturnField("locationGeo");
+          // TODO: add keywords if given, and category filters
+          
+          // Get and convert solr response to php object
+          $data = $feedItemSolrController->query($mapPinsSearchQuery);
+
+          if (!isset($data["response"])) {
+            throw new KurogoDataException("Error, not a valid response.");
+          }
+
+          $pins = json_encode($data["response"]);
+
+          //Kurogo::log(1, "hello", "query result");
+          
+          $this->setResponse($pins);
+          $this->setResponseVersion(1);
+
+          
+          // Now update query count for all items queried
+          $feedItemIds = array();
+          foreach ($data["response"]["docs"] as $solrResults) {
+          $feedItemIds[] = $solrResults["id"];
+          }
+          
+          // Batch update query count by one for results shown to user
+          $feedItemSolrController->incrementQueryCounts($feedItemIds);
+
+          
+          break;
+    }
+  }
+
+  // For testing
+  private $pins= '{
     "numFound": 8,
     "start": 0,
     "docs": [
@@ -116,11 +159,7 @@ class BuzzAPIModule extends APIModule
             "locationGeo": "49.26080,-123.24592"
         }
     ]
-}';
-            $this->setResponse($pins);
-            $this->setResponseVersion(1);
+    }';
 
-            break;
-    }
-  }
+
 }

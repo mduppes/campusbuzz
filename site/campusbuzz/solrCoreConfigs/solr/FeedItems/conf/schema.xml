@@ -119,6 +119,7 @@
    <field name="endDate" type="date" indexed="true" stored="true" required="false"/>
    <field name="locationName" type="text_en" indexed="true" stored="true"/>
    <field name="locationGeo" type="location" indexed="true" stored="true"/>
+   <field name="queryCount" type="int" indexed="true" stored="true" default="0"/>
    <field name="testing" type="boolean" indexed="true" stored="true"/>
 
    <!-- Main body of document extracted by SolrCell.

@@ -13,18 +13,13 @@ abstract class SolrDataRetriever extends URLDataRetriever {
     $this->clearCache();
   }
 
-  public function queryLocationMap(SearchQuery $searchQuery) {
-    return $this->query($searchQuery, self::LOCATION_MAP_URL);
-  }
-
   // internal function to retrieve query
   public function query(SearchQuery $searchQuery) {
     $this->setBaseURL($this->getSolrBaseUrl(). "select");
     $queryParams = $searchQuery->getQueryParams();
-    foreach ($queryParams as $queryParam) {
-      foreach ($queryParam as $key => $value) {
-        $this->addParameter($key, $value);
-      }
+    //print_r($queryParams);
+    foreach ($queryParams as $key => $value) {
+      $this->addParameter($key, $value);
     }
 
     $this->addParameter("wt", "json");
@@ -35,7 +30,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
 
     //print "RESULT\n";
     //print_r($data);
-    return $data;    
+    return $data;
   }
 
   /**
@@ -55,11 +50,11 @@ abstract class SolrDataRetriever extends URLDataRetriever {
 
     $this->_checkResponseUpdate($data);
   }
-  
+
 
   private function _checkResponseHeader($data) {
-    print "response: \n";
-    print_r($data);
+    //print "response: \n";
+    //print_r($data);
 
     if ($data == null) {
       throw new KurogoDataException("Entire response is null");
@@ -85,19 +80,18 @@ abstract class SolrDataRetriever extends URLDataRetriever {
     $this->_checkResponseHeader($data);
   }
 
-  public function deleteAll() {
+  public function deleteAll($query = "*:*") {
+    $this->clearCache();
     $this->setBaseURL($this->getSolrBaseUrl(). "update/json");
     $this->addHeader("Content-type", "application/json");
     // immediately make data searchable
     $this->addParameter("commit", "true");
-    $this->setData('{"delete":{"query":"*:*"}}');
+    $this->setData('{"delete":{"query":"'. $query. '"}}');
     $this->setMethod("POST");
     $data = $this->getData();
+    $this->clearCache();
 
     $this->_checkResponseUpdate($data);
   }
-  
-  public function getData() {
-    return parent::getData();
-  }
+
 }

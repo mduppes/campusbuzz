@@ -111,7 +111,7 @@
    <field name="address" type="text_en" indexed="true" stored="true"/>
    <field name="locationGeo" type="location" indexed="true" stored="true"/>
    <field name="locationCode" type="text_en" indexed="true" stored="true" required="false"/>
-
+   <field name="testing" type="boolean" indexed="true" stored="true" required="false"/>
    <!-- Main body of document extracted by SolrCell.
         NOTE: This field is not indexed by default, since it is also copied to "text"
         using copyField below. This is to save space. Use this field for returning and

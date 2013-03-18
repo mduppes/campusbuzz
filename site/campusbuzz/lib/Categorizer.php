@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Singleton that manages categorizing FeedItems. 
+ * Singleton that manages categorizing FeedItems.
  * @Note Can only categorize items that are persisted in Solr
  */
 class Categorizer {
@@ -15,9 +15,12 @@ class Categorizer {
 
   private function _createMostRecentQuery($startTime, $keywords) {
     $searchQuery = SearchQueryFactory::createSearchAllQuery();
-    $timeFilter = new TimeSearchFilter(null, null, "createDate");
+    $timeFilter = new TimeSearchFilter($startTime, null, "createDate");
     $searchQuery->addFilter($timeFilter);
+    $searchQuery->setMaxItems(1000);
     $searchQuery->addKeyword(implode(" ", $keywords));
+
+    $searchQuery->addReturnField("id");
     return $searchQuery;
   }
 
@@ -32,9 +35,30 @@ class Categorizer {
     foreach ($this->officialCategoryMap as $category => $keywords) {
       print "  Category = {$category}\n";
       $searchQuery = $this->_createMostRecentQuery($startTime, $keywords);
-      $searchQuery->addFilter(new FieldQueryFilter("officialSource", "1"));
-      $results = $this->solrController->queryFeedItem($searchQuery);
-      print_r($results);
+      //$searchQuery->addFilter(new FieldQueryFilter("officialSource", "1"));
+      $results = $this->solrController->query($searchQuery);
+
+      if (!isset($results) || !isset($results["response"])) {
+        print "Error querying for category: {$category}\n";
+      } else {
+        $numFound = $results["response"]["numFound"];
+        $numReturned = count($results["response"]["docs"]);
+        if ($numFound > $numReturned) {
+          print "     numfound: {$numFound} > numReturned: {$numReturned}\n";
+        }
+
+        print "      Matches found for category: {$category} = ". $numFound . "\n";
+        if ($numReturned > 0) {
+          $feedIds = array();
+          foreach ($results["response"]["docs"] as $feedId) {
+            $id = $feedId["id"];
+            print "         Updating id: {$id} with category: {$category}\n";
+            $feedIds[] = $id;
+          }
+          // updates category for each match into solr
+          $this->solrController->updateCategories($feedIds, $category);
+        }
+      }
     }
 
     /*
@@ -45,7 +69,7 @@ class Categorizer {
       print_r($results);
     }
     */
-    
+    print "Done categorizing FeedItems in Solr\n";
   }
 
   public function __construct($official, $buzz, $buzzDefaultCategory, $solrController) {
@@ -57,6 +81,6 @@ class Categorizer {
     $this->buzzCategoryMap = $buzz;
     $this->buzzDefaultCategory = $buzzDefaultCategory;
     $this->solrController = $solrController;
-    print "Initialized categorizer\n";    
+    print "Initialized categorizer\n";
   }
 }

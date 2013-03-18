@@ -5,19 +5,14 @@
  */
 class SearchQueryFactory {
 
-  public static function createGeoSearchQuery($type, $keyword, $categories, $fields = null) {
-
-  }
-
   /**
    * Returns a default geospatial search around the UBC campus
    * @return SearchQuery
    */
-  public static function createDefaultSearchQuery() {
+  public static function createGeoRadiusSearchQuery($lat, $long, $radius) {
     $searchQuery = new SearchQuery();
-    $centerOfUbc = new GeoCoordinate(49.26, -123.24);
-    $radius = 1;
-    $searchFilter = new GeoRadiusSearchFilter($centerOfUbc, $radius);
+    $center = new GeoCoordinate($lat, $long);
+    $searchFilter = new GeoRadiusSearchFilter($center, $radius);
  
     $searchQuery->addFilter($searchFilter);
     return $searchQuery;

@@ -15,17 +15,18 @@ class FeedItemManager {
   private $fbSecret;
 
   private function _retrieve($dataSourceConfig) {
-    print "Retrieving data for ". $dataSourceConfig->getName(). "\n";
+    print "Retrieving data for ". $dataSourceConfig->getSourceName(). "\n";
     switch($dataSourceConfig->getSourceType()) {
     case 'RSS':
       return $this->rssController->retrieveSource($dataSourceConfig);
     case 'Facebook':
+      return $this->facebookController->retrieveSource($dataSourceConfig);
       break;
     case 'Twitter':
     case 'TwitterGeoSearch':
       return $this->twitterController->retrieveSource($dataSourceConfig);
     default:
-      throw new KurogoConfigurationException("Invalid sourceType: for sourceConfig: ". $dataSourceConfig->getName());
+      throw new KurogoConfigurationException("Invalid sourceType: for sourceConfig: ". $dataSourceConfig->getSourceName());
     }
   }
 
@@ -39,40 +40,42 @@ class FeedItemManager {
     foreach ($this->dataSourceConfigs as $dataSourceConfig) {
       $error = false;
       $feedItems = null;
-
       // retrieve feed based on config
       try {
+        print "obtaining feed for source: ". $dataSourceConfig->getSourceName(). "\n";
         $feedItems = $this->_retrieve($dataSourceConfig);
+        print "obtained feed for source: ". $dataSourceConfig->getSourceName(). "\n";
       } catch (Exception $e) {
-        print "Failed to retrieve data for source: ". $dataSourceConfig->getName(). "\n" . $e->getMessage()."\n";
+        print "Failed to retrieve data for source: ". $dataSourceConfig->getSourceName(). "\n" . $e->getMessage()."\n";
         $error = true;
       }
 
-      
+
       if ($feedItems == null) {
-        print "No feed items extracted for feed. ". $dataSourceConfig->getName(). "\n";
+        print "No feed items extracted for feed. ". $dataSourceConfig->getSourceName(). "\n";
         $error = true;
       } else {
         // Now persist FeedItems into solr
+        print "persisting feedItems into solr for ". $dataSourceConfig->getSourceName(). "\n";
         try {
           $this->feedItemSolrController->persistFeedItems($feedItems);
         } catch (Exception $e) {
-          print "Error persisting feed for source {$dataSourceConfig->getName()}. ".$e->getMessage(). "\n";
+          print "Error persisting feed for source {$dataSourceConfig->getSourceName()}. ".$e->getMessage(). "\n";
           $error = true;
         }
-        
-      }   
+
+      }
 
       if (!$error) {
         $successes++;
-        print "Successfully retrieved and persisted {$dataSourceConfig->getName()}\n";
+        print "Successfully retrieved and persisted {$dataSourceConfig->getSourceName()}\n";
       } else {
-        print "Error Config: \n";
+        print "Error Retrieving and Persisting Config: ". $dataSourceConfig->getSourceName(). "\n";
         print_r($dataSourceConfig);
       }
     }
 
-    print "Successfully retrieved and persisted {$successes} / ". count($this->dataSourceConfigs). "\n";    
+    print "Successfully retrieved and persisted {$successes} / ". count($this->dataSourceConfigs). "\n";
 
     // Once the feedItems have been persisted, categorize based on keyword match in solr index
     try {
@@ -86,14 +89,17 @@ class FeedItemManager {
 
 
   public function __construct($parsedConfigs, $feedItemSolr){
-    // init controllers (data retrievers)
-    $this->twitterController = DataRetriever::factory('TwitterDataRetriever', array());
-    $this->facebookController = DataRetriever::factory('FacebookDataRetriever', array($this->fbId, $this->fbSecret));
-    $this->rssController = DataRetriever::factory('RSSDataRetriever', array());
     $this->feedItemSolrController = $feedItemSolr;
 
     // load already parsed php object config
     $this->_initConfig($parsedConfigs);
+
+    // init controllers (data retrievers)
+    $this->twitterController = DataRetriever::factory('TwitterDataRetriever', array());
+    $this->facebookController = DataRetriever::factory('FacebookDataRetriever', array($this->fbId, $this->fbSecret));
+    $this->rssController = DataRetriever::factory('RSSDataRetriever', array());
+
+
   }
 
   private function _initConfig($dataSourceConfigsDecoded) {
@@ -101,7 +107,7 @@ class FeedItemManager {
     if ($dataSourceConfigsDecoded == null) {
       throw new KurogoConfigurationException("Invalid JSON file");
     }
-    
+
     if (!is_array($dataSourceConfigsDecoded)) {
       throw new KurogoConfigurationException("Json config is not an array");
     }
@@ -116,7 +122,7 @@ class FeedItemManager {
     if (!isset($dataSourceConfigsDecoded["buzzDefaultCategory"])) {
       print "Default buzz category (catch all) not set.\n";
     }
-    if (!isset($dataSourceConfigsDecoded["buzzCategories"])) { 
+    if (!isset($dataSourceConfigsDecoded["buzzCategories"])) {
       throw new KurogoConfigurationException("Missing buzz category map: buzzCategories");
     }
     if (!isset($dataSourceConfigsDecoded["officialCategories"])) {
@@ -130,7 +136,7 @@ class FeedItemManager {
                                          $dataSourceConfigsDecoded["buzzDefaultCategory"],
                                          $this->feedItemSolrController);
 
-    $this->fbId = $dataSourceConfigsDecoded["fbid"];    
+    $this->fbId = $dataSourceConfigsDecoded["fbid"];
     $this->fbsecret = $dataSourceConfigsDecoded["fbsecret"];
 
     $this->dataSourceConfigs = array();
@@ -149,7 +155,7 @@ class FeedItemManager {
     print "Loaded configs: ". count($this->dataSourceConfigs). " out of ". count($dataSourceConfigsDecoded["feeds"]). "\n";
 
   }
-    
+
 
 
 }

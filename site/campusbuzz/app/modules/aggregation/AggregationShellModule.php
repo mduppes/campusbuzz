@@ -27,6 +27,7 @@ class AggregationShellModule extends ShellModule {
 
       try {
         $manager->retrieveAndPersistAll();
+        print "Finished retrieving and persisting all\n";
       } catch (Exception $e) {
         print "Error retrieving and persisting. ". $e->getMessage(). "\n";
       }
@@ -34,7 +35,12 @@ class AggregationShellModule extends ShellModule {
       break;
     case "runtests":
       print "running tests...\n";
-      //print_r($this->solrController->queryFeedItem(SearchQueryFactory::createSearchAllQuery()));
+      // Initialize controllers for tester
+      $tester = Tester::getTester();
+      $tester->init($dataSourceConfigsDecoded["fbid"], $dataSourceConfigsDecoded["fbsecret"]);
+      $tester->runtests();
+      //print_r($feedItemSolrController->queryFeedItem(SearchQueryFactory::createSearchAllQuery()));
+
       break;
     case "deleteFeedItems":
       print "Deleting all documents in solr\n";

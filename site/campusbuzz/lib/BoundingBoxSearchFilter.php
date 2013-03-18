@@ -8,11 +8,11 @@ class BoundingBoxSearchFilter {
   // Field to filter on solr schema
   private $field;
 
-  protected function getQueryParams() {
-    return array("fq" => "{$field}:[{$corners[0]} TO {$corners[1]}]");
-                 
+  protected function getQueryString() {
+    return "{$field}:[{$corners[0]} TO {$corners[1]}]";
+
   }
 
-  
+
 
 }

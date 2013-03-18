@@ -10,8 +10,3 @@ site/*/logs/*
 nbrproject
 nbproject/*
 site/campusbuzz/app/modules/aggregation/config/feeds.json
-site/campusbuzz/solrCoreConfigs/solr/FeedItems/data/*
-site/campusbuzz/solrCoreConfigs/solr/QueryLog/data/*
-site/campusbuzz/solrCoreConfigs/solr/LocationMap/data/*
-
-
