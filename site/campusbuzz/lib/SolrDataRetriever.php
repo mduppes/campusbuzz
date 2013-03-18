@@ -6,7 +6,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
   protected $DEFAULT_CACHE_LIFETIME = 300; // 5 min
 
   abstract protected function getSolrBaseUrl();
-  
+
   protected function init($args) {
     parent::init($args);
 
@@ -80,11 +80,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
     $this->_checkResponseHeader($data);
   }
 
-<<<<<<< HEAD
   public function deleteAll($query = "*:*") {
-=======
-  public function deleteAll() {
->>>>>>> 547667ed6fd50bb955b70f5aaa38e3308dd1d9ed
     $this->clearCache();
     $this->setBaseURL($this->getSolrBaseUrl(). "update/json");
     $this->addHeader("Content-type", "application/json");
@@ -94,15 +90,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
     $this->setMethod("POST");
     $data = $this->getData();
     $this->clearCache();
-<<<<<<< HEAD
 
     $this->_checkResponseUpdate($data);
   }
-
-=======
-    
-    $this->_checkResponseUpdate($data);
-  }
-  
->>>>>>> 547667ed6fd50bb955b70f5aaa38e3308dd1d9ed
 }
