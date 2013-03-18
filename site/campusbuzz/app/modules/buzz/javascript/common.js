@@ -142,7 +142,6 @@ function initializeMap(){
 
     //draw piechart pins on map
     loadMapPins();
-
 }
 
 function loadMapPins (){
@@ -152,7 +151,7 @@ function loadMapPins (){
     'GET', 'buzz', 'getMapPins', 
     {"isOfficial":mode, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
     function(response){
-      
+      console.log (response);
       //iterate and plot pins
       var json = $.parseJSON(response);
       $(json.docs).each(function(i,data){
@@ -161,36 +160,28 @@ function loadMapPins (){
           var loc= new google.maps.LatLng(locArray[0],locArray[1]);
           var category;
           console.log ("data's category; "+data.category);
-          if (mode==0){//buzz mode
-            switch (data.category){
-              case "life":
-                category=1;
-                break;
-              case "club":
-                category=2;
-                break;
-              case "health":
-                category=3;
-                break;
-              case "leisure":
-                category=4;
-                break;
+
+          if (mode==0){
+            //check category for Buzz mode
+            if(data.category.indexOf("Life") != -1){
+              category=1;
+            }else if (data.category.indexOf("Club") != -1){
+              category=2;
+            }else if (data.category.indexOf("Health") != -1){
+              category=3;
+            }else if (data.category.indexOf("Leisure") != -1){
+              category=4;
             }
           }else{
-            //news mode
-            switch (data.category){
-              case "news":
-                category=1;
-                break;
-              case "career":
-                category=2;
-                break;
-              case "learning":
-                category=3;
-                break;
-              case "leisure":
-                category=4;
-                break;
+            //check category for Official mode
+            if(data.category.indexOf("News") != -1){
+              category=1;
+            }else if (data.category.indexOf("Career") != -1){
+              category=2;
+            }else if (data.category.indexOf("Learning") != -1){
+              category=3;
+            }else if (data.category.indexOf("Leisure") != -1){
+              category=4;
             }
           }
 

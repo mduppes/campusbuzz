@@ -15,7 +15,10 @@
 {$listItemTemplateFile=$listItemTemplateFile|default:$defaultTemplateFile}
 
 <ul class="results"{if $resultslistID} id="{$resultslistID}"{/if}>
-  {foreach $tweetList as $item}
+
+  <p class="smallprint">{$postList}</p>
+  
+  <!-- {foreach $tweetList as $item}
     {if !isset($item['separator'])}
       <li{if $item['img']} class="icon"{/if}>
         <div class= "ribbon">
@@ -35,7 +38,7 @@
         
       </li>
     {/if}
-  {/foreach}
+  {/foreach} -->
   {if count($tweetList) == 0}
     {block name="noResults"}
       <li>{"NO_RESULTS"|getLocalizedString}</li>

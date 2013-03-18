@@ -13,6 +13,9 @@ class BoundingBoxSearchFilter {
 
   }
 
-
+  public function __construct($corners, $field = 'locationGeo') {
+    $this->corners = $corners;
+    $this->field = $field;
+  }
 
 }

@@ -14,30 +14,59 @@ class BuzzWebModule extends WebModule
 
     $this->controller = DataRetriever::factory('TwitterDataRetriever', array());
 
+
      switch ($this->page)
      {
         case 'index':
             break;
         case 'detail':
-             $user = 'ubcnews';
+            // $category= $this->getArg('category');
+            // $neLng= $this->getArg('neLng');
+            // $neLat= $this->getArg('neLat');
+            // $swLng= $this->getArg('swLng');
+            // $swLat= $this->getArg('swLat');
+           
+            $posts= $this->getArg('response');
+            //$posts= json_decode($this->getArg('response'));
+            $postList= array();
 
-             //get the tweets
-             $tweets = $this->controller->getTweetsByUser($user);
+            //$docs= $posts->docs;
 
-             //prepare the list
-             $tweetList = array();
-             foreach ($tweets as $tweetData) {
-                 $tweet = array(
-                     'title'=> $tweetData['text'],
-                     'subtitle'=> $tweetData['created_at'],
-                     'url'=> $this->buildBreadcrumbURL('detail', array('id'=>$tweetData['id_str']))
+            // foreach ($docs as $postData) {
+            //     $post= array(
+            //         'title'=> $postData['title'],
+            //         'url'=> $postData['url'],
+            //         //'url'=> $this->buildBreadcrumbURL('detail', array('id'=>$tweetData['id_str']))
+            //     );
+            //     $postList[] = $post;
+            // }
 
-                 );
-                 $tweetList[] = $tweet;
-             }
+        //$this->assign('postList', $posts);
 
-             //assign the list to the template
-             $this->assign('tweetList', $tweetList);
+
+
+
+             // $user = 'ubcnews';
+
+             // //get the tweets
+             // $tweets = $this->controller->getTweetsByUser($user);
+
+             // //prepare the list
+             // $tweetList = array();
+             // foreach ($tweets as $tweetData) {
+             //     $tweet = array(
+             //         'title'=> $tweetData['text'],
+             //         'subtitle'=> $tweetData['created_at'],
+             //         'url'=> $this->buildBreadcrumbURL('detail', array('id'=>$tweetData['id_str']))
+
+             //     );
+             //     $tweetList[] = $tweet;
+             // }
+
+             // //assign the list to the template
+             // $this->assign('tweetList', $tweets);
+
+            $this->assign('postList', $posts);
              break;
      }
   }

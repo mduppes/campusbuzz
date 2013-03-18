@@ -19,6 +19,21 @@ class SearchQueryFactory {
   }
 
   /**
+   * Returns a default bounding box search around the UBC campus
+   * @return SearchQuery
+   */
+  public static function createBoundingBoxSearchQuery($neLng, $neLat, $swLng, $swLat) {
+    $searchQuery = new SearchQuery();
+    $neCoor = new GeoCoordinate($neLat, $neLng);
+    $swCoor = new GeoCoordinate($swLat, $swLng);
+    $corners= array($swCoor, $neCoor);
+    $searchFilter = new BoundingBoxSearchFilter($corners);
+ 
+    $searchQuery->addFilter($searchFilter);
+    return $searchQuery;
+  }
+
+  /**
    * Returns a query that returns all stored objects
    * @return SearchQuery
    */

@@ -1136,6 +1136,7 @@ ClusterIcon.prototype.triggerClusterClick = function(event) {
  */
 ClusterIcon.prototype.onAdd = function() {
   this.parent_ = document.createElement('DIV');//parent container
+  this.parent_.setAttribute('class', 'cluster');
   this.div_ = document.createElement('DIV');//text
   this.container_ = document.createElement('DIV');
   this.background_ = document.createElement('DIV');
@@ -1307,8 +1308,8 @@ ClusterIcon.prototype.onAdd = function() {
           var cid= $(cloud).attr('id');
           console.log ("id: "+cid);
           $(cloud).click(function(event){
-            
-            categoryCloudClickHandler($(this).attr('id'));
+            var self= this;
+            categoryCloudClickHandler(self);
           });
           this.cloud_.appendChild(cloud);
         }
@@ -1333,6 +1334,9 @@ ClusterIcon.prototype.onAdd = function() {
   this.parent_.appendChild(this.container_);
   this.parent_.appendChild(this.cloud_);
   addClass(this.cloud_, "hidden");
+
+  //set data bound attribute for parent_
+  $(this.parent_).data('bound',this.cluster_.getBounds());
 
  
     
