@@ -15,7 +15,7 @@ class TimeSearchFilter {
     $queryString .= (isset($this->endTime)) ? $this->endTime->format($this->solrFormatString) : "*";
     $queryString .= "]";
       
-    return array("fq" => $queryString);
+    return array("fq" => $this->field. ":". $queryString);
   }
 
   public function __construct($startTime, $endTime, $field) {

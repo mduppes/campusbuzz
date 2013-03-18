@@ -55,10 +55,10 @@ class LocationMapper {
     // Not found in cache, query solr
     $searchQuery = SearchQueryFactory::createLocationToCoordinateQuery($locationName);
     
-    print "SEARCHING FOR LOCATION\n";    
+    //print "SEARCHING FOR LOCATION\n";    
     $results = $this->solrController->query($searchQuery);
 
-    print_r($results);
+    //print_r($results);
     
     if (isset($results)) {      
       $responseHeader = $results["responseHeader"];

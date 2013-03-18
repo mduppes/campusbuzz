@@ -115,7 +115,7 @@
 
    <!-- Bounding Box, Radius -->
    <field name="searchMode" type="string" indexed="true" stored="true"/>
-
+   <field name="testing" type="boolean" indexed="true" stored="true" required="false"/>
 
    <!-- Main body of document extracted by SolrCell.
         NOTE: This field is not indexed by default, since it is also copied to "text"

@@ -15,9 +15,11 @@ class Categorizer {
 
   private function _createMostRecentQuery($startTime, $keywords) {
     $searchQuery = SearchQueryFactory::createSearchAllQuery();
-    $timeFilter = new TimeSearchFilter(null, null, "createDate");
+    $timeFilter = new TimeSearchFilter($startTime, null, "createDate");
     $searchQuery->addFilter($timeFilter);
     $searchQuery->addKeyword(implode(" ", $keywords));
+
+    $searchQuery->addReturnField("id");
     return $searchQuery;
   }
 
@@ -32,9 +34,23 @@ class Categorizer {
     foreach ($this->officialCategoryMap as $category => $keywords) {
       print "  Category = {$category}\n";
       $searchQuery = $this->_createMostRecentQuery($startTime, $keywords);
-      $searchQuery->addFilter(new FieldQueryFilter("officialSource", "1"));
-      $results = $this->solrController->queryFeedItem($searchQuery);
-      print_r($results);
+      //$searchQuery->addFilter(new FieldQueryFilter("officialSource", "1"));
+      $results = $this->solrController->query($searchQuery);
+
+      if (!isset($results) || !isset($results["response"])) {
+        print "No matches found for category: {$category}\n";
+      } else {
+        $numFound = $results["response"]["numFound"];
+        $numReturned = count($results["response"]["docs"]);
+        if ($numFound > $numReturned) {
+          print "  numfound: {$numFound} > numReturned: {$numReturned}\n";
+        }
+        print "Matches found for category: {$category} = ". count($results). "\n";
+        foreach ($results["response"]["docs"] as $feedId) {
+          // updates category for each match into solr
+          $this->solrController->updateCategory($feedId["id"], $category);
+        }
+      }
     }
 
     /*

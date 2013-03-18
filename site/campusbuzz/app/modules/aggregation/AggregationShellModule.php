@@ -34,7 +34,7 @@ class AggregationShellModule extends ShellModule {
       break;
     case "runtests":
       print "running tests...\n";
-      //print_r($this->solrController->queryFeedItem(SearchQueryFactory::createSearchAllQuery()));
+      print_r($feedItemSolrController->queryFeedItem(SearchQueryFactory::createSearchAllQuery()));
       break;
     case "deleteFeedItems":
       print "Deleting all documents in solr\n";

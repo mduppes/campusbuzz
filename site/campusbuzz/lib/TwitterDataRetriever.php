@@ -39,10 +39,15 @@ class TwitterDataRetriever extends URLDataRetriever
     $newFeedItem->addAndValidateStringLabel("content", $jsonFeedItem["text"], 
                                             "No text for tweet");
     
+
+    // Need a title, for now copy content
+    $newFeedItem->addAndValidateStringLabel("title", $jsonFeedItem["text"],
+                                            "Error duplicating text for title");
+
     $geoCoord = $this->extractGeoCoordinate($jsonFeedItem);
     $newFeedItem->addGeoCoordinate($geoCoord);
 
-    $newFeedItem->addAndValidateOptionalStringLabel("locationName", $jsonFeedItem["location"], "Not a valid location string for tweet");
+    $newFeedItem->addAndValidateOptionalStringLabel("locationName", @$jsonFeedItem["location"], "Not a valid location string for tweet");
 
     $userJsonItem = $jsonFeedItem["user"];
 
@@ -51,12 +56,14 @@ class TwitterDataRetriever extends URLDataRetriever
       $url = "https://www.twitter.com/". $userJsonItem["screen_name"];
       $newFeedItem->addAndValidateStringLabel("url", $url, "Invalid url for tweet");
       $newFeedItem->addAndValidateOptionalStringLabel("imageUrl", $userJsonItem["profile_image_url"], "Not a valid image url for tweet");
+      $newFeedItem->addAndValidateStringLabel("name", $userJsonItem["screen_name"], "Invalid name from tweet");
     } else if (isset($jsonFeedItem["from_user"])) {
       // If no user field exists, see if from_user is there
       // source URL is the twitter user that the message originated from
       $url = "https://www.twitter.com/". $jsonFeedItem["from_user"];
       $newFeedItem->addAndValidateStringLabel("url", $url, "Invalid url for tweet");
       $newFeedItem->addAndValidateOptionalStringLabel("imageUrl", $jsonFeedItem["profile_image_url"], "Not a valid image url for tweet");
+      $newFeedItem->addAndValidateStringLabel("name", $jsonFeedItem["from_user"], "Invalid name from tweet");
     }
   }
     
@@ -88,6 +95,7 @@ class TwitterDataRetriever extends URLDataRetriever
       $centerOfUBC = new GeoCoordinate(49.26, -123.24);
       $feedMap = $this->getTweetsAtGeoLocation($centerOfUBC, 3);
     }
+    //print_r($feedMap);
     $feedItems = $this->parseResultsIntoFeedItems($feedMap, $config);
     return $feedItems;
   }

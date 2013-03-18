@@ -8,9 +8,10 @@ class RSSDataRetriever extends URLDataRetriever
   //protected $DEFAULT_PARSER_CLASS = 'RSSDataParserIgnoreNameSpace';
 
   public function retrieveSource($dataSourceConfig) {
-    print "----------------- Retrieving source: ". $dataSourceConfig->getSourceUrl();
+    print "----------------- Retrieving RSS source: ". $dataSourceConfig->getSourceUrl();
 
     $feedItems = $this->getFeed($dataSourceConfig->getSourceUrl());
+    //print_r($feedItems);
 
     // feedItems is just the string of data, now parse this with simpleXML
     $parsedXML = new SimpleXMLElement($feedItems);
@@ -19,7 +20,7 @@ class RSSDataRetriever extends URLDataRetriever
     // apply namespaces used in this xml
     $namespaces = $parsedXML->getNameSpaces(true);
     foreach ($namespaces as $key => $nameSpaceUrl) {
-      print "Applying xml namespace {$key}, {$nameSpaceUrl}\n";
+      //print "Applying xml namespace {$key}, {$nameSpaceUrl}\n";
       $parsedXML->registerXPathNamespace($key, $nameSpaceUrl);
     }
 
@@ -34,7 +35,7 @@ class RSSDataRetriever extends URLDataRetriever
       try {
         $newFeedItem = FeedItem::createFromConfig($dataSourceConfig);
         foreach($labelMap as $schemaLabel => $xpath) {
-          print "Searching: ". $schemaLabel. " => ". $xpath. "\n";
+          //print "Searching: ". $schemaLabel. " => ". $xpath. "\n";
           if (isset($xpath)) {
             $xpathResults = $xmlItem->xpath($xpath);
             if ($xpathResults == null) {
@@ -44,7 +45,7 @@ class RSSDataRetriever extends URLDataRetriever
             //print_r($xpathResults);
             $value = strip_tags((string) $xpathResults[0]);
             $newFeedItem->addLabel($schemaLabel, $value);
-            print "   Adding new data: ". $schemaLabel." => ".$value. "\n";
+            //print "   Adding new data: ". $schemaLabel." => ".$value. "\n";
           } else {
             $newFeedItem->addLabel($schemaLabel, null);
           }

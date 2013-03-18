@@ -8,7 +8,7 @@ class DataSourceConfig
   private $configMap;
 
   // Get configs
-  public function getName() {
+  public function getSourceName() {
     return isset($this->configMap["name"]) ? $this->configMap["name"] : null;
   }
 
@@ -59,16 +59,16 @@ class DataSourceConfig
 
   private function getLabelValidateMap() {
     return array("title" => "validateAndSetString",
-          "content" => "validateAndSetOptionalString",
-          "url" => "validateAndSetString",
-          "imageUrl" => "validateAndSetOptionalString",
-          "pubDate" => "validateAndSetOptionalString",
-          "startDate" => "validateAndSetOptionalString",
-          "endDate" => "validateAndSetOptionalString",
-          "category" => "validateAndSetOptionalString",
-          "locationName" => "validateAndSetOptionalString",
-          "locationGeo" => "validateAndSetOptionalString",
-          "name" => "validateAndSetOptionalString"       
+                 "name" => "validateAndSetOptionalString",
+                 "content" => "validateAndSetOptionalString",
+                 "url" => "validateAndSetString",
+                 "imageUrl" => "validateAndSetOptionalString",
+                 "pubDate" => "validateAndSetOptionalString",
+                 "startDate" => "validateAndSetOptionalString",
+                 "endDate" => "validateAndSetOptionalString",
+                 "category" => "validateAndSetOptionalString",
+                 "locationName" => "validateAndSetOptionalString",
+                 "locationGeo" => "validateAndSetOptionalString"
           );
   }
 
@@ -132,7 +132,9 @@ class DataSourceConfig
     $this->configMap = array();
     foreach ($this->getConfigValidateMap() as $key => $validateAndSetFunction) {
       $this->configMap[$key] = null;
-      $this->{$validateAndSetFunction}($this->configMap[$key], $configDecoded[$key]);
+      
+      // reflection call to function that validates and populates this required / optional field
+      $this->{$validateAndSetFunction}($this->configMap[$key], @$configDecoded[$key]);
     }
 
     // RSS feeds have custom mappings dependent on feed and must have labelMap

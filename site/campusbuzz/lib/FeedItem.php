@@ -68,6 +68,7 @@ class FeedItem
         }
       } else if (!in_array(null, $validTypes)) {
         print "no valid type found for {$field}\n";
+        return false;
       }      
     }
     return true;
@@ -114,10 +115,10 @@ class FeedItem
     $feedMap = $this->dataMap;
 
     // Add other metadata if missing
-    if ($feedMap["officialSource"] == null) {
+    if (!isset($feedMap["officialSource"])) {
       $feedMap["officialSource"] = $this->config->isOfficialSource();
     }
-    if ($feedMap["sourceType"] == null) {
+    if (!isset($feedMap["sourceType"])) {
       $feedMap["sourceType"] = $this->config->getSourceType();
     }
 
@@ -125,7 +126,7 @@ class FeedItem
     $feedMap["id"] = sha1($feedMap["url"]. $feedMap["title"]);
 
     // Set to default image url if this feed item did not contain an image
-    if ($feedMap["imageUrl"] == null) {
+    if (!isset($feedMap["imageUrl"])) {
       $sourceImageUrlDefault = $this->config->getSourceImageUrl();
       if ($sourceImageUrlDefault != null) {
         $feedMap["imageUrl"] = $sourceImageUrlDefault;
@@ -134,8 +135,8 @@ class FeedItem
 
     // Add source category from config if it exists
     $sourceCategory = $this->config->getSourceCategory();
-    if (isset($sourceCategory) && isset($feedMap["category"])) {
-      switch (gettype($feedMap["category"])) {
+    if (isset($sourceCategory)) {
+      switch (@gettype($feedMap["category"])) {
       case "string":
         $feedMap["category"] = array($feedMap["category"], $sourceCategory);
         break;
@@ -146,7 +147,7 @@ class FeedItem
         $feedMap["category"] = array($sourceCategory);
         break;
       default:
-        throw new KurogoDataException("Error in retrieved category type");
+        throw new KurogoDataException("Error in retrieved category type: ". gettype($feedMap["category"]));
       }
     }
 
@@ -155,17 +156,22 @@ class FeedItem
     $this->formatDate($feedMap["startDate"]);
     $this->formatDate($feedMap["endDate"]);
 
-    // Just use pubDate as startDate if pubDate doesn't exist
-    if ($feedMap["pubDate"] == null && $feedMap["startDate"] != null) {
+    // Add default name if it doesnt exist
+    if (!isset($feedMap["name"])) {
+      $feedMap["name"] = $this->config->getSourceName();
+    }
+
+    // Just use pubDate as startDate if pubDate doesn't exist (events)
+    if (!isset($feedMap["pubDate"]) && isset($feedMap["startDate"])) {
       $feedMap["pubDate"] = $feedMap["startDate"];
     }
 
-    if ($feedMap["locationName"] == null) {
+    if (!isset($feedMap["locationName"])) {
       $feedMap["locationName"] = $this->config->getSourceLocation();
     }
     
     //TODO: Source location validation and map to GPS coord
-    if ($feedMap["locationGeo"] == null) {
+    if (!isset($feedMap["locationGeo"])) {
       $geoCoord = LocationMapper::getLocationMapper()->locationSearch($feedMap["locationName"]);
       if (isset($geoCoord)) {
         $feedMap["locationGeo"] = (string) $geoCoord;
@@ -177,6 +183,7 @@ class FeedItem
     //Simply mark testing data as testing
     $feedMap["testing"] = (Tester::isTesting()) ? true : false;
 
+    //print_r($feedMap);
     $this->dataMap = $feedMap;
   }
 
@@ -188,7 +195,20 @@ class FeedItem
     return json_encode($this->dataMap);
   }
 
-  private function addCategory($category) {
+  public function addCategory($category) {    
+    switch (@gettype($this->dataMap["category"])) {
+    case "string":
+      $this->dataMap["category"] = array($this->dataMap["category"], $category);
+      break;
+    case "array":
+      $this->dataMap["category"][] = $category;
+      break;
+    case "NULL":
+      $this->dataMap["category"] = array($category);
+      break;
+    default:
+      throw new KurogoDataException("Error in category type: ". gettype($this->dataMap["category"]));
+    }
   }
 
 }

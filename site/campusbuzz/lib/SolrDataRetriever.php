@@ -6,25 +6,20 @@ abstract class SolrDataRetriever extends URLDataRetriever {
   protected $DEFAULT_CACHE_LIFETIME = 300; // 5 min
 
   abstract protected function getSolrBaseUrl();
-
+  
   protected function init($args) {
     parent::init($args);
 
     $this->clearCache();
   }
 
-  public function queryLocationMap(SearchQuery $searchQuery) {
-    return $this->query($searchQuery, self::LOCATION_MAP_URL);
-  }
-
   // internal function to retrieve query
   public function query(SearchQuery $searchQuery) {
     $this->setBaseURL($this->getSolrBaseUrl(). "select");
     $queryParams = $searchQuery->getQueryParams();
-    foreach ($queryParams as $queryParam) {
-      foreach ($queryParam as $key => $value) {
-        $this->addParameter($key, $value);
-      }
+    //print_r($queryParams);
+    foreach ($queryParams as $key => $value) {
+      $this->addParameter($key, $value);
     }
 
     $this->addParameter("wt", "json");
@@ -58,8 +53,8 @@ abstract class SolrDataRetriever extends URLDataRetriever {
   
 
   private function _checkResponseHeader($data) {
-    print "response: \n";
-    print_r($data);
+    //print "response: \n";
+    //print_r($data);
 
     if ($data == null) {
       throw new KurogoDataException("Entire response is null");
@@ -86,6 +81,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
   }
 
   public function deleteAll() {
+    $this->clearCache();
     $this->setBaseURL($this->getSolrBaseUrl(). "update/json");
     $this->addHeader("Content-type", "application/json");
     // immediately make data searchable
@@ -93,11 +89,9 @@ abstract class SolrDataRetriever extends URLDataRetriever {
     $this->setData('{"delete":{"query":"*:*"}}');
     $this->setMethod("POST");
     $data = $this->getData();
-
+    $this->clearCache();
+    
     $this->_checkResponseUpdate($data);
   }
   
-  public function getData() {
-    return parent::getData();
-  }
 }
