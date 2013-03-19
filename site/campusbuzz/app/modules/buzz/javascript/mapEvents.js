@@ -40,19 +40,20 @@ function categoryCloudClickHandler (self){
   console.log (bounds.getSouthWest().lat());
 
   //make API call for DetailView
-  loadDetailView(category, bounds);
+  //loadDetailView(category, bounds);
 
 	// goToDetailView();
 	// loadDetailView();
 
 
-  // var args= Array();
-  // args["category"]= category;
-  // args ["neLng"]= bounds.getNorthEast().lng();
-  // args ["neLat"]= bounds.getNorthEast().lat();
-  // args ["swLng"]= bounds.getSouthWest().lng();
-  // args ["swLat"]= bounds.getSouthWest().lat();
-  // redirectTo("detail", args);
+  var args= Array();
+  args["category"]= category;
+  args["isOfficial"]= mode;
+  args ["neLng"]= bounds.getNorthEast().lng();
+  args ["neLat"]= bounds.getNorthEast().lat();
+  args ["swLng"]= bounds.getSouthWest().lng();
+  args ["swLat"]= bounds.getSouthWest().lat();
+  redirectTo("detail", args);
 }
 
 function displayClouds(that){

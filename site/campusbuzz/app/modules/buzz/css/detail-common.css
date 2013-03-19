@@ -49,6 +49,22 @@ select {
    margin: 3em 0;
 
 }
+.rectangle{
+   font-size: 0.6em;
+}
+
+.smallFont{
+   font-size: 0.8em;
+   width:100%;
+}
+
+.postImage{
+   width: 100%;
+}
+
+.imageCell{
+   width:25%;
+}
 
 .r-triangle-top {
    border-color: #e5592e transparent transparent;
