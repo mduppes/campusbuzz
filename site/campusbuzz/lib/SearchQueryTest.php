@@ -48,7 +48,7 @@ class SearchQueryTest {
   public function testBoundingBoxSearchQuery() {
     $lat = 49.26;
     $lon = -123.24;
-    $mapPinsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($lat - 1, $lon - 1, $lat + 1, $lon + 1);
+    $mapPinsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($lon - 1, $lat -1, $lon + 1, $lat +1);
     $data = Tester::getTester()->feedItemSolrController->query($mapPinsSearchQuery);
     print_r($data);
 
