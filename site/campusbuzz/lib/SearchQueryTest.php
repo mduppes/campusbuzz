@@ -1,6 +1,6 @@
 <?php
 
-class SearchQueryTest extends Test {
+class SearchQueryTest {
 
   public function testMapPinSearchQuery() {
     // for now since everything is official
@@ -11,7 +11,6 @@ class SearchQueryTest extends Test {
 
     // Change this for # of results returned
     $numResultsReturned = 50;
-
 
     // $category, $keywords, etc TODO
     $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon, $radius);
@@ -27,7 +26,7 @@ class SearchQueryTest extends Test {
     // TODO: add keywords if given, and category filters
 
     // Get and convert solr response to php object
-    $data = $this->feedItemSolrController->query($mapPinsSearchQuery);
+    $data = Tester::getTester()->feedItemSolrController->query($mapPinsSearchQuery);
 
     if (!isset($data["response"])) {
       throw new KurogoDataException("Error, not a valid response.");
@@ -41,11 +40,19 @@ class SearchQueryTest extends Test {
 
     print_r($feedItemIds);
     // Batch update query count by one for results shown to user
-    $feedItemSolrController->incrementQueryCounts($feedItemIds);
+    Tester::getTester()->feedItemSolrController->incrementQueryCounts($feedItemIds);
 
   }
 
 
+  public function testBoundingBoxSearchQuery() {
+    $lat = 49.26;
+    $lon = -123.24;
+    $mapPinsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($lat - 1, $lon - 1, $lat + 1, $lon + 1);
+    $data = Tester::getTester()->feedItemSolrController->query($mapPinsSearchQuery);
+    print_r($data);
+
+  }
 
 
 

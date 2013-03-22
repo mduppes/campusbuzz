@@ -8,9 +8,12 @@ class BoundingBoxSearchFilter {
   // Field to filter on solr schema
   private $field;
 
-  protected function getQueryString() {
-    return "{$field}:[{$corners[0]} TO {$corners[1]}]";
-
+  public function getQueryString() {
+    $filterString = $this->field;
+    $filterString .= ":[";
+    $filterString .= (string) $this->corners[0]. " TO ". (string) $this->corners[1];
+    $filterString .= "]";
+    return $filterString;
   }
 
   public function __construct($corners, $field = 'locationGeo') {

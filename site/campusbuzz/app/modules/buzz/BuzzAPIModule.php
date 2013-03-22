@@ -5,7 +5,7 @@ class BuzzAPIModule extends APIModule
   protected $id='buzz';
 
   protected $vmin= 1;
-  protected $vmax= 1;          
+  protected $vmax= 1;
 
   public function initializeForCommand(){
     //instantiate controller
@@ -16,7 +16,7 @@ class BuzzAPIModule extends APIModule
         case 'index':
             break;
         case 'detail':
-            
+
             break;
 
         // AJAX calls
@@ -36,7 +36,7 @@ class BuzzAPIModule extends APIModule
 
           // Change this for # of results returned
           $numResultsReturned = 1;
-          
+
           // test radius
           $getPostsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon, $radius);
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
@@ -155,7 +155,7 @@ class BuzzAPIModule extends APIModule
     //     }
     // ]
     // }';
-          
+
           $this->setResponse($posts);
           $this->setResponseVersion(1);
 
@@ -172,11 +172,14 @@ class BuzzAPIModule extends APIModule
 
           // for now since everything is official
           //$isOfficial = true;
-          
+
           // $category, $keywords, etc TODO
           $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon, $radius);
           $mapPinsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
           $mapPinsSearchQuery->setMaxItems($numResultsReturned);
+
+          // Sort results by most recent first
+          $mapPinsSearchQuery->addSort(new SearchSort("pubDate", false));
 
           // Fields we want returned from solr
           //$mapPinsSearchQuery->addReturnField("title");
@@ -185,7 +188,7 @@ class BuzzAPIModule extends APIModule
           $mapPinsSearchQuery->addReturnField("category");
           $mapPinsSearchQuery->addReturnField("locationGeo");
           // TODO: add keywords if given, and category filters
-          
+
           // Get and convert solr response to php object
           $data = $feedItemSolrController->query($mapPinsSearchQuery);
 
@@ -194,23 +197,21 @@ class BuzzAPIModule extends APIModule
           }
 
           $pins = json_encode($data["response"]);
-
           //Kurogo::log(1, "hello", "query result");
-          
+
           $this->setResponse($pins);
           $this->setResponseVersion(1);
 
-          
           // Now update query count for all items queried
+
           $feedItemIds = array();
           foreach ($data["response"]["docs"] as $solrResults) {
-          $feedItemIds[] = $solrResults["id"];
+            $feedItemIds[] = $solrResults["id"];
           }
-          
+
           // Batch update query count by one for results shown to user
           $feedItemSolrController->incrementQueryCounts($feedItemIds);
 
-          
           break;
     }
   }

@@ -6,7 +6,8 @@ class Tester {
   // Populate array with test class names
   private $tests =
     array("TwitterDataRetrieverTest",
-          "FacebookDataRetrieverTest");
+          "FacebookDataRetrieverTest",
+          "SearchQueryTest");
 
 
   // Solr Controllers
