@@ -16,11 +16,11 @@
     {if $item['url']}
       </a>
     {/if}
-    <!-- {if $item['sourceType']=="TwitterGeoSearch"}
-      <span class="smallprint">
+    <!-- {if $item['sourceType']=="TwitterGeoSearch"} -->
+      <!-- <span class="smallprint">
         {if $subTitleNewline|default:true}<br/>{else}&nbsp;{/if}
-        {$item['content']}
-      </span>
-    {/if} -->
+        {$item['name']}
+      </span> -->
+    <!-- {/if} -->
   {/if}
 {/block}

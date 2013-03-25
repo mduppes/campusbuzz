@@ -48,6 +48,10 @@
           {elseif $item['sourceType']=="RSS"}
           <img class= "icon" src="/modules/buzz/images/icons/feed-icon.png"/>
         {/if}
+
+        <span class="smallprint authorField">
+        Posted By: {$item['name']} @ {$item['locationName']}
+        </span>
       </li>
     {/if}
   {/foreach}

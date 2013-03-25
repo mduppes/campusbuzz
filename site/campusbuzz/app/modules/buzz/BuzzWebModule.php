@@ -64,12 +64,12 @@ class BuzzWebModule extends WebModule
           // Fields we want returned from solr
           $getPostsSearchQuery->addReturnField("title");
           $getPostsSearchQuery->addReturnField("id");
-          // $getPostsSearchQuery->addReturnField("author");
+          $getPostsSearchQuery->addReturnField("name");
           $getPostsSearchQuery->addReturnField("sourceType");
           $getPostsSearchQuery->addReturnField("url");
           $getPostsSearchQuery->addReturnField("imageUrl");
           $getPostsSearchQuery->addReturnField("pubDate");
-          // $getPostsSearchQuery->addReturnField("startDate");
+          $getPostsSearchQuery->addReturnField("locationName");
           // $getPostsSearchQuery->addReturnField("endDate");
           $getPostsSearchQuery->addReturnField("content");
            
@@ -90,12 +90,12 @@ class BuzzWebModule extends WebModule
                 $post= array(
                     'title'=> $postData['title'],
                     'id'=> $postData['id'],
-                    // 'author'=> $postData['author'],
+                    'name'=> $postData['name'],
                     'sourceType'=> $postData['sourceType'],
                     'pubDate'=> $postData['pubDate'],
                     'url'=> $postData['url'],
                     'imageUrl'=> $postData['imageUrl'],
-                    // 'content'=> $postData['content'],
+                    'locationName'=> $postData['locationName'],
                     //'url'=> $this->buildBreadcrumbURL('detail', array('id'=>$tweetData['id_str']))
                 );
                 $postList[] = $post;

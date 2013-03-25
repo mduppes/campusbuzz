@@ -37,7 +37,7 @@ select {
 	padding-left: 10px;
 	background: #e5592e;
    height: 20px;
-   width: 40%;
+   width: 200px;
    left:0%;
    top: -60px;
    position: absolute;
@@ -69,11 +69,12 @@ select {
 .r-triangle-top {
    border-color: #e5592e transparent transparent;
    border-style:solid;
-   border-width:10px;
+   border-width:20px;
    height:0px;
    width:0px;
    position: absolute;
-   right:-9%;
+   /*left: 40%;*/
+   right:-5%;
    top: 0px;
 }
 .r-triangle-bottom {
@@ -82,7 +83,8 @@ select {
    border-width:10px;
    height:0px;
    width:0px;
-   right:-9%;
+   /*left: 40%;*/
+   right:-5%;
    top: 0px;
    position: absolute;
 }
@@ -94,4 +96,8 @@ select {
 
 .content td{
 	border-bottom: 1px grey solid;
+}
+
+.authorField{
+   margin-left: 3%;
 }
