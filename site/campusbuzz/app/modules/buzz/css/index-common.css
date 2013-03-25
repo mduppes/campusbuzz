@@ -245,20 +245,16 @@ html, body ,#map_canvas{
 /*Slide out menu buttons*/
 
 #buzzLife{
-	background-color: #689114;
-	background: url(/modules/buzz/images/icons/life-button.png) no-repeat left;
+	background: #5ade76 url(/modules/buzz/images/icons/buzz-life.png) no-repeat left;
 }
 #buzzClub{
-	background-color: #9c4c15;
-	background: url(/modules/buzz/images/icons/club-button.png) no-repeat left;
+	background: #dfa85a url(/modules/buzz/images/icons/buzz-club.png) no-repeat left;
 }
 #buzzHealth{
-	background-color: #c0382e;
-	background: url(/modules/buzz/images/icons/health-button.png) no-repeat left;
+	background: #f95f59 url(/modules/buzz/images/icons/buzz-health.png) no-repeat left;
 }
 #buzzLeisure{
-	background-color: #236e87;
-	background: url(/modules/buzz/images/icons/leisure-button.png) no-repeat left;
+	background: #5f9ece url(/modules/buzz/images/icons/buzz-leisure.png) no-repeat left;
 }
 .filterOut{
 
@@ -274,16 +270,16 @@ html, body ,#map_canvas{
 }
 
 #newsNews{
-	background-color: #3a533b;
+	background: #4a8d41 url(/modules/buzz/images/icons/news-news.png) no-repeat left;
 }
 #newsCareer{
-	background-color: #db761a;
+	background: #b58241 url(/modules/buzz/images/icons/news-career.png) no-repeat left;
 }
 #newsLearning{
-	background-color: #8c2623;
+	background: #c45246 url(/modules/buzz/images/icons/news-learning.png) no-repeat left;
 }
 #newsLeisure{
-	background-color: #222a60;
+  background: #345892 url(/modules/buzz/images/icons/news-leisure.png) no-repeat left;
 }
 
 /***** pie chart pins ****/

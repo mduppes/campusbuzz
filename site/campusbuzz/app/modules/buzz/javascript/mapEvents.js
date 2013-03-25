@@ -48,6 +48,7 @@ function categoryCloudClickHandler (self){
   args ["swLng"]= bounds.getSouthWest().lng().toFixed(8);
   args ["swLat"]= bounds.getSouthWest().lat().toFixed(8);
   args ["keyword"]= $("#searchbar").find("input").val();
+  args ["sortBy"]= "time";
   redirectTo("detail", args);
 }
 
@@ -98,6 +99,9 @@ function filterCategory(obj){
 
 function filterOutCategory (categoryList){
 
+  for(var i=0;i<categoryList.length;i++)
+    console.log ("categories in filter: "+ categoryList[i]);
+
   makeAPICall(
     'POST', 'buzz', 'filterOut', 
     {"isOfficial":mode,  "categoryList": categoryList, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
@@ -106,6 +110,53 @@ function filterOutCategory (categoryList){
       console.log (response);
     });
 }
+
+function sortPosts(that){
+  var selected= $(that).val();
+  var param= $(that).data("param");
+  $(that).val("popularity"); //set to point to popularity.. 
+
+  var neLng= (param["neLng"]);
+  var neLat= (param["neLat"]);
+  var swLng= (param["swLng"]);
+  var swLat= (param["swLat"]);
+  var isOfficial= (param["isOfficial"]);
+  var keyword= (param["keyword"]);
+  var category= (param["category"]);
+
+  var args= Array();
+  args["category"]= category;
+  args["isOfficial"]= isOfficial;
+  args ["neLng"]= neLng;
+  args ["neLat"]= neLat;
+  args ["swLng"]= swLng;
+  args ["swLat"]= swLat;
+  args ["keyword"]= keyword;
+  args ["sortBy"]= selected;
+  redirectTo("detail", args);
+
+  //can it use apicall??
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

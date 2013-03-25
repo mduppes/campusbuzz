@@ -23,24 +23,43 @@ class BuzzWebModule extends WebModule
         case 'index':
             break;
         case 'detail':
-            $category= $this->getArg('category');
-            $neLng= $this->getArg('neLng');
-            $neLat= $this->getArg('neLat');
-            $swLng= $this->getArg('swLng');
-            $swLat= $this->getArg('swLat');
-            $isOfficial=$this->getArg('isOfficial',0);
-            $keyword= $this-> getArg('keyword',0);
-          
+          $category= $this->getArg('category');
+          $neLng= $this->getArg('neLng');
+          $neLat= $this->getArg('neLat');
+          $swLng= $this->getArg('swLng');
+          $swLat= $this->getArg('swLat');
+          $isOfficial=$this->getArg('isOfficial',0);
+          $keyword= $this-> getArg('keyword',0);
+          $sortBy= $this-> getArg ('sortBy',0);
+
+          //create search params array
+          $params= array(
+            "category" => $category,
+            "neLng" => $neLng,
+            "neLat"=> $neLat,
+            "swLng"=> $swLng,
+            "swLat"=> $swLat,
+            "isOfficial"=> $isOfficial,
+            "keyword"=> $keyword
+          );
+
           // Change this for # of results returned
           $numResultsReturned = 50;
           
-          // test radius
+          // bbox search
           $getPostsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($neLng, $neLat, $swLng, $swLat);
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("category", $category));
           if ($keyword != "")
             $getPostsSearchQuery->addKeyword($keyword);
 
+          //sort by most recent/popularity
+          if ($sortBy=="time"){
+            $getPostsSearchQuery->addSort(new SearchSort("pubDate", false));
+          }else{
+            $getPostsSearchQuery->addSort(new SearchSort("queryCount", false));
+          }
+          
 
           // Fields we want returned from solr
           $getPostsSearchQuery->addReturnField("title");
@@ -83,6 +102,7 @@ class BuzzWebModule extends WebModule
             }
 
             $this->assign('postList', $postList);
+            $this->assign ('params', json_encode($params));
              break;
      }
   }

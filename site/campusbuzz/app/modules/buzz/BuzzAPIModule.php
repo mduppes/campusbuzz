@@ -15,10 +15,6 @@ class BuzzAPIModule extends APIModule
     switch ($this->command){
         case 'index':
             break;
-        case 'detail':
-
-            break;
-
         // AJAX calls
         case 'getMapPins':
           $isOfficial=$this->getArg('isOfficial',0);
@@ -73,7 +69,7 @@ class BuzzAPIModule extends APIModule
 
           break;
 
-          case 'filterOut':
+        case 'filterOut':
             $isOfficial=$this->getArg('isOfficial',0);
             $categoryArray= $this->getArg('categoryList', 0);
             $lat = $this->getArg('lat', 0);
@@ -85,9 +81,11 @@ class BuzzAPIModule extends APIModule
             $filterSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
 
             //loop through array to filter out categories
-            foreach ($categoryArray as $category)
-              $filterSearchQuery->addFilter(new FieldQueryFilter("category", $category));
-
+            foreach ($categoryArray as $category){
+              $filterSearchQuery->addCategory($category);
+              // $filterSearchQuery->addFilter(new FieldQueryFilter("category", $category));
+            }
+              
             // Fields we want returned from solr
             $filterSearchQuery->addReturnField("title");
             $filterSearchQuery->addReturnField("id");

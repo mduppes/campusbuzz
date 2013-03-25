@@ -3,11 +3,11 @@
 <div id="background">
       <div id="category-switcher" class="category-mode">
         <form method="get" action="/{$configModule}/index" id="category-form">
-              <div class="formlabel">{"SORT_TEXT"|getLocalizedString}
-                <select class="sortinput" id="sort" name="sort" onchange="loadSection(this);">
-                  <option value="{$section['value']}">Time</option>
-                  <option value="{$section['value']}">Popularity</option>
-                  <option value="{$section['value']}">Relevance</option>
+              <div class="formlabel">
+                <select class="sortinput" id="sort" name="sort" onchange="sortPosts(this);" data-param={$params}>
+                  <option value="sort">Sort Posts By:</option>
+                  <option value="time">Time</option>
+                  <option value="popularity">Popularity</option>
                 </select></div>
       </div>
 
