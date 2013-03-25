@@ -10,7 +10,7 @@
 <div id="searchbar">
 	<form class="form-wrapper cf">
         <input type="text" placeholder="Search by keywords..." required>
-        <button type="submit">Search</button>
+        <button type="button" onclick="searchKeyword(this)">Search</button>
         <div id="searchButton" onclick="expandSearchBar(event)">
 			<!-- <input type="button" onclick="expandSearchBar()" value={"SEARCH_TITLE"|getLocalizedString} /> -->
 			<img src="/modules/buzz/images/search.png"> </img>

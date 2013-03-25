@@ -1,17 +1,24 @@
-/************* Map Related methods **************/
+/************* Map Related vars **************/
 var map;
-var buzzPinsArray = [];
-var newsPinsArray = [];
+// var buzzPinsArray = [];
+// var newsPinsArray = [];
 var buzzMarkers = [];
 var newsMarkers = [];
 var buzzMarkerCluster;
 var newsMarkerCluster;
+var searchTerm="";
+// var buzzSearchMarkerCluster;
+// var newsSearchMarkerCluster;
 var mode=0; // Unofficial: 0, Official: 1
 // var overlay;
 var pieData = []; // total: 17
 
 var campusCenter= new google.maps.LatLng(49.26646,-123.250551);
 var searchRadius= 2000; //in metres
+
+//filter category arrays
+var buzzCategoryList= ["Life", "Club", "Health", "Leisure"];
+var newsCategoryList= ["News", "Career", "Learning", "Leisure"];
 
 //geolocation vars
 var browserSupportFlag =  new Boolean();
@@ -91,15 +98,6 @@ function initializeMap(){
     //create marker clusterer obj
     buzzMarkerCluster = new MarkerClusterer(map, buzzMarkers);
     newsMarkerCluster = new MarkerClusterer(map, newsMarkers);
-
-    // overlay = new pieOverlay(bounds, map);
-
-    //add marker to center
-    // var marker = new google.maps.Marker({
-    //     position: map.getCenter(),
-    //     map: map,
-    //     title: 'Click to zoom'
-    // });
   
     // event listeners
     google.maps.event.addListener(map, 'dblclick', function(event) {
@@ -118,30 +116,17 @@ function initializeMap(){
       var overlay = new pieOverlay(pieData, bounds, map);
 
       //check which layer to push
-      if (mode==0)
-        buzzPinsArray.push(overlay);
-      else
-        newsPinsArray.push(overlay);
-      
-      //add click event for overlay.... 
-      // google.maps.event.addListener(overlay, 'dblclick', function() {
-      //   // map.setZoom(8);
-      //   // map.setCenter(marker.getPosition());
-      //   console.log ('click');
-      // });
+      // if (mode==0)
+      //   buzzPinsArray.push(overlay);
+      // else
+      //   newsPinsArray.push(overlay);
 
       pieData=[];
 
     });
-    // google.maps.event.addListener(marker, 'click', function() {
-    //     // marker.setMap(null);
-    //     // marker=null;
-    //     clearOverlays(buzzPinsArray);
-    // });
 
 
-    //draw piechart pins on map
-    loadMapPins();
+    
 }
 
 function loadMapPins (){
@@ -159,7 +144,8 @@ function loadMapPins (){
           var locArray = data.locationGeo.split(',');
           var loc= new google.maps.LatLng(locArray[0],locArray[1]);
           var category;
-          console.log ("data's category; "+data.category);
+          console.log ("data's loc; "+locArray[0]+ ", "+locArray[1]);
+          console.log ("google's loc; "+loc.lat()+ ", "+loc.lng());
 
           if (mode==0){
             //check category for Buzz mode
@@ -171,6 +157,8 @@ function loadMapPins (){
               category=3;
             }else if (data.category.indexOf("Leisure") != -1){
               category=4;
+            }else{
+              category=1;
             }
           }else{
             //check category for Official mode
@@ -182,6 +170,8 @@ function loadMapPins (){
               category=3;
             }else if (data.category.indexOf("Leisure") != -1){
               category=4;
+            }else{
+              category=1;
             }
           }
 
@@ -205,16 +195,98 @@ function loadMapPins (){
               marker.set("isOfficial", true);
             }
             console.log ("official; "+marker.get("isOfficial"));
-          }
-          
-
-          //try to caluclate the number of 
-            
+          }   
       });
-
-      //cluster pins
-
   });
+
+}
+
+
+function searchKeyword (that){
+
+  var searchString= $(that).prev().val();
+  // searchTerm= searchString;
+  console.log ("search: "+searchString);
+
+  makeAPICall(
+    'POST', 'buzz', 'searchKeyword', 
+    {"isOfficial":mode, "keyword": searchString, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
+    function(response){
+      console.log (response);
+
+      //iterate and plot pins
+      var json = $.parseJSON(response);
+
+      if (json["numFound"]==0){
+
+        $(that).prev().val("").attr('placeholder', "No Results, search again.");
+      }else{
+
+        // $(that).prev().val("").attr('placeholder', json["numFound"]+" results.");
+
+        initializeMap();
+
+        $(json.docs).each(function(i,data){
+          
+            var locArray = data.locationGeo.split(',');
+            var loc= new google.maps.LatLng(locArray[0],locArray[1]);
+            var category;
+            console.log ("search data's category; "+data.category);
+
+            if (mode==0){
+              //check category for Buzz mode
+              if(data.category.indexOf("Life") != -1){
+                category=1;
+              }else if (data.category.indexOf("Club") != -1){
+                category=2;
+              }else if (data.category.indexOf("Health") != -1){
+                category=3;
+              }else if (data.category.indexOf("Leisure") != -1){
+                category=4;
+              }else{
+                //no category
+                category=1;
+              }
+            }else{
+              //check category for Official mode
+              if(data.category.indexOf("News") != -1){
+                category=1;
+              }else if (data.category.indexOf("Career") != -1){
+                category=2;
+              }else if (data.category.indexOf("Learning") != -1){
+                category=3;
+              }else if (data.category.indexOf("Leisure") != -1){
+                category=4;
+              }else{
+                //no category
+                category=1;
+              }
+            }
+
+            if (category!=null){
+              var marker = new google.maps.Marker({
+                position: loc,
+                map: map
+              });  
+              marker.set("category", category);
+              console.log ("category; "+marker.get("category"));
+
+              if (mode==0){
+                buzzMarkers.push(marker);
+                buzzMarkerCluster.addMarker(marker);
+                marker.set("isOfficial", false);
+
+
+              }else{
+                newsMarkers.push(marker);
+                newsMarkerCluster.addMarker(marker);
+                marker.set("isOfficial", true);
+              }
+              console.log ("official; "+marker.get("isOfficial"));
+            }   
+        });
+      }
+    });
 
 }
 
@@ -469,10 +541,10 @@ function addMarker(location) {
     animation: google.maps.Animation.BOUNCE
   });
 
-  if (mode==0)
-    buzzPinsArray.push(marker);
-  else
-    newsPinsArray.push(marker);
+  // if (mode==0)
+  //   buzzPinsArray.push(marker);
+  // else
+  //   newsPinsArray.push(marker);
 }
 
 // Removes the overlays from the map, but keeps them in the array
@@ -528,6 +600,8 @@ function expandSlideMenu(event){
 ////// switching modes (student buzz OR campus news) -cng
 
 function campusNewsMode(){
+
+    hideSearchbar();
     //button state
     var button = document.getElementById("newstoggle");
     addClass(button, "pressed");
@@ -563,14 +637,20 @@ function campusNewsMode(){
     mode=1;
 
     //show news overlays
-    showOverlays(newsPinsArray);
+    // showOverlays(newsPinsArray);
     //hide buzz overlays
-    clearOverlays(buzzPinsArray);
+    // clearOverlays(buzzPinsArray);
 
     initializeMap();
+    //draw piechart pins on map
+    loadMapPins();
 }
 
 function studentBuzzMode(){
+
+    //close search bar
+    hideSearchbar();
+
     //button state
     var button = document.getElementById("buzztoggle");
     addClass(button, "pressed");
@@ -606,15 +686,24 @@ function studentBuzzMode(){
     mode=0;
 
     //show buzz overlays
-    showOverlays(buzzPinsArray);
+    // showOverlays(buzzPinsArray);
     //hide news overlays
-    clearOverlays(newsPinsArray);
+    // clearOverlays(newsPinsArray);
 
     initializeMap();
+    //draw piechart pins on map
+    loadMapPins();
     
 }
 
 ////// Show/hide search bar
+
+function hideSearchbar(){
+  var search = document.getElementById("searchbar");
+  removeClass(search, "expand");
+
+  $(search).find("input").attr("placeholder", "Search by keywords...");
+}
 
 function expandSearchBar(event){
 
@@ -641,6 +730,8 @@ function goToDetailView(){
   //make API call to query solr for feed details
 
 }
+
+
 
 
 

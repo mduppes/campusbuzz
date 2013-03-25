@@ -34,25 +34,20 @@ function categoryCloudClickHandler (self){
   //get search bounds
   var bounds= $(self).closest($(".cluster")).data("bound");
   console.log (category);
-  console.log (bounds.getNorthEast().lng());
-  console.log (bounds.getNorthEast().lat());
-  console.log (bounds.getSouthWest().lng());
-  console.log (bounds.getSouthWest().lat());
-
-  //make API call for DetailView
-  //loadDetailView(category, bounds);
-
-	// goToDetailView();
-	// loadDetailView();
+  console.log (bounds.getNorthEast().lng().toFixed(8));
+  console.log (bounds.getNorthEast().lat().toFixed(8));
+  console.log (bounds.getSouthWest().lng().toFixed(8));
+  console.log (bounds.getSouthWest().lat().toFixed(8));
 
 
   var args= Array();
   args["category"]= category;
   args["isOfficial"]= mode;
-  args ["neLng"]= bounds.getNorthEast().lng();
-  args ["neLat"]= bounds.getNorthEast().lat();
-  args ["swLng"]= bounds.getSouthWest().lng();
-  args ["swLat"]= bounds.getSouthWest().lat();
+  args ["neLng"]= bounds.getNorthEast().lng().toFixed(8); //round up to 8th decimal to fix bounding box inaccuracy issue
+  args ["neLat"]= bounds.getNorthEast().lat().toFixed(8);
+  args ["swLng"]= bounds.getSouthWest().lng().toFixed(8);
+  args ["swLat"]= bounds.getSouthWest().lat().toFixed(8);
+  args ["keyword"]= $("#searchbar").find("input").val();
   redirectTo("detail", args);
 }
 
@@ -70,41 +65,47 @@ function filterCategory(obj){
 
   var className=obj.className;
   var id= obj.id;
-  console.log ("id: "+id);
+  console.log ("category: "+id);
+
+  if (id.indexOf("buzz") != -1){
+    //filter in buzz mode
+    id= id.replace("buzz","");
+
     if (className.indexOf("filterOut")>-1){
-        removeClass(obj, "filterOut");
-        //add items to map
-
+      removeClass(obj, "filterOut");//show
+      buzzCategoryList.push(id);
     }else{
-        addClass(obj, "filterOut");
-        //remove  items from map
-
+      addClass(obj, "filterOut");//hide
+      var found= buzzCategoryList.indexOf(id);
+      buzzCategoryList.splice(found,1);
     }
+    filterOutCategory(buzzCategoryList);
+  }else{
+    //filter in news mode
+    id= id.replace("news","");
 
+    if (className.indexOf("filterOut")>-1){
+      removeClass(obj, "filterOut");//show
+      newsCategoryList.push(id);
+    }else{
+      addClass(obj, "filterOut");//hide
+      var found= newsCategoryList.indexOf(id);
+      newsCategoryList.splice(found,1);
+    }
+    filterOutCategory(newsCategoryList);
+  }
 }
 
-function loadDetailView (category, bounds){
-  //clear all pins on map
+function filterOutCategory (categoryList){
 
   makeAPICall(
-    'POST', 'buzz', 'getPosts', 
-    {"isOfficial":mode, "neLng": bounds.getNorthEast().lng(),"neLat": bounds.getNorthEast().lat(),"swLng": bounds.getSouthWest().lng(), "swLat":bounds.getSouthWest().lat(), "category": category},
+    'POST', 'buzz', 'filterOut', 
+    {"isOfficial":mode,  "categoryList": categoryList, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
     function(response){
       
-      //iterate and get data
-      // var json = $.parseJSON(response);
-      // $(json.docs).each(function(i,data){
-        
-      //     console.log ("data's category; ");
-           
-      // });
-    var args= new Array;
-    args["response"]= response;
-    console.log(args["response"]);
-    redirectTo("detail", args);
-
-      
-  });
+      console.log (response);
+    });
 }
+
 
 

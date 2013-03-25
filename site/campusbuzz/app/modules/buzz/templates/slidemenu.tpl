@@ -4,7 +4,7 @@
 
     <button class= "buzzCategory" id="buzzLife" type="button" onclick="filterCategory(this)">Student Life</button>
     <button class= "buzzCategory" id="buzzClub" type="button" onclick="filterCategory(this)">Clubs</button>
-    <button class= "buzzCategory" id="buzzWellbeing" type="button" onclick="filterCategory(this)">Well Being</button>
+    <button class= "buzzCategory" id="buzzHealth" type="button" onclick="filterCategory(this)">Well Being</button>
     <button class= "buzzCategory" id="buzzLeisure" type="button" onclick="filterCategory(this)">Leisure</button>
 
     <button class= "newsCategory" id="newsNews" type="button" onclick="filterCategory(this)">UBC News</button>

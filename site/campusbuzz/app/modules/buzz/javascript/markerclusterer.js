@@ -796,6 +796,7 @@ MarkerClusterer.prototype.addToClosestCluster_ = function(marker) {
         console.log('4++');
       }
   }
+
 };
 
 
@@ -1039,6 +1040,7 @@ Cluster.prototype.updateIcon = function() {
   var sums = this.markerClusterer_.getCalculator()(this.markers_, numStyles);
   this.clusterIcon_.setCenter(this.center_);
   this.clusterIcon_.setSums(sums);
+  console.log ("group1 data: "+ this.group1Num);
   this.clusterIcon_.setGroupNums(this.group1Num, this.group2Num, this.group3Num, this.group4Num);
   this.clusterIcon_.show();
 };
@@ -1077,6 +1079,7 @@ function ClusterIcon(cluster, styles, opt_padding) {
   this.background_=null;
   this.cloud_=null;
   this.slice_=null;
+  
   this.group1Num=0;
   this.group2Num=0;
   this.group3Num=0;
@@ -1135,6 +1138,7 @@ ClusterIcon.prototype.triggerClusterClick = function(event) {
  * @ignore
  */
 ClusterIcon.prototype.onAdd = function() {
+  var self= this;
   this.parent_ = document.createElement('DIV');//parent container
   this.parent_.setAttribute('class', 'cluster');
   this.div_ = document.createElement('DIV');//text
@@ -1147,10 +1151,10 @@ ClusterIcon.prototype.onAdd = function() {
 
   //calculate number of items in cluster's category
   var pieData=[];
-  pieData.push(this.group1Num);
-  pieData.push(this.group2Num);
-  pieData.push(this.group3Num);
-  pieData.push(this.group4Num);
+  pieData.push(this.cluster_.group1Num);
+  pieData.push(this.cluster_.group2Num);
+  pieData.push(this.cluster_.group3Num);
+  pieData.push(this.cluster_.group4Num);
   var total= pieData[0]+pieData[1]+pieData[2]+pieData[3];
   console.log ("total: "+total);
   var proportionArr = [];

@@ -29,28 +29,29 @@ class BuzzWebModule extends WebModule
             $swLng= $this->getArg('swLng');
             $swLat= $this->getArg('swLat');
             $isOfficial=$this->getArg('isOfficial',0);
+            $keyword= $this-> getArg('keyword',0);
           
-          $radius= 1000; // in metres
-
           // Change this for # of results returned
           $numResultsReturned = 50;
           
           // test radius
-          $getPostsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($neLat, $neLng, $radius);
+          $getPostsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($neLng, $neLat, $swLng, $swLat);
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("category", $category));
-          $getPostsSearchQuery->setMaxItems($numResultsReturned);
+          if ($keyword != "")
+            $getPostsSearchQuery->addKeyword($keyword);
+
 
           // Fields we want returned from solr
           $getPostsSearchQuery->addReturnField("title");
           $getPostsSearchQuery->addReturnField("id");
-          $getPostsSearchQuery->addReturnField("author");
+          // $getPostsSearchQuery->addReturnField("author");
           $getPostsSearchQuery->addReturnField("sourceType");
           $getPostsSearchQuery->addReturnField("url");
           $getPostsSearchQuery->addReturnField("imageUrl");
           $getPostsSearchQuery->addReturnField("pubDate");
-          $getPostsSearchQuery->addReturnField("startDate");
-          $getPostsSearchQuery->addReturnField("endDate");
+          // $getPostsSearchQuery->addReturnField("startDate");
+          // $getPostsSearchQuery->addReturnField("endDate");
           $getPostsSearchQuery->addReturnField("content");
            
            // Get and convert solr response to php object
