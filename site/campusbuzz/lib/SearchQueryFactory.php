@@ -13,7 +13,7 @@ class SearchQueryFactory {
     $searchQuery = new SearchQuery();
     $center = new GeoCoordinate($lat, $long);
     $searchFilter = new GeoRadiusSearchFilter($center, $radius);
- 
+
     $searchQuery->addFilter($searchFilter);
     return $searchQuery;
   }
@@ -28,7 +28,7 @@ class SearchQueryFactory {
     $swCoor = new GeoCoordinate($swLat, $swLng);
     $corners= array($swCoor, $neCoor);
     $searchFilter = new BoundingBoxSearchFilter($corners);
- 
+
     $searchQuery->addFilter($searchFilter);
     return $searchQuery;
   }
@@ -40,18 +40,6 @@ class SearchQueryFactory {
   public static function createSearchAllQuery() {
     $searchQuery = new SearchQuery();
     return $searchQuery;
-  }
-
-  /**
-   * Create query to map locationName to a geocoordinate
-   * @param string Name of location
-   * @return SearchQuery
-   */
-  public static function createLocationToCoordinateQuery($locationName) {
-    $searchQuery = new SearchQuery();
-    $searchQuery->addKeyword($locationName);
-    return $searchQuery;
-
   }
 
   public static function createSearchByIdQuery($id) {

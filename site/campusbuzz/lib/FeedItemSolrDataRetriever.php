@@ -1,8 +1,10 @@
 <?php
 
-
+/**
+ * Solr data retriever specialized for FeedItems.
+ * Contains functions specific to FeedItem querying and updating.
+ */
 class FeedItemSolrDataRetriever extends SolrDataRetriever {
-
 
   protected function getSolrBaseUrl() {
     return "http://localhost:8983/solr/FeedItems/";
@@ -14,7 +16,10 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
     return parent::query($searchQuery);
   }
 
-  // Do a search for feedItems
+  /**
+   * Query Solr for FeedItems according to searchQuery
+   * @return array of FeedItems returned from Solr
+   */
   public function queryFeedItem(SearchQuery $searchQuery) {
     $response = $this->query($searchQuery);
     //print "response\n";
@@ -36,6 +41,11 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
     return $feedItems;
   }
 
+  /**
+   * Update the categories for the given FeedItem ID's already in solr.
+   * @param array of FeedItem ID's to update
+   * @param new category to add to this FeedItem
+   */
   public function updateCategories($id_array, $newCategory) {
     $combinedUpdateArray = array();
     foreach ($id_array as $id) {
@@ -45,6 +55,11 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
     $this->persist(json_encode($combinedUpdateArray));
   }
 
+  /**
+   * Increment the query count by 1 for the given FeedItem ID's already in solr.
+   * The query count is the number of times a FeedItem has been shown to a user.
+   * @param array of FeedItem ID's to increment the query count
+   */
   public function incrementQueryCounts($id_array) {
     $combinedUpdateArray = array();
     foreach ($id_array as $id) {

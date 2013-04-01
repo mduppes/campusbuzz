@@ -22,7 +22,7 @@ class GeoRadiusSearchFilter {
 
   public function __construct($geoCoordinate, $radius, $field = 'locationGeo') {
     $this->geoCoordinate = $geoCoordinate;
-    $this->radius = $radius;
+    $this->radius = SearchQuery::escapeSolrValue($radius);
     $this->field = $field;
   }
 

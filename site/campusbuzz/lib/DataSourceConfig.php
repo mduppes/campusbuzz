@@ -54,7 +54,7 @@ class DataSourceConfig
   }
 
   private function getValidSourceTypes() {
-    return array("Facebook", "RSS", "Twitter", "TwitterGeoSearch");
+    return array("Facebook", "RSS", "RSSEvents", "Twitter", "TwitterGeoSearch");
   }
 
   private function getLabelValidateMap() {
@@ -134,7 +134,11 @@ class DataSourceConfig
       $this->configMap[$key] = null;
 
       // reflection call to function that validates and populates this required / optional field
-      $this->{$validateAndSetFunction}($this->configMap[$key], @$configDecoded[$key]);
+      try {
+        $this->{$validateAndSetFunction}($this->configMap[$key], @$configDecoded[$key]);
+      } catch (Exception $e) {
+        throw new KurogoDataException("Invalid value for populating label: {$key}. ". $e->getMessage());
+      }
     }
 
     // RSS feeds have custom mappings dependent on feed and must have labelMap

@@ -7,8 +7,11 @@ class Tester {
   private $tests =
     array("TwitterDataRetrieverTest",
           "FacebookDataRetrieverTest",
-          "SearchQueryTest");
-
+          "RSSDataRetrieverTest",
+          "SearchQueryTest",
+          "LocationMapperTest",
+          "CategorizerTest",
+          "FeedItemManagerTest");
 
   // Solr Controllers
   public $feedItemSolrController;
@@ -23,22 +26,36 @@ class Tester {
   private $testing = false;
   private static $tester;
 
+  private function _deleteTestFeedItems() {
+    $this->feedItemSolrController->deleteAll("testing:1");
+  }
+
   public function runtests() {
     if (!$this->testing) {
       throw new KurogoDataException("Tester has not been initialized to run tests");
     }
 
+    $passed = 0;
+    $total = 0;
     foreach ($this->tests as $class) {
-      print $class. ":\n";
       $testClass = new $class;
       $methods = get_class_methods($class);
+
       foreach ($methods as $testMethod) {
-        print "Test {$class}->{$testMethod}\n";
+        print "Testing {$class}->{$testMethod}: \n\n";
+        // Delete all that was in solr for testing
+        $this->_deleteTestFeedItems();
         $result = $testClass->{$testMethod}();
-        $resultString = ($result) ? "PASS": "FAIL";
-        print $resultString. "\n";
+        $resultString = "\n                                                     .......";
+        $resultString .= ($result) ? "PASS": "###### FAIL ######";
+        if ($result) {
+          $passed++;
+        }
+        $total++;
+        print $resultString. "\n---------------------------------------------------------------------------------------------\n";
       }
     }
+    print "Passed {$passed} / {$total} tests.\n";
   }
 
   // Get singleton tester
@@ -63,7 +80,7 @@ class Tester {
     $this->queryLogSolrController = DataRetriever::factory("QueryLogSolrDataRetriever", array());
 
     $this->twitterController = DataRetriever::factory("TwitterDataRetriever", array());
-    $this->facebookController = DataRetriever::factory("FacebookDataRetriever", array($fbid, $fbsecret));
+    $this->facebookController = DataRetriever::factory("FacebookDataRetriever", array("FB_ID" => $fbid, "FB_SECRET" => $fbsecret));
     $this->rssController = DataRetriever::factory("RSSDataRetriever", array());
     $this->testing = true;
   }

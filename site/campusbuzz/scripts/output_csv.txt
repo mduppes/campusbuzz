@@ -1,0 +1,631 @@
+Abdul Ladha Science Student Centre,2055 East Mall V6T 1Z1,49.2642554,-123.2492694
+Academy,5728 Berton Avenue V6T 1W5,49.2548617,-123.2361055
+Acadia Community Centre,2707 Tennis Crescent V6T 2E5,49.2640621,-123.2382027
+Acadia Faculty Row Housing - Unit 1,5501-5515 President's Row V6T 1L5,49.2654551,-123.2381245
+Acadia Faculty Row Housing - Unit 2,5517-5529 President's Row V6T 1L5,49.2653606,-123.2383871
+Acadia Faculty Row Housing - Unit 3,5603-5617 President's Row V6T 1L5,49.2648612,-123.2397752
+Acadia Family Housing Phase II - Unit 1,2500-2510 Melfa Lane V6T 2C6,49.2634153,-123.2364996
+Acadia Family Housing Phase II - Unit 10,5644-5654 Yalta Place V6T 2C2,49.2645049,-123.2373882
+Acadia Family Housing Phase II - Unit 11,2601-2609 Pearkes Lane V6T 2C3,49.2644788,-123.2394924
+Acadia Family Housing Phase II - Unit 12,5621-5649 Yalta Place V6T 1L7,49.2645087,-123.237343
+Acadia Family Housing Phase II - Unit 13,2601-03 / 5501-05 / 5601-19 Yalta Place V6T 1L7,49.2639168,-123.2389613
+Acadia Family Housing Phase II - Unit 14,2501-2517 Melfa Lane V6T 2C5,49.2634961,-123.2365258
+Acadia Family Housing Phase II - Unit 15,5600-5620 Montgomery Place V6T 2C7,49.2645275,-123.2395188
+Acadia Family Housing Phase II - Unit 16,5622-5628 Montgomery Place V6T 2C7,49.2645321,-123.2395154
+Acadia Family Housing Phase II - Unit 17,2500 / 5630-5644 Pearkes Lane / Montgomery Place V6T 2C3 /,49.2650651,-123.237982
+Acadia Family Housing Phase II - Unit 18,2502-2508 Pearkes Lane V6T 2C4,49.2632762,-123.2388162
+Acadia Family Housing Phase II - Unit 19,2501-2527 Pearkes Lane V6T 2C3,49.2632009,-123.2387128
+Acadia Family Housing Phase II - Unit 2,2512-2518 Melfa Lane V6T 2C6,49.2635075,-123.2365776
+Acadia Family Housing Phase II - Unit 20,5639-5643 Montgomery Place V6T 2C8,49.2650438,-123.2380042
+Acadia Family Housing Phase II - Unit 21,5631-5637 Montgomery Place V6T 2C8,49.2650233,-123.2380637
+Acadia Family Housing Phase II - Unit 22,5623-5629 Montgomery Place V6T 2C8,49.264996,-123.238143
+Acadia Family Housing Phase II - Unit 23,5615-5621 Montgomery Place V6T 2C8,49.2649687,-123.2382222
+Acadia Family Housing Phase II - Unit 24,5607-5613 Montgomery Place V6T 2C8,49.2649414,-123.2383015
+Acadia Family Housing Phase II - Unit 25,5509 / 5601-5605 Montgomery Place V6T 2C8,49.2649004,-123.2384205
+Acadia Family Housing Phase II - Unit 26,5501-5507 Montgomery Place V6T 2C8,49.2650682,-123.2379244
+Acadia Family Housing Phase II - Unit 3,2520-2522 Melfa Lane V6T 2C6,49.2635536,-123.2366165
+Acadia Family Housing Phase II - Unit 4,2600-2610 Melfa Lane V6T 2C6,49.2646787,-123.2374655
+Acadia Family Housing Phase II - Unit 5,5502-5508 Yalta Place V6T 2C2,49.2639583,-123.2389284
+Acadia Family Housing Phase II - Unit 6,5510-5606 Yalta Place V6T 2C2,49.2639653,-123.2389088
+Acadia Family Housing Phase II - Unit 7,5608-5618 Yalta Place V6T 2C2,49.2643654,-123.2377766
+Acadia Family Housing Phase II - Unit 8,2621-2635 Tennis Crescent V6T 2C1,49.2631877,-123.2374876
+Acadia Family Housing Phase II - Unit 9,5636-5642 Yalta Place V6T 2C2,49.2644256,-123.2374743
+Acadia Family Housing Phase III - Unit 1,2612-2618 Melfa Lane V6T 2C6,49.2647748,-123.2375494
+Acadia Family Housing Phase III - Unit 10,2657-2663 Tennis Crescent V6T 2C1,49.2635388,-123.2377465
+Acadia Family Housing Phase III - Unit 2,2620-2626 Melfa Lane V6T 2C6,49.2648709,-123.2376333
+Acadia Family Housing Phase III - Unit 3,2628-2634 Melfa Lane V6T 2C6,49.2649669,-123.2377173
+Acadia Family Housing Phase III - Unit 4,2636-2642 Melfa Lane V6T 2C6,49.2650511,-123.2378083
+Acadia Family Housing Phase III - Unit 5,2605-2635 Melfa Lane V6T 2C5,49.2650496,-123.2377516
+Acadia Family Housing Phase III - Unit 6,2637-39 / 5501-05 , 5601-11 Melfa Lane / Fairview Place V6T 2C5 /,49.264601,-123.2369991
+Acadia Family Housing Phase III - Unit 7,2622-2644 Tennis Crescent V6T 2E1,49.263562,-123.2378121
+Acadia Family Housing Phase III - Unit 8,2646-2664 Tennis Crescent V6T 2E1,49.2640542,-123.2382375
+Acadia Family Housing Phase III - Unit 9,2637-2655 Tennis Crescent V6T 2C1,49.2634423,-123.2376592
+Acadia House - 2700,2700 Acadia Road V6T 1R9,49.2633456,-123.2357884
+Acadia House - 2710,2710 Acadia Road V6T 1R9,49.2628251,-123.2353623
+Acadia House - 2720,2720 Acadia Road V6T 1R9,49.2623046,-123.2349362
+Acadia Park Highrise,2725 Melfa Road V6T 1N4,49.2624333,-123.2367238
+Acute Care Unit Patient Park,  V6T 1Z3,49.2648785,-123.2524963
+Allard Hall,1822 East Mall V6T 1Z1,49.2697918,-123.2537078
+ALMA MATER SOCIETY CAIRN,1800 EAST MALL ,49.2697501,-123.2537132
+Ambulance Station,2333 Wesbrook Mall V6T 1Z3,49.2644583,-123.2440378
+Anthropology and Sociology Building,6303 North West Marine Drive V6T 1Z1,49.2688643,-123.2585333
+Anthropology and Sociology Building - Anne Wesbrook Hall,6303 North West Marine Drive V6T 1Z1,49.2688643,-123.2585333
+Anthropology and Sociology Building - Isabel Macinnes Hall,6303 North West Marine Drive V6T 1Z1,49.2688643,-123.2585333
+Anthropology and Sociology Building - Mary Murrin Hall,6303 North West Marine Drive V6T 1Z1,49.2688643,-123.2585333
+Aquatic Centre,6121 University Boulevard V6T 1Z1,49.2658513,-123.2492269
+Aquatic Ecosystems Research Laboratory,2202 Main Mall V6T 1Z4,49.2637441,-123.2510181
+Argyll House East,5958 Iona Drive V6T 1Z1,49.2713048,-123.2496634
+Argyll House West,6018 Iona Drive V6T 1Z1,49.2708596,-123.2520293
+Asian Centre,1871 West Mall V6T 1Z2,49.2668673,-123.2573857
+Athletics Washroom Facilities,3055 Wesbrook Mall V6T 1Z3,49.2573998,-123.2379294
+Audain Art Centre,6398 University Boulevard V6T 1Z4,49.2643297,-123.254438
+Auditorium,6344 Memorial Road V6T 1Z2,49.2669593,-123.2568614
+Auditorium Annex Offices A,1924 West Mall V6T 1Z2,49.2667547,-123.2572522
+Auditorium Annex Offices B,1924 West Mall V6T 1Z2,49.2667547,-123.2572522
+Axis,6090 Iona Drive V6T 1Z1,49.2709454,-123.2518744
+B.C. Binning Studios,6373 University Boulevard V6T 1Z2,49.2643297,-123.254438
+Beaty Biodiversity Centre,2212 Main Mall V6T 1Z4,49.2635307,-123.2515345
+BEATY BIODIVERSITY MUSEUM,2212 MAIN MALL V6T 1Z4,49.2635307,-123.2515345
+Berwick Memorial Centre,2765 Osoyoos Crescent V6T 1X7,49.2623658,-123.2391513
+Bioenergy Research and Demonstration Facility,2337 Lower Mall V6T 1Z4,49.2602259,-123.2537829
+Biological Archive Centre,4000 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+Biological Sciences - Paper Recycling/Flammable Storage Facility,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biological Sciences Building,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biological Sciences Building - North Wing,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biological Sciences Building - South Wing,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biological Sciences Building - West Wing,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biological Sciences Building - Workshop,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biological Sciences Building - Workshop - Addition 1,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biological Sciences Building - Workshop - Addition 2,6270 University Boulevard V6T 1Z4,49.2647919,-123.2524886
+Biomedical Research Centre,2222 Health Sciences Mall V6T 1Z3,49.26401,-123.2473969
+Bookstore,6200 University Boulevard V6T 1Z4,49.265263,-123.2504076
+Botanical Garden - Garden Pavilion,6804 South West Marine Drive (Access From) V6T 1Z4,49.2648785,-123.2524963
+Botanical Garden Centre - Campbell Building,6804 South West Marine Drive V6T 1Z4,49.2545387,-123.2502685
+Botanical Garden Centre - Gate House and Shop-In-The-Garden,6804 South West Marine Drive V6T 1Z4,49.2545387,-123.2502685
+Botanical Garden Centre - Lookout Tower,6804 South West Marine Drive V6T 1Z4,49.2545387,-123.2502685
+Botanical Garden Centre - Reception and Education Centre,6804 South West Marine Drive V6T 1Z4,49.2545387,-123.2502685
+Botanical Gardens - Greenhouse,3463 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Botanical Gardens - Greenhouse and Workshop,3463 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Botanical Gardens - Greenhouse, Alpine Garden,6804 South West Marine Drive (Access From) V6T 1Z4,49.2648785,-123.2524963
+Botanical Gardens - Lunchroom,3463 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Botanical Gardens - Shade House,3463 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Botanical Gardens - Workshop,3463 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Botanical Gardens Area,  ,49.2648785,-123.2524963
+Botanical Gardens Scholars' Retreat,6380 Stadium Road V6T 1Z4,49.2551481,-123.2474796
+Botanical Gardens Workshop (Trailer),6450 Stadium Road V6T 1Z4,49.2551481,-123.2474796
+Botany Greenhouse 1,3461 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Botany Greenhouse 2,3461 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Brock Hall - East Wing,1874 East Mall V6T 1Z1,49.2642554,-123.2492694
+Brock Hall - West Wing,1874 East Mall V6T 1Z1,49.2642554,-123.2492694
+Brock Hall Annex,1874 East Mall V6T 1Z1,49.2642554,-123.2492694
+Buchanan Building Block A,1866 Main Mall V6T 1Z1,49.2673161,-123.25483
+Buchanan Building Block B,1866 Main Mall V6T 1Z1,49.2673161,-123.25483
+Buchanan Building Block C,1866 Main Mall V6T 1Z1,49.2673161,-123.25483
+Buchanan Building Block D,1866 Main Mall V6T 1Z1,49.2673161,-123.25483
+Buchanan Building Block E,1866 Main Mall V6T 1Z1,49.2673161,-123.25483
+Buchanan Tower,1873 East Mall V6T 1Z1,49.2642554,-123.2492694
+Building Operations - Nursery,6029 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Building Operations Exterior Storage Shed,2214 Lower Mall V6T 1Z4,49.259863,-123.2534596
+BUS LOOP,1950 WESBROOK MALL (APPROXIMATE),49.2648785,-123.2524963
+C. K. Choi Building for The Institute of Asian Research,1855 West Mall V6T 1Z2,49.2678601,-123.2581998
+Campus &  Community Planning  1,2210 West Mall V6T 1Z4,49.2617603,-123.2534157
+Campus & Community Planning  2,2210 West Mall V6T 1Z4,49.2617603,-123.2534157
+Carey Centre,5920 Iona Drive V6T 1Z1,49.2715856,-123.2501117
+Carey Theological College,1815 Wesbrook Mall V6T 1Z1,49.2704442,-123.2477894
+Carey Theological College Addition,1815 Wesbrook Mall V6T 1Z1,49.2704442,-123.2477894
+Cecil Green Park Coach House,6323 Cecil Green Park Road V6T 1Z1,49.27083,-123.2584683
+Cecil Green Park House,6251 Cecil Green Park Road V6T 1Z1,49.2708343,-123.2581
+Cecil Green Park Squash Court,6251 Cecil Green Park Road V6T 1Z1,49.2708343,-123.2581
+Centre for Comparative Medicine,4145 Wesbrook Mall V6T 1W5,49.2574511,-123.2379739
+Centre for Interactive Research on Sustainability [CIRS],2260 West Mall V6T 1Z4,49.2617103,-123.2534092
+Chan Centre for The Performing Arts,6265 Crescent Road V6T 1Z1,49.2694316,-123.2547799
+Chancellor Hall (Apartments),5989 Iona Drive V6T 1Z1,49.2716506,-123.2499295
+Chancellor Hall (Townhouses),5978 / 5980 / 5982 / 5984 / 59 Chancellor Mews V6T 1Z1,49.2725147,-123.2510785
+Chancellor House (Apartments),6015 Iona Drive V6T 1Z1,49.271529,-123.251088
+Chancellor House Cityhomes,6006 / 6010 / 6018 / 6022 Chancellor Mews V6T 1Z1,49.2721507,-123.2520586
+Chancellor Row  (Duplex) -  1,6002 / 6008 Chancellor Boulevard V6T 1Z1,49.2723078,-123.2516644
+Chancellor Row  (Duplex) -  2,6012 / 6016 Chancellor Boulevard V6T 1Z1,49.2722206,-123.2518926
+Chancellor Row  (Duplex) -  3,6020 / 6028 Chancellor Boulevard V6T 1Z1,49.2720804,-123.2522251
+Cheeze Factory Engineering Undergraduate Society,2335 Engineering Road V6T 1Z4,49.2620709,-123.2484172
+Chemical & Biological Engineering Building,2360 East Mall V6T 1Z3,49.2622832,-123.2471796
+Chemistry A Block, Chemistry Physics Building,6221 University Boulevard V6T 1Z1,49.2643297,-123.254438
+Chemistry B Block, South Wing,2036 Main Mall V6T 1Z1,49.2662048,-123.2538124
+Chemistry C Block, East Wing,2036 Main Mall V6T 1Z1,49.2662048,-123.2538124
+Chemistry D Block, Centre Wing,2036 Main Mall V6T 1Z1,49.2662048,-123.2538124
+Chemistry E Block, North Wing,2036 Main Mall V6T 1Z1,49.2662048,-123.2538124
+Chemistry Storage,2036 Main Mall V6T 1Z1,49.2662048,-123.2538124
+Child Care Services - Building 1,5690 Osoyoos Crescent V6T 2E6,49.2607185,-123.2338233
+Child Care Services - Building 2,5660 Osoyoos Crescent V6T 2E6,49.2604642,-123.2339862
+Child Care Services - Building 3,5620 Osoyoos Crescent V6T 2E6,49.2601518,-123.2343431
+Child Care Services - Building 4,5590 Osoyoos Crescent V6T 2E6,49.2594559,-123.2366084
+Child Care Services - Building 5,5580 Osoyoos Crescent V6T 2E6,49.2597257,-123.2373455
+Child Care Services Administration Building,2881 Acadia Road V6T 1S1,49.2612541,-123.234205
+Child Care Services Building 1,5655 / 2815 Osoyoos Crescent / Revelstoke Court V6T 1S1,49.2619956,-123.2365332
+Child Care Services Building 2,5615 / 2805 Osoyoos Crescent / Revelstoke Court V6T 1S1,49.2619956,-123.2365332
+Child Care Services Building 3,2865 Revelstoke Court V6T 1S1,49.2608103,-123.2349342
+Civil and Mechanical Engineering Building,6250 Applied Science Lane V6T 1Z4,49.2627317,-123.2489408
+Civil and Mechanical Engineering Laboratories,2275 East Mall V6T 1Z4,49.2642554,-123.2492694
+Civil and Mechanical Engineering Structures Lab,2275 East Mall V6T 1Z4,49.2642554,-123.2492694
+Clement's Green,6268 Eagles Drive V6T 1Z4,49.257934,-123.2457665
+Coal and Mineral Processing Laboratory,2332 West Mall V6T 1Z4,49.2609241,-123.2528221
+Coal and Mineral Processing Laboratory Addition,2332 West Mall V6T 1Z4,49.2609241,-123.2528221
+Coast Apartment East,6063 Iona Drive V6T 1Z1,49.2709454,-123.2518744
+Coast Apartment West,6093 Iona Drive V6T 1Z1,49.2709454,-123.2518744
+Coast Duplex 1,6098 / 6092 Chancellor Boulevard V6T 1Z1,49.2724937,-123.2511297
+Coast Duplex 2,6088 / 6082 Chancellor Boulevard V6T 1Z1,49.2713663,-123.2536275
+Coast Duplex 3,6078 / 6072 Chancellor Boulevard V6T 1Z1,49.271512,-123.2533848
+Coast Duplex 4,6068 / 6062 Chancellor Boulevard V6T 1Z1,49.2716527,-123.2531342
+Coast Duplex 5,6060 / 6050 Chancellor Boulevard V6T 1Z1,49.2718107,-123.2528221
+Coast Townhouses,6070 / 6076 / 6080 / 6086 / 60 Chancellor Mews V6T 1Z1,49.2713063,-123.2537217
+Continuing Studies Building,2121 West Mall V6T 1Z4,49.2633839,-123.2548686
+Corus Apartment Building,5989 Walter Gage Road V6T 1Z1,49.2698806,-123.2506762
+Crescent West,5879 Gray Avenue V6T 1W5,49.2520557,-123.235142
+D.H. Copp Building,2146 Health Sciences Mall V6T 1Z3,49.2646473,-123.2481188
+D.H. Copp Building Addition,2146 Health Sciences Mall V6T 1Z3,49.2646473,-123.2481188
+D.H. Copp Building Addition 2,2146 Health Sciences Mall V6T 1Z3,49.2646473,-123.2481188
+Dahlia House,3565 Wesbrook Mall V6T 1W5,49.2562837,-123.2369491
+David Lam Learning Centre,6326 Agricultural Road V6T 1Z2,49.2657495,-123.2552698
+David Lam Management Research Centre,2033 Main Mall V6T 1Z2,49.2651552,-123.2529553
+David Strangway Building,5950 University Boulevard V6T 1Z3,49.266088,-123.2457372
+Detwiller Pavilion 1,2255 Wesbrook Mall V6T 1Z3,49.2626597,-123.2425229
+Detwiller Pavilion 2,2255 Wesbrook Mall V6T 1Z3,49.2626597,-123.2425229
+District Energy Centre, Health Sciences Mall & Agronomy Road V6T 1Z3,49.2629763,-123.2467902
+Djavad Mowafaghian Centre for Brain Health,2215 Wesbrook Mall V6T 1Z3,49.2626924,-123.2425503
+Donald Rix Building,2389 Health Sciences Mall V6T 1Z3,49.2620983,-123.2460649
+Dorothy Somerset Studios,6361 University Boulevard V6T 1Z2,49.2645598,-123.2545515
+Doug Mitchell Thunderbird Sports Centre,2555 / 6066 Wesbrook Mall / Thunderbird Boulevard V6T 1Z3,49.2648785,-123.2524963
+Douglas Kenny Building,2136 West Mall V6T 1Z4,49.2626643,-123.2539124
+Earth and Ocean Sciences  - Main,6339 Stores Road V6T 1Z4,49.2620303,-123.2518019
+Earth and Ocean Sciences  - South,6339 Stores Road V6T 1Z4,49.2620303,-123.2518019
+Earth Sciences Building,2207 Main Mall V6T 1Z4,49.2628075,-123.2510279
+Earthquake Engineering Research Facility,2235 East Mall V6T 1Z4,49.2642554,-123.2492694
+Empire Pool,6081 University Boulevard V6T 1Z1,49.2659096,-123.2487816
+Engineering High Head Room Laboratory,2225 East Mall V6T 1Z4,49.2642554,-123.2492694
+Environmental Services Facility - Chemical Waste Processing & Storage Building,6025 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Environmental Services Facility - Incinerator,6025 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Environmental Services Facility - Office,6025 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Environmental Services Facility - Pcb Equipment Storage Containers,6025 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Environmental Services Facility - Solvent & Silver Recovery Lab,6025 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Environmental Services Facility - Solvent Storage Area,6025 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Esse (Townhouses),1863 Wesbrook Mall V6T 1Z1,49.270293,-123.2477508
+EVELYN LETT FIELD (THUNDERBIRD PARK), WESBROOKE MALL AND THUNDERBIRD BOULEVARD (APPROXIMATE),49.2648785,-123.2524963
+Faculty Staff Housing - Building A,6388 Hawthorn Lane V6T 1Z4,49.2580801,-123.2495243
+Faculty Staff Housing - Building B,6395 Hawthorn Lane V6T 1Z4,49.2580759,-123.2499075
+Faculty Staff Housing - Building C,6385 Hawthorn Lane V6T 1Z4,49.2583311,-123.2495507
+Faculty Staff Housing - Building D,6309 Larkin Drive V6T 1Z4,49.2590322,-123.2487461
+Faculty Staff Housing - Building E,6230 Thunderbird Boulevard V6T 1Z4,49.2595276,-123.2474813
+Faculty Staff Housing - Building F,3428 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+Fairview Crescent Student Housing - Parking Lot,2600-2804 Fairview Crescent V6T 2B9,49.2625875,-123.238288
+Fairview Crescent Student Housing - Unit 1,2706-2714 Fairview Crescent V6T 2B9,49.2630852,-123.2408998
+Fairview Crescent Student Housing - Unit 10,2798-2804 Fairview Crescent V6T 2B9,49.2624528,-123.2393012
+Fairview Crescent Student Housing - Unit 11,2757-2769 Fairview Crescent V6T 2B9,49.2628837,-123.2408847
+Fairview Crescent Student Housing - Unit 12,2743-2755 Fairview Crescent V6T 2B9,49.2627821,-123.2405406
+Fairview Crescent Student Housing - Unit 13,2729-2741 Fairview Crescent V6T 2B9,49.26268,-123.2401958
+Fairview Crescent Student Housing - Unit 14,2721-2727 Fairview Crescent V6T 2B9,49.2625779,-123.2398509
+Fairview Crescent Student Housing - Unit 15,2711-2719 Fairview Crescent V6T 2B9,49.2625195,-123.2396538
+Fairview Crescent Student Housing - Unit 16,2697-2709 Fairview Crescent V6T 2B9,49.2624065,-123.2390515
+Fairview Crescent Student Housing - Unit 17,2689-2695 Fairview Crescent V6T 2B9,49.2624057,-123.2390343
+Fairview Crescent Student Housing - Unit 18,2681-2687 Fairview Crescent V6T 2B9,49.2624041,-123.2389632
+Fairview Crescent Student Housing - Unit 19,2673-2679 Fairview Crescent V6T 2B9,49.2624073,-123.2388947
+Fairview Crescent Student Housing - Unit 2,2716-2722 Fairview Crescent V6T 2B9,49.2624449,-123.2392507
+Fairview Crescent Student Housing - Unit 20,2665-2671 Fairview Crescent V6T 2B9,49.2624177,-123.2388248
+Fairview Crescent Student Housing - Unit 21,2651-2663 Fairview Crescent V6T 2B9,49.2624279,-123.2387579
+Fairview Crescent Student Housing - Unit 22,2643-2649A Fairview Crescent V6T 2B9,49.2624503,-123.2386401
+Fairview Crescent Student Housing - Unit 23,2629-2641 Fairview Crescent V6T 2B9,49.2624665,-123.2385767
+Fairview Crescent Student Housing - Unit 24,2615-2627 Fairview Crescent V6T 2B9,49.2624951,-123.2384627
+Fairview Crescent Student Housing - Unit 25,2601-2613 Fairview Crescent V6T 2B9,49.2625302,-123.2383547
+Fairview Crescent Student Housing - Unit 26,2600-2612 Fairview Crescent V6T 2B9,49.2625365,-123.2384171
+Fairview Crescent Student Housing - Unit 27,2614-2620 Fairview Crescent V6T 2B9,49.2627844,-123.2408614
+Fairview Crescent Student Housing - Unit 28,2622-2634 Fairview Crescent V6T 2B9,49.2624664,-123.2386777
+Fairview Crescent Student Housing - Unit 29,2636-2642 Fairview Crescent V6T 2B9,49.2624501,-123.2387746
+Fairview Crescent Student Housing - Unit 3,2724-2734 Fairview Crescent V6T 2B9,49.2624461,-123.2392582
+Fairview Crescent Student Housing - Unit 30,2644-2650 Fairview Crescent V6T 2B9,49.2624347,-123.238875
+Fairview Crescent Student Housing - Unit 31,2652-2664 Fairview Crescent V6T 2B9,49.2624305,-123.2390489
+Fairview Crescent Student Housing - Unit 32,2666-2674 Fairview Crescent V6T 2B9,49.2624309,-123.2390584
+Fairview Crescent Student Housing - Unit 33,2676-2684 Fairview Crescent V6T 2B9,49.2624313,-123.239068
+Fairview Crescent Student Housing - Unit 34,2686-2696 Fairview Crescent V6T 2B9,49.2624318,-123.2390794
+Fairview Crescent Student Housing - Unit 35,2698-2704 Fairview Crescent V6T 2B9,49.2624319,-123.2390813
+Fairview Crescent Student Housing - Unit 4,2736-2748 Fairview Crescent V6T 2B9,49.2624474,-123.239267
+Fairview Crescent Student Housing - Unit 5,2750-2756 Fairview Crescent V6T 2B9,49.2624482,-123.2392721
+Fairview Crescent Student Housing - Unit 6,2758-2764 Fairview Crescent V6T 2B9,49.2624489,-123.2392771
+Fairview Crescent Student Housing - Unit 7,2766-2778 Fairview Crescent V6T 2B9,49.2624503,-123.2392859
+Fairview Crescent Student Housing - Unit 8,2780-2786 Fairview Crescent V6T 2B9,49.262451,-123.2392909
+Fairview Crescent Student Housing - Unit 9,2788-2796 Fairview Crescent V6T 2B9,49.2624518,-123.2392963
+FAIRVIEW SQUARE,2300 MAIN MALL (APPROXIMATE),49.2648785,-123.2524963
+First Nations Longhouse,1985 West Mall V6T 1Z2,49.2655066,-123.2562816
+FLAG POLE PLAZA, 6300 CRESENT ROAD (APPROXIMATE),49.2648785,-123.2524963
+Folio Apartment Building,5955 Iona Drive V6T 1Z1,49.2721411,-123.2483948
+Folio Cityhomes I,5952 Chancellor Mews V6T 1Z1,49.272775,-123.2502031
+Folio Cityhomes II,5958 Chancellor Mews V6T 1Z1,49.2727289,-123.2503695
+Folio Duplex 1,5998 / 5992 Chancellor Boulevard V6T 1Z1,49.2724424,-123.2512925
+Folio Duplex 2,5988 / 5982 Chancellor Boulevard V6T 1Z1,49.2725319,-123.2510252
+Folio Duplex 3,5978 / 5972 Chancellor Boulevard V6T 1Z1,49.2726156,-123.2507527
+Folio Duplex 4,5968 / 5962 Chancellor Boulevard V6T 1Z1,49.2726983,-123.2504804
+Folio Townhomes,5962, 5966, 5968 Chancellor Mews V6T 1Z1,49.272649,-123.2506437
+Food, Nutrition and Health Building,2205 East Mall V6T 1Z4,49.2642554,-123.2492694
+Food, Nutrition and Health Building - Addition,2205 East Mall V6T 1Z4,49.2642554,-123.2492694
+Forest Sciences Centre,2424 Main Mall V6T 1Z4,49.2603866,-123.2489917
+Forest Sciences Greenhouse,3461 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Forestry Field House South Campus,3461 Ross Drive V6T 1W5,49.2510218,-123.2348044
+FPInnovations - Forest Operations (FERIC),2601 East Mall V6T 1Z4,49.257648,-123.2440389
+FPInnovations - Pulp & Paper,3800 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+FPInnovations - Wood Products (Forintek),2665 East Mall V6T 1Z4,49.2570536,-123.2436185
+Frank Forward Building,6350 Stores Road V6T 1Z4,49.2621101,-123.2516257
+Fraser Hall - Student Rental Housing,2550 Wesbrook Mall V6T 1Z3,49.2618395,-123.2415364
+Fraser River Parkade,6440 Memorial Road V6T 1Z2,49.2670081,-123.256733
+Fraternity Village - House - 1,2880 Wesbrook Mall V6T 2J3,49.2597157,-123.238811
+Fraternity Village - House - 2,2880 Wesbrook Mall V6T 1Z3,49.2597157,-123.238811
+Fraternity Village - House - 4,2880 Wesbrook Mall V6T 1Z3,49.2597157,-123.238811
+Fraternity Village - House - 5,2880 Wesbrook Mall V6T 1Z3,49.2597157,-123.238811
+Fraternity Village - House - 6,2880 Wesbrook Mall V6T 1Z3,49.2597157,-123.238811
+Fraternity Village - House - 7,2880 Wesbrook Mall V6T 1Z3,49.2597157,-123.238811
+Fraternity Village - House - 8,2880 Wesbrook Mall V6T 1Z3,49.2597157,-123.238811
+Frederic Lasserre Building,6333 Memorial Road V6T 1Z2,49.2674086,-123.2556258
+Frederic Wood Theatre,6354 Crescent Road V6T 1Z2,49.2680432,-123.2570211
+Frederic Wood Theatre Addition,6354 Crescent Road V6T 1Z2,49.2680432,-123.2570211
+Friedman Building,2177 Wesbrook Mall V6T 1Z3,49.265415,-123.2460813
+Friedman Building Addition,2177 Wesbrook Mall V6T 1Z3,49.265415,-123.2460813
+Future Secondary School,3250 East Mall V6T 1W5,49.2549289,-123.2414581
+Gas Gun Facility,6301 Stadium Road V6T 1Z4,49.2553222,-123.2466371
+General Services Administration Building,2075 Wesbrook Mall V6T 1Z1,49.2666729,-123.2460727
+Geography Building,1984 West Mall V6T 1Z2,49.2655178,-123.256249
+George Cunningham Building (Pharmaceutical Sciences),2146 East Mall V6T 1Z3,49.2642554,-123.2492694
+George Cunningham Building Addition (Pharmaceutical Sciences),2146 East Mall V6T 1Z3,49.2642554,-123.2492694
+Gerald McGavin Building,2386 East Mall V6T 1Z3,49.2642554,-123.2492694
+Gerald McGavin UBC Rugby Centre,2765 Wesbrook Mall V6T 1Z3,49.2586515,-123.2390283
+Granite Terrace 3,3313 Shrum Lane V6T 1W5,49.2542253,-123.2358417
+GREAT TREK CAIRN,2050 MAIN MALL  (APPROXIMATE),49.2648785,-123.2524963
+Green College - Administration -Building F,6201 Cecil Green Park Road V6T 1Z1,49.2711564,-123.2564331
+Green College - Building A North,6201 Cecil Green Park Road V6T 1Z1,49.2711564,-123.2564331
+Green College - Building A South,6201 Cecil Green Park Road V6T 1Z1,49.2711564,-123.2564331
+Green College - Building B East,6201 Cecil Green Park Road V6T 1Z1,49.2711564,-123.2564331
+Green College - Building E,6201 Cecil Green Park Road V6T 1Z1,49.2711564,-123.2564331
+Green College - Graham House, Green Commons, Coach House - Building D,6201 Cecil Green Park Road V6T 1Z1,49.2711564,-123.2564331
+Green College - Kitchen / Laundry,6201 Cecil Green Park Road V6T 1Z1,49.2711564,-123.2564331
+Green College - Principal's Residence - Building C,6205 Cecil Green Park Road V6T 1Z1,49.2707522,-123.2567522
+Greenwood Commons - Rental Housing,2660 Wesbrook Mall V6T 1Z3,49.2611232,-123.2408905
+H. R. Macmillan Building,2357 Main Mall V6T 1Z4,49.2625826,-123.250853
+Haida House,6393 North West Marine Drive V6T 1Z2,49.268814,-123.2588512
+Hampton Place Lot 1 - Sandringham,5650 Hampton Place V6T 2G5,49.2583002,-123.2332324
+Hampton Place Lot 10 - Pemberley,5605 Hampton Place V6T 2H2,49.2575064,-123.2324307
+Hampton Place Lot 2 - West Hampstead,5760 Hampton Place V6T 2G1,49.258359,-123.2345794
+Hampton Place Lot 3 - Thames Court,5880 Hampton Place V6T 2E9,49.2577676,-123.2365828
+Hampton Place Lot 4 - St. James,5835 Hampton Place V6T 2G2,49.2578588,-123.2367839
+Hampton Place Lot 5 - The Chatham,5775 Hampton Place V6T 2G6,49.2581732,-123.2359696
+Hampton Place Lot 6 - The Bristol,5735 Hampton Place V6T 2G8,49.2582518,-123.2353201
+Hampton Place Lot 7-1 - The Stratford,5657 Hampton Place V6T 2H4,49.2585432,-123.2335228
+Hampton Place Lot 7-2 - Wyndham Hall,5683 Hampton Place V6T 2H3,49.2587238,-123.2340525
+Hampton Place Lot 8 - The Regency,5639 Hampton Place V6T 2H6,49.2583648,-123.2332702
+Hampton Place Lot 9 - The Balmoral,5615 Hampton Place V6T 2H1,49.258316,-123.2332046
+Hawthorn Green,6318-6358 Hawthorn Lane V6T 1Z4,49.2581232,-123.2493917
+Health Sciences Parkade,2250 Health Sciences Mall V6T 1Z3,49.2633074,-123.2476875
+Hebb Building,2045 East Mall V6T 1Z1,49.2661246,-123.2508696
+Hennings Building,6224 Agricultural Road V6T 1Z1,49.2662475,-123.2538161
+Hennings Building Penthouse Addition,6244 Agricultural Road V6T 1Z1,49.2662475,-123.2538161
+Henry Angus Building,2053 Main Mall V6T 1Z2,49.2649393,-123.2527698
+Henry Angus Building Addition,2053 Main Mall V6T 1Z2,49.2649393,-123.2527698
+Henry Angus Building Classroom Addition,2053 Main Mall V6T 1Z2,49.2649393,-123.2527698
+Hillel House - The Diamond Foundation Centre for Jewish Campus Life,6145 Student Union Boulevard V6T 1Z1,49.2690473,-123.2485834
+Horticulture Building,6394 Stores Road V6T 1Z4,49.262312,-123.2509576
+Hugh Dempster Pavilion,6245 Agronomy Road V6T 1Z4,49.2601029,-123.2505251
+In-Vessel Composting Facility,6035 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Institute for Computing, Information and Cognitive Systems / Computer Science,2366 Main Mall V6T 1Z4,49.2630427,-123.2511662
+Institute for Computing, Information and Cognitive Systems / Computer Science Addition,2366 Main Mall V6T 1Z4,49.2630427,-123.2511662
+International House,1783 West Mall V6T 1Z2,49.2685898,-123.2588353
+Irving K. Barber Learning Centre,1961 East Mall V6T 1Z1,49.2676124,-123.2523876
+Isac 1 - Isotope Separator Accelerator (Triumf),4004 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+Isac 2 - Isotope Separator Accelerator Addition (Triumf),4004 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+J. B. Macdonald Building,2199 Wesbrook Mall V6T 1Z3,49.2627054,-123.2425613
+Jack Bell Building for The School of Social Work,2080 West Mall V6T 1Z2,49.2641209,-123.2550938
+Japanese Tea House - Nitobe Gardens,1895 Lower Mall V6T 1Z2,49.2662847,-123.2588025
+John Owen Pavilion and Allan Mcgavin Sports Medicine Centre,3055 Wesbrook Mall V6T 1Z3,49.2573998,-123.2379294
+John Owen Pavilion and Allan Mcgavin Sports Medicine Centre - Addition,3055 Wesbrook Mall V6T 1Z3,49.2573998,-123.2379294
+John Owen Pavilion Annex,3055 Wesbrook Mall V6T 1Z3,49.2573998,-123.2379294
+Journey,6328 Larkin Drive V6T 1Z4,49.2580902,-123.2476282
+Keenleyside,5788 Birney Avenue V6T 1W5,49.2535179,-123.2352305
+Kids Club,2855 Acadia Road V6T 1S1,49.2618846,-123.2347816
+Koerner Gallery,6393 North West Marine Drive V6T 1Z2,49.268814,-123.2588512
+Koerner Pavilion,2211 Wesbrook Mall V6T 1Z3,49.2626956,-123.2425531
+Labor Hut - South Campus,6116 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Ladner Clock Tower,1956 Main Mall V6T 1Z1,49.26671,-123.254342
+Landscape Architecture Annex,2371 Main Mall V6T 1Z4,49.2605575,-123.249182
+Legacy Apartments,6333 Larkin Drive V6T 1Z4,49.257244,-123.2477262
+Leon and Thea Koerner University Centre,6331 Crescent Road V6T 1Z1,49.2686227,-123.2562303
+Leon and Thea Koerner University Centre Addition 1,6331 Crescent Road V6T 1Z1,49.2686227,-123.2562303
+LIBRARY GARDEN,1900 BLOCK MAIN MALL ,49.2670719,-123.2546323
+Life Sciences Centre,2350 Health Sciences Mall V6T 1Z3,49.2623096,-123.2462008
+Liu Institute for Global Issues,6476 North West Marine Drive V6T 1Z2,49.2661684,-123.2603266
+Logan Field Kiosk,  ,49.2648785,-123.2524963
+Logan Lane Townhouses,2537-2579 / 6202-6288 East Mall / Logan Lane V6T 1Z4,49.2594486,-123.2456595
+LORD RUGBY FIELD (THUNDERBIRD PARK), THUNDERBIRD BOULEVARD AND WESBROOK MALL (Southwest of),49.2615127,-123.2415215
+Lower Mall Header House,2331 Lower Mall V6T 1Z4,49.2602259,-123.2537829
+Lower Mall Research Station,2259 Lower Mall V6T 1Z4,49.2602679,-123.253817
+LUTHERAN CAMPUS CENTRE,5889 UNIVERSITY BOULEVARD ,49.2659096,-123.2487816
+M.F.A. Studios,6363 Stores Road V6T 1Z4,49.2621019,-123.251565
+MACINNES FIELD, STUDENT UNION BOULEVARD AND WESBROOK MALL ,49.2694483,-123.2475199
+Macleod Building,2356 Main Mall V6T 1Z4,49.2630745,-123.2511899
+Magnolia House,3515 Wesbrook Mall V6T 1W5,49.2562837,-123.2369491
+Main Substation,2446 Health Sciences Mall V6T 1Z3,49.2605783,-123.2447714
+Main Substation Addition,2446 Health Sciences Mall V6T 1Z3,49.2605783,-123.2447714
+Marine Drive Residence - Building #2,2205 Lower Mall V6T 1Z4,49.2604728,-123.253983
+Marine Drive Residence - Building #3,2205 Lower Mall V6T 1Z4,49.2604728,-123.253983
+Marine Drive Residence - Building #4,2205 Lower Mall V6T 1Z4,49.2604728,-123.253983
+Marine Drive Residence - Building #5,2205 Lower Mall V6T 1Z4,49.2604728,-123.253983
+Marine Drive Residence - Building #6,2205 Lower Mall V6T 1Z4,49.2604728,-123.253983
+Marine Drive Residence - Simon K.Y. Lee Hku-UBC House,2205 Lower Mall V6T 1Z4,49.2604728,-123.253983
+Mary Bollert Hall,6253 North West Marine Drive V6T 1Z1,49.268953,-123.2583773
+Material Recovery Facility,6055 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Mathematics Annex,1986 Mathematics Road V6T 1Z2,49.2648785,-123.2524963
+Mathematics Building,1984 Mathematics Road V6T 1Z2,49.2648785,-123.2524963
+MATTHEWS FIELD (THUNDERBIRD PARK),  ,49.2648785,-123.2524963
+MBA House,3385 Wesbrook Mall V6T 1W5,49.2562837,-123.2369491
+Medical Sciences Block C,2176 Health Sciences Mall V6T 1Z3,49.2641793,-123.2477359
+Medical Sciences Block C Addition,2176 Health Sciences Mall V6T 1Z3,49.2641793,-123.2477359
+Michael Smith Laboratories,2185 East Mall V6T 1Z4,49.2645771,-123.2495516
+Morris and Helen Belkin Art Gallery,1825 Main Mall V6T 1Z2,49.2681815,-123.2560264
+Mortuary House,6393 North West Marine Drive V6T 1Z2,49.268814,-123.2588512
+Museum of Anthropology,6393 North West Marine Drive V6T 1Z2,49.268814,-123.2588512
+Music Building,6361 Memorial Road V6T 1Z2,49.267322,-123.2558812
+Networks of Centres of Excellence,2125 East Mall V6T 1Z4,49.2642554,-123.2492694
+Neville Scarfe Building - Classroom Block,2125 Main Mall V6T 1Z4,49.2629305,-123.2511234
+Neville Scarfe Building - Lecture Block,2125 Main Mall V6T 1Z4,49.2629305,-123.2511234
+Neville Scarfe Building - Library,2125 Main Mall V6T 1Z4,49.2629305,-123.2511234
+Neville Scarfe Building - Office Block,2125 Main Mall V6T 1Z4,49.2629305,-123.2511234
+Neville Scarfe Building - Teacher Education Office,2125 Main Mall V6T 1Z4,49.2629305,-123.2511234
+Nine On The Park,6298-6282 Eagles Drive V6T 1Z4,49.2581241,-123.2463162
+NITOBE MEMORIAL GARDEN,1895 LOWER MALL ,49.2670359,-123.2600577
+NOBEL BIOCARE ORAL HEALTH CENTRE,2151 WESBROOK MALL V6T 1Z3,49.2659611,-123.2457579
+Norman Mackenzie House (President's Residence - Garage),6565 North West Marine Drive V6T 1A7,49.263028,-123.2586607
+Norman Mackenzie House (President's Residence),6565 North West Marine Drive V6T 1A7,49.263028,-123.2586607
+North Parkade,6115 Student Union Boulevard V6T 1Z1,49.2690594,-123.2485508
+NRC Institute for Fuel Cell Innovation,4250 Wesbrook Mall V6T 1W5,49.245379,-123.2324402
+Old Administration Building,6328 Memorial Road V6T 1Z2,49.2668151,-123.2572919
+Old Barn Community Centre,6308 Thunderbird Boulevard V6T 1Z4,49.259092,-123.2484445
+Old Fire Hall,2038 West Mall V6T 1Z2,49.2645895,-123.2554817
+Orchard House,2336 West Mall V6T 1Z4,49.2606567,-123.2526011
+P. A. Woodward Instructional Resources Centre,2194 Health Sciences Mall V6T 1Z3,49.2647801,-123.2467318
+P. A. Woodward Instructional Resources Centre Lecture Theatre Addition,2194 Health Sciences Mall V6T 1Z3,49.2647801,-123.2467318
+Pacific,5928 Birney Avenue V6T 1W5,49.2534005,-123.2351347
+Panhellenic Sorority House,2770 Wesbrook Mall V6T 2B7,49.2622829,-123.2419232
+Pathways I ( West ),5777 Birney Avenue V6T 1W5,49.2532727,-123.2359779
+Pathways II ( East ),5779 Birney Avenue V6T 1W5,49.2532727,-123.2359779
+Peter Wall Institute for Advanced Studies,6331 Crescent Road V6T 1Z1,49.2686227,-123.2562303
+Pharmaceutical Sciences & Centre for Drug Research and Development,2405 Wesbrook Mall V6T 1Z3,49.2637237,-123.2434292
+Place Vanier Residence - Aldyen Hamber House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Cariboo House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Dorothy Mawdsley House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Gordon Shrum Common Block,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Kootenay House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Korea University - UBC House,1935 Lower Mall V6T 1Z2,49.2647728,-123.2586914
+Place Vanier Residence - Margaret Mackenzie House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Okanagan House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Phyllis Ross House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Robson House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Sherwood Lett House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Place Vanier Residence - Tec De Monterrey - UBC House,1935 Lower Mall V6T 1Z2,49.2647728,-123.2586914
+Place Vanier Residence - Tweedsmuir House,1935 Lower Mall V6T 1X1,49.2647728,-123.2586914
+Plant Science Field Building,3461 Ross Drive V6T 1W5,49.2510218,-123.2348044
+Plant Science Field Station,2613 West Mall V6T 1Z4,49.256399,-123.2488793
+Plant Science Garage,2613 West Mall V6T 1Z4,49.256399,-123.2488793
+Point Grey Apartments (Osoyoos Housing),2875 Osoyoos Crescent V6T 2G3,49.2600422,-123.2377763
+Ponderosa Annex H,2074 Lower Mall V6T 1Z2,49.2637457,-123.2565866
+Ponderosa Centre,2071 West Mall V6T 1Z2,49.2641094,-123.2551263
+Ponderosa Hub Phase I - West,  V6T 1Z4,49.2648785,-123.2524963
+Ponderosa Office Annex A,2011 West Mall V6T 1Z2,49.2653996,-123.2561942
+Ponderosa Office Annex B,2029 West Mall V6T 1Z2,49.264645,-123.2555696
+Ponderosa Office Annex C,2021 West Mall V6T 1Z2,49.2649704,-123.255839
+Ponderosa Office Annex E,2034 Lower Mall V6T 1Z2,49.2662747,-123.2587689
+Ponderosa Office Annex F,2008 Lower Mall V6T 1Z2,49.2649556,-123.2575736
+Ponderosa Office Annex G,2044 Lower Mall V6T 1Z2,49.2649556,-123.2575736
+Power House,2040 West Mall V6T 1Z2,49.2645672,-123.2554633
+Power House - Addition 1,2040 West Mall V6T 1Z2,49.2645672,-123.2554633
+Power House - Addition 2,2040 West Mall V6T 1Z2,49.2645672,-123.2554633
+Power House - Addition 3,2040 West Mall V6T 1Z2,49.2645672,-123.2554633
+Power House - Meter Station,2040 West Mall (South of Power House) V6T 1Z2,49.2648785,-123.2524963
+Power House - Oil Storage Facility, University Boulevard (North of 6358) V6T 1Z4,49.2638791,-123.2556462
+Promontory Tower,2688 West Mall V6T 1Z4,49.255812,-123.2483589
+Public Safety Building,2990 / 2992 Wesbrook Mall V6T 2B7,49.2590164,-123.2381418
+Pulp and Paper Centre,2385 East Mall V6T 1Z4,49.2614053,-123.2470004
+Purdy Pavilion,2221 Wesbrook Mall V6T 1Z9,49.2626875,-123.2425462
+Reflections,6279 Eagles Drive V6T 1Z4,49.2582288,-123.2460178
+REGENT COLLEGE,2130 WESBROOK MALL ,49.2631574,-123.2426834
+Research Station Annex 3,2333 Lower Mall V6T 1Z4,49.2602259,-123.2537829
+Research Station Annex 6,2331 Lower Mall V6T 1Z4,49.2602259,-123.2537829
+RHODODENDRON WOOD, WEST MALL AND HAWTHORNE LANE (APPROXIMATE),49.2648785,-123.2524963
+Ritsumeikan-UBC House,6460 Agronomy Road V6T 1Z4,49.2602304,-123.2537307
+Robert F. Osborne Centre - Unit 1,6108 Thunderbird Boulevard V6T 1Z3,49.2605368,-123.2442778
+Robert F. Osborne Centre - Unit 2,6108 Thunderbird Boulevard V6T 1Z3,49.2605368,-123.2442778
+Rodney Graham Millennium Sculpture Pavillion,1940 Main Mall V6T 1Z1,49.2668134,-123.2544249
+ROSE GARDEN, NORTH WEST MARINE DRIVE AND MAIN MALL ,49.2648785,-123.2524963
+Rose Garden Parkade,6278 North West Marine Drive V6T 1Z1,49.2687207,-123.2586984
+Rugby Pavilion,2584 East Mall V6T 1Z3,49.2642554,-123.2492694
+Sage,5782 Berton Avenue V6T 1W5,49.2548617,-123.2361055
+School Addition,3250 East Mall V6T 1W5,49.2549289,-123.2414581
+School of Population & Public Health,2206 East Mall V6T 1Z3,49.2642554,-123.2492694
+Sedgewick Library,1958 Main Mall V6T 1Z1,49.2666971,-123.2543316
+Sing Tao Building,6388 Crescent Road V6T 1Z2,49.2685352,-123.2564317
+Sitka,5868 Agronomy Road V6T 1Z3,49.2629063,-123.242488
+Somerset,6360-6388 / 2602-2616 Larkin Drive / West Mall V6T 1Z4,49.2648785,-123.2524963
+Somerville House,6015 Walter Gage Road V6T 1Z1,49.2699172,-123.2506503
+Sopron House,2730 Acadia Road V6T 1R9,49.2621837,-123.235265
+South Campus Substation - Switching Station 12kv,6075 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+South Campus Telecommunication Hub Site,3425 Wesbrook Mall V6T 1W5,49.2562837,-123.2369491
+South Campus Warehouse,6116 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+SPENCER FIELD HOCKEY AND CRICKET PITCH (THUNDERBIRD PARK), THUNDERBIRD BOULEVARD AND WESBROOK MALL (Southwest of),49.2615127,-123.2415215
+Spirit,3478 Wesbrook Mall V6T 1W5,49.2699642,-123.2476503
+Spirit Park Apartments - 2705,2705 Osoyoos Crescent V6T 1X7,49.261215,-123.2386873
+Spirit Park Apartments - 2715,2715 Osoyoos Crescent V6T 1X7,49.261035,-123.2385069
+Spirit Park Apartments - 2725,2725 / 2735 Osoyoos Crescent V6T 1X7,49.2611996,-123.2389044
+St. Andrew's Hall Residence - Block A - Ross House & Mclean Block,6040 Iona Drive V6T 1Z1,49.269744,-123.251431
+St. Andrew's Hall Residence - Block A Addition,6640 Iona Drive V6T 1Z1,49.2714488,-123.2522388
+St. Andrew's Hall Residence - Block B - Walker House,6040 Iona Drive V6T 1Z1,49.269744,-123.251431
+St. Andrew's Hall Residence - Block C - Lennox House,6040 Iona Drive V6T 1Z1,49.270282,-123.25348
+St. John Hospice,6389 Stadium Road V6T 1Z4,49.2553222,-123.2466371
+St. John's College,2111 Lower Mall V6T 1Z4,49.2608612,-123.2542966
+St. John's College,2111 Lower Mall V6T 1Z4,49.2608612,-123.2542966
+St. John's College,2111 Lower Mall V6T 1Z4,49.2608612,-123.2542966
+St. Mark's College,5935 Iona Drive V6T 1Z1,49.2721931,-123.2485504
+St. Mark's College Chapel,5935 Iona Drive V6T 1Z1,49.2721931,-123.2485504
+St. Mark's Duplex 5,5938 / 5932 Chancellor Boulevard V6T 1Z1,49.2729165,-123.2496428
+St. Mark's Duplex 6,5928 / 5922 Chancellor Boulevard V6T 1Z1,49.2729816,-123.2493588
+St. Mark's Duplex 7,5918 / 5912 Chancellor Boulevard V6T 1Z1,49.2730055,-123.2492447
+St. Mark's Duplex 8,5908 / 5902 Chancellor Boulevard V6T 1Z1,49.2730828,-123.2487698
+Staging Research Centre,6045 Nurseries Road V6T 1W5,49.2439941,-123.2295725
+Stirling House,6080/6068/6078/6082/6086/6088 Iona Drive V6T 1Z1,49.2709454,-123.2518744
+Stores Road Annex,6368 Stores Road V6T 1Z4,49.262312,-123.2509576
+Student Recreation Centre,6000 Student Union Boulevard V6T 1Z1,49.2683282,-123.2498625
+Student Union Building (Sub),6138 Student Union Boulevard V6T 1Z1,49.2676114,-123.250492
+Student Union Building (Sub) - Addition 1,6138 Student Union Boulevard V6T 1Z1,49.2676114,-123.250492
+Student Union Building (Sub) - Addition 2,6138 Student Union Boulevard V6T 1Z1,49.2676114,-123.250492
+Tapestry At Wesbrook Village, UBC - North Building,3338 / 3308, 3318, 3328, 3348, Wesbrook Mall V6T 1W5,49.2641259,-123.2457642
+Tapestry At Wesbrook Village, UBC - South Building,3382 / 3378 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+Technology Enterprise Facility 3 (Tef3),6190 Agronomy Road V6T 1Z3,49.2615641,-123.2463326
+Telus Hub,5895 Berton Avenue V6T 1W5,49.2548617,-123.2361055
+The Barn,2323 Main Mall V6T 1Z4,49.2626336,-123.2508926
+The Brimacombe Building,2355 East Mall V6T 1Z4,49.2622708,-123.2476502
+The Fred Kaiser Building,2332 Main Mall V6T 1Z4,49.2631507,-123.2512468
+The Leonard S. Klinck Building,6356 Agricultural Road V6T 1Z2,49.2654478,-123.2561571
+The Leonard S. Klinck Building Addition,6356 Agricultural Road V6T 1Z2,49.2654478,-123.2561571
+The Mews,3333 Wesbrook Mall V6T 1W5,49.2545373,-123.2355498
+Thea Koerner House,6371 Crescent Road V6T 1Z2,49.2681148,-123.2577265
+Thea Koerner House Addition,6371 Crescent Road V6T 1Z2,49.2682368,-123.2578268
+Theatre-Film Production Building,6358 University Boulevard V6T 1Z4,49.2638791,-123.2556462
+Theatre-Film Production Building Annex,6358 University Boulevard V6T 1Z4,49.2638791,-123.2556462
+Thunderbird Park,  ,49.2648785,-123.2524963
+Thunderbird Parkade,6085 Thunderbird Boulevard V6T 1Z3,49.2606498,-123.2444886
+Thunderbird Residence - Building A1,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building A2,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building A3,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building A4,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building B1,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building B2,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building B2 Store,6315 Thunderbird Crescent V6T 2G9,49.2589362,-123.2497896
+Thunderbird Residence - Building B3,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building B4,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building C1,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Residence - Building C2,6335 Thunderbird Crescent V6T 2G9,49.2590391,-123.2498771
+Thunderbird Stadium,6288 Stadium Road V6T 1Z4,49.2552258,-123.2468566
+TODD SOCCER FIELD (THUNDERBIRD PARK), THUNDERBIRD BOULEVARD AND WEST 16TH (NORTHWEST CORNER),49.2648785,-123.2524963
+TOTEM FIELD, THUNDERBIRD BOULEVARD AND WEST MALL (SOUTHWEST OF),49.2585247,-123.2506435
+Totem Field Studios,2613 West Mall V6T 1Z4,49.256399,-123.2488793
+Totem Field Studios Addition,2613 West Mall V6T 1Z4,49.256399,-123.2488793
+TOTEM PARK,  ,49.2648785,-123.2524963
+Totem Park Residence - Coquihala Common Block/Magda's Convenience Store,2525 West Mall V6T 1W9,49.2588217,-123.2531154
+Totem Park Residence - Dene House/Nootka House,2525 West Mall V6T 1W9,49.2588217,-123.2531154
+Totem Park Residence - Haida House/Salish House,2525 West Mall V6T 1W9,49.2588217,-123.2531154
+Totem Park Residence - Hemlesem House,2525 West Mall V6T 1W9,49.2588217,-123.2531154
+Totem Park Residence - Kwakiutl House/Shuswap House,2525 West Mall V6T 1W9,49.2588217,-123.2531154
+Totem Park Residence - Qelexen House,2525 West Mall V6T 1W9,49.2588217,-123.2531154
+Townhouse Attached To Chancellor House - 2,6010 Chancellor Mews V6T 1Z1,49.272286,-123.2517214
+Townhouse Attached To Chancellor House - 3,6018 Chancellor Mews V6T 1Z1,49.2721976,-123.2519476
+Townhouse Attached To Chancellor House - 4,6022 Chancellor Mews V6T 1Z1,49.2721507,-123.2520586
+Triumf - Accelerator and Experimental Building,4004 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+Triumf - Offices, Laboratory & Workshops,4004 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+Triumf - Stores Building,4004 Wesbrook Mall V6T 2A3,49.2472207,-123.2297679
+Triumf - Workshop Building,4004 Wesbrook Mall V6T 1W5,49.2622266,-123.2418953
+Triumf House,5835 Thunderbird Boulevard V6T 2B7,49.261889,-123.2409128
+UBC FARM,6186 SOUTH CAMPUS ROAD ,49.2512954,-123.237958
+UBC Research Ponds,4069 Wesbrook Mall V6T 1W5,49.2574511,-123.2379739
+UBC Tennis Centre,6160 Thunderbird Boulevard V6T 1Z3,49.2600896,-123.2456988
+UBC Tennis Centre (New),6160 Thunderbird Boulevard V6T 1Z3,49.2600896,-123.2456988
+Ultima,3479 Wesbrook Mall V6T 1W5,49.2520567,-123.2338446
+University Services Building,2329 West Mall V6T 1Z4,49.2648785,-123.2524963
+Vancouver School of Theology - Chancellor Building - Chapel of Epiphany,6030 Chancellor Boulevard V6T 1Z1,49.272057,-123.2522806
+Vancouver School of Theology - Iona Building,6000 Iona Drive V6T 1L4,49.2713958,-123.2508277
+Vanier Pump Station,1935 Lower Mall V6T 1Z2,49.2647728,-123.2586914
+W. ROBERT WYMAN PLAZA, 1880 MAIN MALL (APPROXIMATE),49.2648785,-123.2524963
+Walter C. Koerner Library,1958 Main Mall V6T 1Z2,49.2666971,-123.2543316
+Walter H. Gage Residence - Apartments,5959 Student Union Boulevard V6T 1Z1,49.2694628,-123.2495977
+Walter H. Gage Residence - Common Block,5959 Student Union Boulevard V6T 1Z1,49.2694628,-123.2495977
+Walter H. Gage Residence - Court,5961 Student Union Boulevard V6T 1Z1,49.2691478,-123.2484158
+Walter H. Gage Residence - East Tower,5959 Student Union Boulevard V6T 1Z1,49.2694628,-123.2495977
+Walter H. Gage Residence - North Tower,5959 Student Union Boulevard V6T 1Z1,49.2694628,-123.2495977
+Walter H. Gage Residence - South Tower,5959 Student Union Boulevard V6T 1Z1,49.2694628,-123.2495977
+War Memorial Gymnasium,6081 University Boulevard V6T 1Z1,49.2659096,-123.2487816
+Wayne and William White Engineering Design Centre,2345 East Mall V6T 1Z4,49.2625136,-123.2478355
+Wesbrook Building,6174 University Boulevard V6T 1Z3,49.2656817,-123.250186
+Wesbrook Building Annex,6174 University Boulevard V6T 1Z3,49.2656817,-123.250186
+Wesbrook Discovery Centre,3345 Shrum Lane V6T 1W5,49.2542253,-123.2358417
+Wesbrook Residential Tower,5838 Berton Avenue V6T 1W5,49.2548617,-123.2361055
+Wesbrook Village - Office / Bank,5923 / 5905 Berton Avenue V6S 0B3,49.254985,-123.2362016
+Wesbrook Village - Save-On-Foods / Granite Terrace Apartments,5945 / 3233 Berton Avenue / Wesbrook Mall V6T 1W5,49.2648785,-123.2524963
+WEST COAST SUITES,5961 STUDENT UNION BOULEVARD ,49.2691478,-123.2484158
+West Mall Annex,1933 West Mall V6T 1Z2,49.2667435,-123.2572848
+West Mall Swing Space Building,2175 West Mall V6T 1Z4,49.2626531,-123.2539451
+West Parkade,2140 Lower Mall V6T 1Z4,49.2601396,-123.2536745
+Westchester Townhouses,2560-2598 / 6361-6387 West Mall / Larkin Drive V6T 1Z4,49.2648785,-123.2524963
+Westpoint,6005 Walter Gage Road V6T 1Z1,49.2698806,-123.2506762
+White Spot Restaurant in David Lam Management Research Centre,2015 Main Mall V6T 1Z2,49.2653494,-123.2531222
+WOLFSON I RUGBY FIELD (THUNDERBIRD PARK), EAST MALL AND THUNDERBIRD BOULEVARD (SOUTHEAST OF),49.2601045,-123.2459981
+WOLFSON II FIELDS (THUNDERBIRD PARK), EAST MALL AND WEST 16TH (NORTHEAST CORNER),49.2542664,-123.240976
+Wood Products Laboratory,2324 West Mall V6T 1Z4,49.2612436,-123.2531092
+Woodward Library,2198 Health Sciences Mall V6T 1Z3,49.26407,-123.2476465
+Woodward Library Addition,2198 Health Sciences Mall V6T 1Z3,49.26407,-123.2476465
+Yu,5955 / 5933 Burney Avenue V6T 1W5,49.2532727,-123.2359779
+UBC, 2329 W Mall V6T 1Z4, 49.26487850, -123.25249630
+1712 Acadia Rd,1712 Acadia Rd,49.272302,-123.241695
+
+Acute Care Unit,2211 Wesbrook Mall,49.2626956,-123.2425531,ACU
+Allard Hall (LAW),1822 East Mall,49.2642554,-123.2492694,ALRD
+Anthropology and Sociology,6303 North West Marine Drive,49.2688643,-123.2585333,ANSO
+Aquatic Ecosystems Research Laboratory,2202 Main Mall,49.2637441,-123.2510181,AERL
+Asian Centre,1871 West Mall,49.2668673,-123.2573857,ACEN
+Auditorium,6344 Memorial Road,49.2673746,-123.2557261,AUDI
+Auditorium Annex,1924 West Mall,49.2667547,-123.2572522,AUDX
+B.C. Binnings Studio,6373 University Boulevard,49.2643272,-123.2544359,BINN
+Biological Sciences,6270 University Boulevard,49.2647919,-123.2524886,BIOL
+Brock Hall Annex,1874 East Mall,49.2642554,-123.2492694,BRKX
+Buchanan,1866 Main Mall,49.2673161,-123.25483,BUCH
+Buchanan Tower,1873 East Mall,49.2642554,-123.2492694,BUTO
+Centre for Interactive  Research on Sustainability,2260 West Mall, V6T 1Z4,49.2617103,-123.2534092,CIRS
+Chan Centre,6265 Crescent Road,49.2694316,-123.2547799,CHAN
+Chemical and Biological Engineering Building,2360 East Mall V6T 1Z3,49.2622832,-123.2471796,CHBE
+Chemistry,2036 Main Mall,49.2653396,-123.2530715,CHEM
+Civil and Mechanical Engineering,6250 Applied Science Lane,49.2627317,-123.2489408,CEME
+D.H. Copp,2146 Health Sciences Mall,49.2646473,-123.2481188,COPP
+David Lam Management Research Centre,2033 Main Mall V6T 1Z2,49.2651552,-123.2529553,DLAM
+Dorothy Somerset Studio,6361 University Blvd,49.2645598,-123.2545515,DSOM
+Douglas Kenny,2136 West Mall,49.2626643,-123.2539124,KENN
+Earth and Ocean Sciences - Main,6339 Stores Road,49.2620303,-123.2518019,EOSM
+Earth Sciences Building,2207 Main Mall,49.2628075,-123.2510279,ESB
+Food, Nutrition and Health,2205 East Mall,49.2642554,-123.2492694,FNH
+Forest Sciences Centre,2424 Main Mall,49.2603866,-123.2489917,FSC
+Frank Forward,6350 Stores Road,49.2621101,-123.2516257,FORW
+Frederic Lasserre,6333 Memorial Road,49.2674086,-123.2556258,LASR
+Frederic Wood Theatre,6354 Crescent Road,49.2680432,-123.2570211,FRWO
+Friedman Building,2177 Wesbrook Mall V6T 1Z3,49.265415,-123.2460813,FRDM
+Geography,1984 West Mall,49.2655178,-123.256249,GEOG
+George Cunningham,2146 East Mall,49.2642554,-123.2492694,CUNN
+Hebb,2045 East Mall,49.2661246,-123.2508696,HEBB
+Hennings,6224 Agricultural Road,49.2662475,-123.2538161,HENN
+Henry Angus,2053 Main Mall,49.2649393,-123.2527698,ANGU
+Hugh Dempster Pavilion,6245 Agronomy Road V6T 1Z4,49.2601029,-123.2505251,DMP
+Hut M-22,2109 West Mall,49.263868,-123.2549174,HM22
+Institute for Computing (ICICS/CS),2366 Main Mall,49.2630427,-123.2511662,ICCS
+Irving K Barber Learning Centre,1961 East Mall V6T 1Z1,49.2676124,-123.2523876,IBLC
+J.B. MacDonald,2199 West Mall,49.2625776,-123.2538838,MCDN
+Jack Bell Building for the School of Social Work,2080 West Mall,49.2641209,-123.2550938,SOWK
+Leonard S. Klinck (also known as CSCI),6356 Agricultural Road,49.2654478,-123.2561571,LSK
+Life Sciences Centre,2350 Health Sciences Mall,49.2623096,-123.2462008,LSC
+MacLeod,2356 Main Mall,49.2630745,-123.2511899,MCLD
+MacMillan,2357 Main Mall,49.2625826,-123.250853,MCML
+Mathematics,1984 Mathematics Road,49.261226,-123.1139268,MATH
+Mathematics Annex,1986 Mathematics Road,49.261226,-123.1139268,MATX
+Medical Sciences Block C,2176 Health Sciences Mall,49.2641793,-123.2477359,MEDC
+Music,6361 Memorial Road,49.267322,-123.2558812,MUSC
+Neville Scarfe,2125 Main Mall,49.2629305,-123.2511234,SCRF
+Pharmaceutical Sciences Building,2405 Wesbrook Mall,49.2637237,-123.2434292,PHRM
+Ponderosa Annex E,2034 Lower Mall,49.2662747,-123.2587689,PONE
+Ponderosa Office Annex F,2008 Lower Mall,49.2649556,-123.2575736,PONF
+Ponderosa Office Annex H,2008 Lower Mall,49.2649556,-123.2575736,PONH
+Robert F. Osborne Centre,6108 Thunderbird Boulevard,49.2605368,-123.2442778,OSBO
+School of Population and Public Health,2206 East Mall,49.2642554,-123.2492694,SPPH
+Student Recreation Centre,6000 Student Union Blvd,49.2683282,-123.2498625,SRC
+The Leon and Thea Koerner University Centre,6331 Crescent Road V6T 1Z1,49.2686227,-123.2562303,UCLL
+Theatre-Film Production Building,6358 University Blvd, V6T 1Z4,49.2638791,-123.2556462,TFPB
+Theatre-Film Production Building Annex,6358 University Blvd, V6T 1Z4,49.2638791,-123.2556462,TFPX
+War Memorial Gymnasium,6081 University Blvd,49.2659096,-123.2487816,MGYM
+Wesbrook,6174 University Boulevard,49.2656817,-123.250186,WESB
+West Mall Annex,1933 West Mall,49.2667435,-123.2572848,WMAX
+West Mall Swing Space,2175 West Mall V6T 1Z4,49.2626531,-123.2539451,SWNG
+Woodward (Instructional Resources Centre-IRC),2194 Health Sciences Mall,49.2647801,-123.2467318,WOOD

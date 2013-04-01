@@ -5,7 +5,6 @@
 class FeedItem
 {
   protected $dataMap = array();
-  protected $geoCoord;
   protected $config;
   protected $createdFrom;
 
@@ -22,12 +21,30 @@ class FeedItem
           "imageUrl" => array("string"),
           "category" => array("array"),
           "pubDate" => array("string"),
-          "startDate" => array("string", null),
-          "endDate" => array("string", null),
+          "startDate" => array(null, "string", "DateTime"),
+          "endDate" => array("string", null, "DateTime"),
           "locationName" => array("string"),
           "locationGeo" => array("string"),
           "testing" => array("boolean")
           );
+
+  /**
+   * Checks for content equality in the feedItem.
+   * Does not check the config or createdFrom fields.
+   * @return true if $other has the same contents as $this
+   */
+  public function isEqual(FeedItem $other) {
+    foreach (self::$validParams as $key => $value) {
+      // only check for valid parameters
+      if (isset($this->dataMap[$key]) || isset($other->dataMap[$key])) {
+        if ($this->dataMap[$key] !== $other->dataMap[$key]){
+          print "Not Equal: {$key}\n";
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
   // Factory method to create from config file
   public static function createFromConfig(DataSourceConfig $config) {
@@ -79,15 +96,23 @@ class FeedItem
   }
 
   public function addLabel($key, $value) {
+    // trim whitespace
+    if (is_string($value)) {
+      $value = trim($value, ' ');
+    }
     $this->dataMap[$key] = $value;
   }
 
-  public function addGeoCoordinate($coordinate) {
-    $this->geoCoord = $coordinate;
+  public function addGeoCoordinate(GeoCoordinate $coordinate) {
+    $this->dataMap["locationGeo"] = (string) $coordinate;
   }
 
   public function getGeoCoordinate() {
-    return $this->geoCoord;
+    if (!isset($this->dataMap["locationGeo"])) {
+      return null;
+    } else {
+      return GeoCoordinate::createFromString($this->dataMap["locationGeo"]);
+    }
   }
 
   public function addAndValidateStringLabel($key, $value, $errorMessage) {
@@ -106,15 +131,28 @@ class FeedItem
     }
   }
 
+  /**
+   * Converts a string or DateTime $date into a solr compatible string format
+   * @params string or DateTime object that will be modified
+   */
   private function formatDate(&$date) {
     if (isset($date)) {
-      $dateTime = new DateTime($date);
+      $startDateType = gettype($date);
+      if ($startDateType === "string") {
+        $dateTime = new DateTime($date);
+      } else {
+        $dateTime = $date;
+      }
+
       $dateTime->setTimezone(new DateTimeZone("UTC"));
       // Solr date format, mandatory Z at the end for UTC
       $date = $dateTime->format('Y-m-d\TH:i:s\Z');
     }
   }
 
+  /**
+   * Adds additional meta information to this feed item, and formats all fields to match what solr allows.
+   */
   public function addMetaData() {
     $feedMap = $this->dataMap;
 
@@ -140,19 +178,7 @@ class FeedItem
     // Add source category from config if it exists
     $sourceCategory = $this->config->getSourceCategory();
     if (isset($sourceCategory)) {
-      switch (@gettype($feedMap["category"])) {
-      case "string":
-        $feedMap["category"] = array($feedMap["category"], $sourceCategory);
-        break;
-      case "array":
-        $feedMap["category"][] = $sourceCategory;
-        break;
-      case "NULL":
-        $feedMap["category"] = array($sourceCategory);
-        break;
-      default:
-        throw new KurogoDataException("Error in retrieved category type: ". gettype($feedMap["category"]));
-      }
+      $this->addCategory($sourceCategory, $feedMap);
     }
 
     // Fix date to be compatible with solr
@@ -181,12 +207,13 @@ class FeedItem
       if (isset($geoCoord)) {
         $feedMap["locationGeo"] = (string) $geoCoord;
       } else {
-        print "No valid geolocation for this source! Using default location from config\n";
-        $feedMap["locationName"] = $this->config->getSourceLocation();
-        $geoCoord = LocationMapper::getLocationMapper()->locationSearch($feedMap["locationName"]);
-        if (isset($geoCoord)) {
-          $feedMap["locationGeo"] = (string) $geoCoord;
-        }
+        print "No valid geolocation for this source!\n";
+        throw new KurogoDataException("Not a valid geolocation for this source! LocationName: ". $feedMap["locationName"]);
+        //$feedMap["locationName"] = $this->config->getSourceLocation();
+        //$geoCoord = LocationMapper::getLocationMapper()->locationSearch($feedMap["locationName"]);
+        //if (isset($geoCoord)) {
+        //  $feedMap["locationGeo"] = (string) $geoCoord;
+        //}
       }
     }
 
@@ -197,7 +224,10 @@ class FeedItem
     $this->dataMap = $feedMap;
   }
 
-  // Obtains the json necessary to perform a solr update from an already populated FeedItem
+  /**
+   * Returns the json necessary to perform a solr update from an already populated FeedItem
+   * @return valid json for a solr update
+   */
   public function getSolrUpdateJson() {
     if (!$this->isValid()) {
       throw new KurogoDataException("Invalid feed item");
@@ -205,19 +235,27 @@ class FeedItem
     return json_encode($this->dataMap);
   }
 
-  public function addCategory($category) {
-    switch (@gettype($this->dataMap["category"])) {
+  /**
+   * Add a category to this feedItem.
+   * @param new string category to add to this item
+   */
+  public function addCategory($category, &$feedMap) {
+    switch (@gettype($feedMap["category"])) {
     case "string":
-      $this->dataMap["category"] = array($this->dataMap["category"], $category);
+      if ($feedMap["category"] !== $category) {
+        $feedMap["category"] = array($feedMap["category"], $category);
+      }
       break;
     case "array":
-      $this->dataMap["category"][] = $category;
+      if (!in_array($category, $feedMap["category"])) {
+        $feedMap["category"][] = $category;
+      }
       break;
     case "NULL":
-      $this->dataMap["category"] = array($category);
+      $feedMap["category"] = array($category);
       break;
     default:
-      throw new KurogoDataException("Error in category type: ". gettype($this->dataMap["category"]));
+      throw new KurogoDataException("Error in category type: ". gettype($feedMap["category"]));
     }
   }
 

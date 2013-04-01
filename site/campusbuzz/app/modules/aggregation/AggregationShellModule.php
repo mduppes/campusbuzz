@@ -46,9 +46,10 @@ class AggregationShellModule extends ShellModule {
       print "Deleting all documents in solr\n";
       $feedItemSolrController->deleteAll();
       break;
-    case "deleteLocationMap":
-      print "Deleting all location mappings in solr\n";
-      LocationMapper::getLocationMapper()->deleteAllLocationsFromSolr();
+    case "updateLocationMap":
+      print "Updating all locations to Solr\n";
+      LocationMapper::getLocationMapper()->updateSolrLocations();
+      break;
     case "deleteAll":
       print "deleting everything in solr\n";
       //$this->solrController->deleteAllFeeditems();

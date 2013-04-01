@@ -4,12 +4,24 @@
 class SearchQuery {
 
   protected $keywordMap = array();
-  protected $categies = array();
+  protected $categories = array();
   protected $filters = array();
   protected $geoFilters = array();
   protected $returnFields = array();
   protected $rows;
   protected $sorts = array();
+
+  /**
+   * Code copied from http://e-mats.org/2010/01/escaping-characters-in-a-solr-query-solr-url/
+   * Escapes a solr string.
+   */
+  static public function escapeSolrValue($string)
+  {
+    $match = array('\\', '+', '-', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '~', '*', '?', ':', '"', ';', ' ');
+    $replace = array('\\\\', '\\+', '\\-', '\\&', '\\|', '\\!', '\\(', '\\)', '\\{', '\\}', '\\[', '\\]', '\\^', '\\~', '\\*', '\\?', '\\:', '\\"', '\\;', '\\ ');
+    $string = str_replace($match, $replace, $string);
+    return $string;
+  }
 
   public function addFilter($filter) {
     // Due to problem specific to geospatial queries separating them.
@@ -30,12 +42,19 @@ class SearchQuery {
   }
 
   public function addCategory($category) {
-    array_push($this->categies, $category);
+    $this->categories[] = $category;
   }
 
-  public function addKeyword($keyword, $field = "text") {
+  /**
+   * Add a query keyword
+   */
+  public function addKeyword($keyword, $boost = null, $field = "text") {
     // False booleans print out as "", we don't want that
-    $this->keywordMap[$field] = $keyword;
+    $escapedKeyword = self::escapeSolrValue($keyword);
+    if (isset($boost)) {
+      $escapedKeyword .= "^". $boost;
+    }
+    $this->keywordMap[] = array($field, $escapedKeyword);
   }
 
   public function setMaxItems($max) {
@@ -47,17 +66,20 @@ class SearchQuery {
     $searchParams  = array();
 
     $keywords = array();
-    foreach ($this->keywordMap as $searchField => $keyword) {
-      array_push($keywords, "{$searchField}:{$keyword}");
+    foreach ($this->keywordMap as $pair) {
+      $searchField = $pair[0];
+      $keyword = $pair[1];
+      $keywords[] = "{$searchField}:{$keyword}";
     }
+
     // if no keywords, the default is to search for anything
     if (empty($keywords)) {
-      array_push($keywords, "*:*");
+      $keywords[] = "*:*";
     }
 
     // Do a OR search of label keywords, for most anticipated cases this shouldn't matter
     // Since we will do a general search on the catchall solr schema label
-    $searchParams["q"] = implode(" ", $keywords);
+    $searchParams["q"] = implode(" OR ", $keywords);
 
     if ($this->returnFields != null) {
       $searchParams["fl"] = implode(',', $this->returnFields);
@@ -66,6 +88,12 @@ class SearchQuery {
     // set number of max items to return
     if ($this->rows !== null) {
       $searchParams["rows"] = $this->rows;
+    }
+
+    // Add category filters. This is done separately since it is an OR of categories
+    if (!empty($this->categories)) {
+      $categoryParams = implode(" OR ", $this->categories);
+      $searchParams["fq"] = "(". $categoryParams. ")";
     }
 
     // Add filters
@@ -82,7 +110,12 @@ class SearchQuery {
     // Although solr allows multiple fields such as fq, Kurogo's representation uses a PHP array
     // So cannot have multiple fields. To workaround we combine all fq's with logical and
     if (!empty($fq)) {
-      $searchParams["fq"] = implode(" AND ", $fq);
+      if (isset($searchParams["fq"])) {
+        $searchParams["fq"] .= " AND ";
+      } else {
+        $searchParams["fq"] = "";
+      }
+      $searchParams["fq"] .= implode(" AND ", $fq);
     }
 
     // Add sort of the query

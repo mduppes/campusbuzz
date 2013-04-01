@@ -5,13 +5,9 @@ abstract class SolrDataRetriever extends URLDataRetriever {
   protected $DEFAULT_PARSER_CLASS = "JSONDataParser";
   protected $DEFAULT_CACHE_LIFETIME = 300; // 5 min
 
+  protected $cacheGroup = 'Solr';
+
   abstract protected function getSolrBaseUrl();
-
-  protected function init($args) {
-    parent::init($args);
-
-    $this->clearCache();
-  }
 
   // internal function to retrieve query
   public function query(SearchQuery $searchQuery) {
@@ -24,6 +20,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
 
     $this->addParameter("wt", "json");
     $this->setMethod("GET");
+    $this->setCacheRequest(true);
     $data = $this->getData();
 
     $this->_checkResponseQuery($data);
@@ -38,15 +35,18 @@ abstract class SolrDataRetriever extends URLDataRetriever {
    * @param string Valid Json that can be used to update solr
    */
   public function persist($jsonData) {
-    $this->clearCache();
+    if (!isset($jsonData)) {
+      throw new KurogoDataException("Data to persist is null");
+    }
+
     $this->setBaseURL($this->getSolrBaseUrl(). "update/json");
     $this->addHeader("Content-type", "application/json");
     // immediately make data searchable
     $this->addParameter("commit", "true");
     $this->setData($jsonData);
     $this->setMethod("POST");
+    $this->setCacheRequest(false);
     $data = $this->getData();
-    $this->clearCache();
 
     $this->_checkResponseUpdate($data);
   }
@@ -81,16 +81,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
   }
 
   public function deleteAll($query = "*:*") {
-    $this->clearCache();
-    $this->setBaseURL($this->getSolrBaseUrl(). "update/json");
-    $this->addHeader("Content-type", "application/json");
-    // immediately make data searchable
-    $this->addParameter("commit", "true");
-    $this->setData('{"delete":{"query":"'. $query. '"}}');
-    $this->setMethod("POST");
-    $data = $this->getData();
-    $this->clearCache();
-
-    $this->_checkResponseUpdate($data);
+    $jsonQuery = '{"delete":{"query":"'. $query. '"}}';
+    $this->persist($jsonQuery);
   }
 }

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Sanity tests for retrieving tweets from Twitter, and also parsing sample Twitter responses.
+ */
 class TwitterDataRetrieverTest {
 
   // simple sanity test for feed retrieval
@@ -10,6 +13,7 @@ class TwitterDataRetrieverTest {
     return (count($tweets)) > 0 ? true : false;
   }
 
+  // Test geolocation search from twitter
   public function testGetTweetsAtGeoLocation() {
     $centerOfUBC = new GeoCoordinate(49.26, -123.24);
     $tweets = Tester::getTester()->twitterController->getTweetsAtGeoLocation($centerOfUBC, 3);
@@ -17,13 +21,15 @@ class TwitterDataRetrieverTest {
     return (count($tweets)) > 0 ? true : false;
   }
 
+  // Parse sample results into feedItems
   public function testParseResultsIntoFeedItems() {
     $config = new DataSourceConfig($this->sampleTwitterConfig);
     $sampleFeed = json_decode($this->sampleTwitterFeedJson, true);
     $feedItems = Tester::getTester()->twitterController->parseResultsIntoFeedItems($sampleFeed, $config);
 
-
-    if (count($feedItems) != 5) {
+    // 2/5 are from toronto, should not match in solr
+    if (count($feedItems) != 3) {
+      print_r($feedItems);
       print "Number feeditems returned is wrong\n";
       return false;
     }
@@ -65,8 +71,11 @@ class TwitterDataRetrieverTest {
     }
 
     // check geo working
-    if ($feedItems[4]->getGeoCoordinate() != new GeoCoordinate(49.266116, -123.251558)) {
+    // In this case, British Columbia CANADA EARTH!
+    // Maps to somewhere on UBC
+    if (!$feedItems[0]->getGeoCoordinate()->isEqual(new GeoCoordinate(49.2628075,-123.2510279), 0.1)) {
       print "geo wrong\n";
+      print_r($feedItems[0]->getGeoCoordinate());
       return false;
     }
 

@@ -20,7 +20,7 @@ class FieldQueryFilter {
       $value = 1;
     }
 
-    $this->value = $value;
+    $this->value = SearchQuery::escapeSolrValue($value);
   }
 
 }

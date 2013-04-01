@@ -9,21 +9,21 @@ import time
 # extracts buildings from UBC building list at:
 # http://www.maps.ubc.ca/PROD/buildingsListAll.php
 def mapLocationsToGeoCoords():
-    
+
     response1 = urllib2.urlopen("http://www.maps.ubc.ca/PROD/buildingsListAll.php")
     data1 = response1.read()
 
     all_buildings_url = re.findall(r'<li><a href="(.*)">(.*)</a>', data1)
-    
+
     for building in all_buildings_url:
         response_building = urllib2.urlopen("http://www.maps.ubc.ca/PROD/" + building[0])
         data_building = response_building.read()
         match = re.search(r'<h2>(.*)</h2>', data_building)
         address = match.group(1)
-    
+
         formatted_address = re.sub(' ', '+', address)
         response_google_geocode_api = urllib2.urlopen(
-            "http://maps.googleapis.com/maps/api/geocode/json?address=" + formatted_address + "+Vancouver+Canada&sensor=false")
+            "http://maps.googleapis.com/maps/api/geocode/json?address=" + formatted_address + "+University+of+British+Columbia+Vancouver+Canada&sensor=false")
         json_response = json.loads(response_google_geocode_api.read())
         if json_response['status'] == 'OK':
             lat = json_response['results'][0]['geometry']['location']['lat']
@@ -36,7 +36,7 @@ def mapLocationsToGeoCoords():
 # mostly duplicate code for same purposes of extracting code and buildings from:
 # http://www.students.ubc.ca/classroomservices/buildings-and-classrooms/
 def mapLocationsWithBuildingCodesToGeoCoords():
-    
+
     response1 = urllib2.urlopen("http://www.students.ubc.ca/classroomservices/buildings-and-classrooms/")
     data1 = response1.read()
 
@@ -57,7 +57,7 @@ def mapLocationsWithBuildingCodesToGeoCoords():
 
 
         formatted_address = re.sub(' ', '+', building_address)
-    
+
         #print formatted_address
         response_google_geocode_api = urllib2.urlopen(
             "http://maps.googleapis.com/maps/api/geocode/json?address=" + formatted_address + "+Vancouver+Canada&sensor=false")
@@ -70,7 +70,7 @@ def mapLocationsWithBuildingCodesToGeoCoords():
             print "error in google api response for", building_name, building_address
             pprint.pprint(json_response)
         time.sleep(2)
-    
+
 
 
 def aaa():
@@ -89,7 +89,7 @@ def aaa():
         print "Error retrieving view state"
         return
 
-    params = (('__EVENTTARGET', ''), 
+    params = (('__EVENTTARGET', ''),
               ('__EVENTARGUMENT', ''),
               ('__VIEWSTATE', view_state),
               ('ctl00$MainContent$CallingCodeDropDownList', '-1'),
@@ -106,7 +106,7 @@ def aaa():
 
 
     login_headers = response2.info().headers
-    login_response = response2.read()    
+    login_response = response2.read()
 
     #choose location means login succeeded
     match = re.search("tranrpt1.aspx", login_response)

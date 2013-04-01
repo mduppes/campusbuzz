@@ -1,16 +1,22 @@
 <?php
 
+/**
+ * Class that executes data retrieval from various data sources.
+ */
 class FeedItemManager {
 
+  // Controllers to retrieve each type of datasource
   private $dataSourceConfigs;
   private $twitterController;
   private $facebookController;
   private $rssController;
 
+  // Controller to access solr feed items index
   private $feedItemSolrController;
 
   private $categorizer;
 
+  // Facebook credentials
   private $fbId;
   private $fbSecret;
 
@@ -18,10 +24,10 @@ class FeedItemManager {
     print "Retrieving data for ". $dataSourceConfig->getSourceName(). "\n";
     switch($dataSourceConfig->getSourceType()) {
     case 'RSS':
+    case 'RSSEvents':
       return $this->rssController->retrieveSource($dataSourceConfig);
     case 'Facebook':
       return $this->facebookController->retrieveSource($dataSourceConfig);
-      break;
     case 'Twitter':
     case 'TwitterGeoSearch':
       return $this->twitterController->retrieveSource($dataSourceConfig);
@@ -96,7 +102,7 @@ class FeedItemManager {
 
     // init controllers (data retrievers)
     $this->twitterController = DataRetriever::factory('TwitterDataRetriever', array());
-    $this->facebookController = DataRetriever::factory('FacebookDataRetriever', array($this->fbId, $this->fbSecret));
+    $this->facebookController = DataRetriever::factory('FacebookDataRetriever', array('FB_ID' => $this->fbId, "FB_SECRET" => $this->fbSecret));
     $this->rssController = DataRetriever::factory('RSSDataRetriever', array());
 
 
@@ -119,9 +125,6 @@ class FeedItemManager {
     if (!isset($dataSourceConfigsDecoded["fbsecret"])) {
       throw new KurogoConfigurationException("Missing fbsecret");
     }
-    if (!isset($dataSourceConfigsDecoded["buzzDefaultCategory"])) {
-      print "Default buzz category (catch all) not set.\n";
-    }
     if (!isset($dataSourceConfigsDecoded["buzzCategories"])) {
       throw new KurogoConfigurationException("Missing buzz category map: buzzCategories");
     }
@@ -133,11 +136,10 @@ class FeedItemManager {
     $this->categorizer = new Categorizer(
                                          $dataSourceConfigsDecoded["officialCategories"],
                                          $dataSourceConfigsDecoded["buzzCategories"],
-                                         $dataSourceConfigsDecoded["buzzDefaultCategory"],
                                          $this->feedItemSolrController);
 
     $this->fbId = $dataSourceConfigsDecoded["fbid"];
-    $this->fbsecret = $dataSourceConfigsDecoded["fbsecret"];
+    $this->fbSecret = $dataSourceConfigsDecoded["fbsecret"];
 
     $this->dataSourceConfigs = array();
     if (!isset($dataSourceConfigsDecoded["feeds"])) {

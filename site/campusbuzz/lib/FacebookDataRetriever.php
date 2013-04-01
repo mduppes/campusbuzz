@@ -3,13 +3,28 @@
 class FacebookDataRetriever extends URLDataRetriever
 {
   protected $DEFAULT_PARSER_CLASS = 'JSONDataParser';
+  protected $cacheGroup = 'Facebook';
 
-  private $clientId = "347882941994347";
-
-  // move this to file..
-  private $clientSecret = "ca91999af6a102dc16168394fe826d92";
+  // Facebook Graph API access related
+  private $clientId;
+  private $clientSecret;
   private $accessToken = null;
 
+  protected function init($args) {
+    parent::init($args);
+
+    if (isset($args["FB_ID"])) {
+      $this->clientId = $args["FB_ID"];
+    } else {
+      throw new KurogoConfigurationException("No FB_ID exists");
+    }
+
+    if (isset($args["FB_SECRET"])) {
+      $this->clientSecret = $args["FB_SECRET"];
+    } else {
+      throw new KurogoConfigurationException("No FB_SECRET exists");
+    }
+  }
 
   private function getOpenGraphUrl($url) {
     $this->getAccessToken();
@@ -19,7 +34,8 @@ class FacebookDataRetriever extends URLDataRetriever
     return $data;
   }
 
-  private function getFbId($name) {
+  // internal function exposed for testing..
+  public function getFbId($name) {
     $url = 'https://graph.facebook.com/'. $name;
     $data = $this->getOpenGraphUrl($url);
     if (!isset($data)) {
@@ -72,16 +88,18 @@ class FacebookDataRetriever extends URLDataRetriever
   private function populateFeedItem(&$newFeedItem, $jsonFeedItem, $fbid) {
 
     // Manually populate for now
-
-    $url = $jsonFeedItem["link"];
-    $newFeedItem->addAndValidateStringLabel("url", $url, "Invalid url for tweet");
+    $url = @$jsonFeedItem["link"];
 
     // check if event
     $eventUrl = "https://www.facebook.com/events/";
-    if ($jsonFeedItem["type"] == "link" && !strncmp($url, $eventUrl, strlen($eventUrl)) ) {
+    if ($jsonFeedItem["type"] == "link" && isset($url) && !strncmp($url, $eventUrl, strlen($eventUrl)) ) {
       // This is an event
-      $eventId = substr($url, strlen($eventUrl));
-      $eventJsonData = $this->getFbId($eventId);
+      $newFeedItem->addAndValidateStringLabel("url", $url, "Invalid url for fb post");
+
+      $eventId = trim(substr($url, strlen($eventUrl)), '/');
+
+      $eventJsonData = $this->getPage($eventId);
+
       // Need a title, for now copy content
       $newFeedItem->addAndValidateStringLabel("title", $eventJsonData["name"],
                                               "Error for event title");
@@ -96,73 +114,175 @@ class FacebookDataRetriever extends URLDataRetriever
 
       $newFeedItem->addAndValidateOptionalStringLabel("locationName", $eventJsonData["location"], "Not a valid location string for fb event");
 
-      $venueId = $eventJsonData["venue"];
+      $venueId = $eventJsonData["venue"]["id"];
       $venueJsonData = $this->getPage($venueId);
       $coord = $this->extractGeoCoordinate($venueJsonData);
-      $newFeedItem->addGeoCoordinate($coord);
+      if (isset($coord)) {
+        $newFeedItem->addGeoCoordinate($coord);
+      }
     } else {
       // not an event
 
-      $newFeedItem->addAndValidateOptionalStringLabel("imageUrl", @$jsonFeedItem["picture"], "Not a valid image url for tweet");
+      if (!isset($jsonFeedItem["message"])) {
+        // This is probably a photo with no message, ignore
+        throw new KurogoDataException("Message field is null, ignoring this fb: ". $jsonFeedItem["type"]);
+      }
 
       $newFeedItem->addAndValidateStringLabel("content", $jsonFeedItem["message"],
-                                              "No text for tweet");
+                                              "No message for fb");
 
       // Need a title, for now copy content
       $newFeedItem->addAndValidateStringLabel("title", $jsonFeedItem["message"],
                                               "Error duplicating text for title");
 
-      $newFeedItem->addAndValidateOptionalStringLabel("locationName", @$jsonFeedItem["place"]["name"], "Not a valid location string for tweet");
+
+      if (!isset($url) && isset($jsonFeedItem["id"])) {
+          $url = "https://www.facebook.com/". $jsonFeedItem["id"];
+      }
+      $newFeedItem->addAndValidateStringLabel("url", $url, "Invalid url for fb post");
+
+      $newFeedItem->addAndValidateOptionalStringLabel("imageUrl", @$jsonFeedItem["picture"], "Not a valid image url for fb");
+
+      $newFeedItem->addAndValidateOptionalStringLabel("locationName", @$jsonFeedItem["place"]["name"], "Not a valid location string for fb");
 
       $geoCoord = $this->extractGeoCoordinate($jsonFeedItem);
-      $newFeedItem->addGeoCoordinate($geoCoord);
+      if (isset($geoCoord)) {
+        $newFeedItem->addGeoCoordinate($geoCoord);
+      }
 
     }
     $newFeedItem->addAndValidateStringLabel("pubDate", $jsonFeedItem["updated_time"],
-                                            "No created_at for tweet");
+                                            "No created_at for fb");
 
     // change name if this was from a different id
     if ($jsonFeedItem["from"]["id"] != $fbid) {
       $newFeedItem->addAndValidateStringLabel("name", $jsonFeedItem["from"]["name"], "Invalid from name from fb object");
     }
-
-
   }
 
-
-  private function parseResultsIntoFeedItems($feedMap, $config, $fbid) {
+  public function parseResultsIntoFeedItems($feedMap, $config, $fbid) {
     if ($feedMap == null) {
       throw new KurogoDataException("Error parsing null feed json item");
     }
 
     $feedItems = array();
     foreach ($feedMap as $jsonFeedItem) {
-      if ($jsonFeedItem["from"]["id"] != $fbid && $config->isOfficialSource()) {
-        // This post is from somebody else
-        // TODO: handle this
-        continue;
-      }
-
       try {
         $newFeedItem = FeedItem::createFromConfig($config);
         $this->populateFeedItem($newFeedItem, $jsonFeedItem, $fbid);
+
+        if ($jsonFeedItem["from"]["id"] != $fbid) {
+          // This post is from somebody else, check if it is an official source
+          $isOfficialSource = isset($this->_officialSourceFbIdMap[$jsonFeedItem["from"]["id"]]) ? true : false;
+          $newFeedItem->addLabel("officialSource", $isOfficialSource);
+        }
+
         $newFeedItem->addMetaData();
         $feedItems[] = $newFeedItem;
       } catch (Exception $e) {
-        print "Failed to populate feed item". $e->getMessage(). "\n";
+        print "Failed to populate feed item: ". $e->getMessage(). "\n";
       }
     }
-    print "\n\n============= Obtained Facebook result: \n\n";
+    //print "\n\n============= Obtained Facebook result: \n\n";
     //print_r($feedMap);
-    print "fbid\n";
+    //print "fbid\n";
     //print_r($fbid);
-    print_r($feedItems);
+    //print_r($feedItems);
     return $feedItems;
   }
 
-  public function retrieveSource($config) {
+  /**
+   * Retrieve FeedItems by querying the URL's from a given data source config.
+   * @param data source config to retrieve.
+   * @return array of FeedItems obtained from this data source
+   */
+  public function retrieveSource(DataSourceConfig $config) {
     $fbid = $this->getFbId($config->getSourceUrl());
     $feedMap = $this->getFeedFromPage($config->getSourceUrl());
     return $this->parseResultsIntoFeedItems($feedMap, $config, $fbid);
   }
+
+  // Gathered FBID's of official UBC source pages
+  private $_officialSourceFbIdMap =
+    array(
+          "16761458703" => "The University of British Columbia",
+          "187745150182" => "UBC Alumni Association",
+          "43456649150" => "UBC Film Production Alumni Association",
+          "8593703425" => "UBC Bookstore",
+          "119392889939" => "UBC Campus and Community Planning",
+          "185527296331" => "UBC Career Services",
+          "211023718628" => "UBC Centre for Student Involvement",
+          "135004786640540" => "UBC Centre for Teaching, Learning and Technology",
+          "152158141486572" => "UBC First Nations House of Learning",
+          "114025336267" => "UBC Go Global",
+          "138288639530229" => "UBC Learning Exchange",
+          "133596536665975" => "UBC's news in the Okanagan",
+          "62250146183" => "UBC Press",
+          "206397061958" => "UBC Prospective Undergraduates",
+          "48978787993" => "UBC Alma Mater Society",
+          "64895937030" => "UBC Commerce Undergraduate Society",
+          "138083118623" => "UBC International Business Club",
+          "216459251726609" => "UBC Residence Hall Association",
+          "128843469516" => "Science Undergraduate Society of UBC",
+          "173864423352" => "UBC Student Leadership Conference (SLC)",
+          "123083611078355" => "UBC Players Club",
+          "99164676792" => "The Ubyssey",
+          "191367330892004" => "UBC Faculty of Applied Science (Engineering)",
+          "143543645534" => "UBC Faculty of Arts",
+          "145943338785891" => "UBC Faculty of Forestry",
+          "283683945029178" => "UBC Faculty of Graduate Studies",
+          "349844239398" => "UBC Faculty of Land and Food Systems",
+          "180644975280905" => "UBC Faculty of Law",
+          "77207808489" => "UBC Faculty of Science",
+          "151693221552338" => "UBC Sauder School of Business BCom Program",
+          "138463566188010" => "UBC Sauder School of Business MBA Program",
+          "122723497779164" => "UBC Master of Management - Early Career Masters Program",
+          "152000511496023" => "Sauder School of Business at the University of British Columbia",
+          "199645413412070" => "Arts One Program at UBC",
+          "22151909544" => "Biochemistry at UBC",
+          "257755474262509" => "UBC Department of Chemistry",
+          "32625077959" => "UBC CFIS",
+          "105481622830895" => "UBC CPD (The UBC Division of Continuing Professional Development, Faculty of Medicine)",
+          "118530886992" => "UBC English Language Institute",
+          "43456649150" => "UBC Film Production Program",
+          "218095258223843" => "UBC Department of Geography",
+          "150521538304337" => "UBC Graduate School of Journalism",
+          "12269080757" => "UBC Integrated Science Program",
+          "138288639530229" => "UBC Learning Exchange",
+          "92780592171" => "UBC Opera",
+          "471799796202940" => "UBC Philosophy Department",
+          "301557643201292" => "UBC Teacher Education",
+          "84835972965" => "Theatre at UBC",
+          "320891444656637" => "UBC Arts Co-op Program",
+          "137857806262448" => "UBC Arts Co-op Students' Association",
+          "217735101629082" => "School of Population and Public Health",
+          "319171334760379" => "UBC Human Early Learning Partnership",
+          "116247148388385" => "UBC School of Music",
+          "221355054597138" => "UBC Liu Institute for Global Issues",
+          "79718832777" => "UBC Aquatic Centre",
+          "77837463267" => "UBC Botanical Garden",
+          "148903255121402" => "Beaty Biodiversity Museum",
+          "33605145925" => "Chan Centre for the Performing Arts",
+          "141914082503899" => "Go Thunderbirds",
+          "16609125085" => "Irving K. Barber Learning Centre",
+          "94560725354" => "Morris and Helen Belkin Art Gallery",
+          "261008030084" => "Museum of Anthropology",
+          "201724309862026" => "UBC Department of Occupational Science &amp; Occupational Therapy",
+          "124560474228521" => "UBC REC",
+          "21575979616" => "UBC Okanagan Athletics",
+          "112198338520" => "UBC Wellness Centre",
+          "116247148388385" => "UBC School of Music",
+          "142718259085294" => "UBC Birdcoop Fitness Centre",
+          "235699997790" => "UBC Library",
+          "165768816766471" => "Canaccord Learning Commons",
+          "128846127152088" => "Chapman Learning Commons",
+          "10434725898" => "David Lam Library",
+          "16609125085" => "Irving K. Barber Learning Centre",
+          "6582698414" => "Law Library",
+          "26266194795" => "Asian Library",
+          "230872143627109" => "Xwi7xwa Library",
+          "120500581320676" => "Asia Pacific Memo",
+          "125372226396" => "Healthy Minds at UBC"
+          );
+
 }
