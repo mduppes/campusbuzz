@@ -43,12 +43,13 @@ class FeedItemManager {
 
     $successes = 0;
 
+    $totalUpdateCount = 0;
     foreach ($this->dataSourceConfigs as $dataSourceConfig) {
       $error = false;
       $feedItems = null;
       // retrieve feed based on config
       try {
-        print "obtaining feed for source: ". $dataSourceConfig->getSourceName(). "\n";
+        print "\nobtaining feed for source: ". $dataSourceConfig->getSourceName(). "\n";
         $feedItems = $this->_retrieve($dataSourceConfig);
         print "obtained feed for source: ". $dataSourceConfig->getSourceName(). "\n";
       } catch (Exception $e) {
@@ -56,36 +57,37 @@ class FeedItemManager {
         $error = true;
       }
 
-
       if ($feedItems == null) {
         print "No feed items extracted for feed. ". $dataSourceConfig->getSourceName(). "\n";
         $error = true;
       } else {
         // Now persist FeedItems into solr
-        print "persisting feedItems into solr for ". $dataSourceConfig->getSourceName(). "\n";
+        print "Attempting to persist FeedItems into solr for ". $dataSourceConfig->getSourceName(). "\n";
         try {
-          $this->feedItemSolrController->persistFeedItems($feedItems);
+          $feedUpdateCount = $this->feedItemSolrController->persistFeedItems($feedItems);
+          print "Updated {$feedUpdateCount} FeedItems to Solr\n";
+          $totalUpdateCount += $feedUpdateCount;
         } catch (Exception $e) {
           print "Error persisting feed for source {$dataSourceConfig->getSourceName()}. ".$e->getMessage(). "\n";
           $error = true;
         }
-
       }
 
       if (!$error) {
         $successes++;
-        print "Successfully retrieved and persisted {$dataSourceConfig->getSourceName()}\n";
+        print "Retrieved and persisted {$dataSourceConfig->getSourceName()}\n";
       } else {
         print "Error Retrieving and Persisting Config: ". $dataSourceConfig->getSourceName(). "\n";
         print_r($dataSourceConfig);
       }
     }
 
-    print "Successfully retrieved and persisted {$successes} / ". count($this->dataSourceConfigs). "\n";
+    print "\n\nSuccessfully retrieved and persisted {$successes} / ". count($this->dataSourceConfigs). " sources\n";
+    print "Total of {$totalUpdateCount} FeedItems updated\n\n";
 
     // Once the feedItems have been persisted, categorize based on keyword match in solr index
     try {
-      print "Categorizing persisted feedItems\n";
+      print "Categorizing persisted FeedItems by querying Solr for keyword matches:\n";
       $this->categorizer->categorizeFeedItemsSince($aggregationStartTime);
     } catch (Exception $e) {
       print "Error categorizing feeditems. ". $e->getMessage(). "\n";

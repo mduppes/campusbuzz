@@ -38,8 +38,7 @@ class TwitterDataRetriever extends URLDataRetriever
   /**
    * Given a parsed json php item, populate a newFeedItem and validate
    */
-  private function populateFeedItem(&$newFeedItem, $jsonFeedItem) {
-
+  private function populateFeedItem(&$newFeedItem, $jsonFeedItem, $userId) {
     // Manually populate for now
     $newFeedItem->addAndValidateStringLabel("pubDate", $jsonFeedItem["created_at"],
                                             "No created_at for tweet");
@@ -74,6 +73,13 @@ class TwitterDataRetriever extends URLDataRetriever
       $newFeedItem->addAndValidateStringLabel("url", $url, "Invalid url for tweet");
       $newFeedItem->addAndValidateOptionalStringLabel("imageUrl", $jsonFeedItem["profile_image_url"], "Not a valid image url for tweet");
       $newFeedItem->addAndValidateStringLabel("name", $jsonFeedItem["from_user"], "Invalid name from tweet");
+
+      // This is a tweet from a different user
+      if ($jsonFeedItem["from_user"] !== $userId) {
+        // Look through posts to see if any were official sources
+        $isOfficialSource = (isset($this->_officialSourceTwitterUserMap[$jsonFeedItem["from_user"]])) ? true : false;
+        $newFeedItem->addLabel("officialSource", $isOfficialSource);
+      }
     }
   }
 
@@ -89,7 +95,7 @@ class TwitterDataRetriever extends URLDataRetriever
     foreach ($feedMap as $jsonFeedItem) {
       try {
         $newFeedItem = FeedItem::createFromConfig($config);
-        $this->populateFeedItem($newFeedItem, $jsonFeedItem);
+        $this->populateFeedItem($newFeedItem, $jsonFeedItem, $config->getSourceUrl());
         $newFeedItem->addMetaData();
         $feedItems[] = $newFeedItem;
       } catch (Exception $e) {
@@ -117,15 +123,6 @@ class TwitterDataRetriever extends URLDataRetriever
     //print_r($feedMap);
     $feedItems = $this->parseResultsIntoFeedItems($feedMap, $config);
 
-    if ($isGeoSearch) {
-      // Look through posts to see if any were official sources
-      foreach ($feedItems as $feedItem) {
-        if (isset($this->_officialSourceTwitterUserMap[$feedItem->getLabel("name")])) {
-          $feedItem->setLabel("officialSource", true);
-        }
-      }
-    }
-
     return $feedItems;
   }
 
@@ -140,6 +137,7 @@ class TwitterDataRetriever extends URLDataRetriever
 			$coordinate->longitude. ','.
 			$radius. 'km');
     $data = $this->getData();
+    print_r($data);
     if (isset($data) && isset($data["results"])) {
       return $data["results"];
     } else {

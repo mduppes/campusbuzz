@@ -20,7 +20,6 @@ abstract class SolrDataRetriever extends URLDataRetriever {
 
     $this->addParameter("wt", "json");
     $this->setMethod("GET");
-    $this->setCacheRequest(true);
     $data = $this->getData();
 
     $this->_checkResponseQuery($data);
@@ -47,6 +46,7 @@ abstract class SolrDataRetriever extends URLDataRetriever {
     $this->setMethod("POST");
     $this->setCacheRequest(false);
     $data = $this->getData();
+    $this->setCacheRequest(true);
 
     $this->_checkResponseUpdate($data);
   }

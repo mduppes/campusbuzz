@@ -157,6 +157,10 @@ class FacebookDataRetriever extends URLDataRetriever
     // change name if this was from a different id
     if ($jsonFeedItem["from"]["id"] != $fbid) {
       $newFeedItem->addAndValidateStringLabel("name", $jsonFeedItem["from"]["name"], "Invalid from name from fb object");
+
+      // This post is from somebody else, check if it is an official source
+      $isOfficialSource = isset($this->_officialSourceFbIdMap[$jsonFeedItem["from"]["id"]]) ? true : false;
+      $newFeedItem->addLabel("officialSource", $isOfficialSource);
     }
   }
 
@@ -170,12 +174,6 @@ class FacebookDataRetriever extends URLDataRetriever
       try {
         $newFeedItem = FeedItem::createFromConfig($config);
         $this->populateFeedItem($newFeedItem, $jsonFeedItem, $fbid);
-
-        if ($jsonFeedItem["from"]["id"] != $fbid) {
-          // This post is from somebody else, check if it is an official source
-          $isOfficialSource = isset($this->_officialSourceFbIdMap[$jsonFeedItem["from"]["id"]]) ? true : false;
-          $newFeedItem->addLabel("officialSource", $isOfficialSource);
-        }
 
         $newFeedItem->addMetaData();
         $feedItems[] = $newFeedItem;

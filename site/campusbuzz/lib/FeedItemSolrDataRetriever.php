@@ -73,11 +73,11 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
    * Insert an array of FeedItems into solr
    * @param FeedItem[] Items to persist to database
    * @param bool if false, will only exist if unique (no duplicate entries already exist)
+   * @return number of items persisted
    */
   public function persistFeedItems($feedItems, $overwrite = false) {
 
     $jsonUpdate = array();
-    $skipCount = 0;
     foreach ($feedItems as $feedItem) {
       // Create a query which searches by ID and returns if it hit or not
       // Does not return the items itself
@@ -91,21 +91,20 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
             print_r($existingItem);
             throw new KurogoDataException("Returned more than 1 for solr id query");
           }
-          print "Item already exists in database, skipping id: ". $feedItem->getLabel("id"). "\n";
-          $skipCount++;
           continue;
         }
       } else {
-        print "Overwriting item in database, id: ". $feedItem->getLabel("id"). "\n";
+        print "Updating item in database, id: ". $feedItem->getLabel("id"). "\n";
       }
       // Add valid item to persist list
       $jsonUpdate[] = $feedItem->getSolrUpdateJson();
     }
 
-    print "Items to persist: ". count($jsonUpdate). " / ". count($feedItems). ", skipped duplicates: {$skipCount}\n";
+    print "Updating Solr FeedItems: ". count($jsonUpdate). " / ". count($feedItems). " after removing duplicates.\n";
     // trim trailing comma and add closing bracket
-    $jsonUpdate = '['. implode(',', $jsonUpdate). ']';
-    $this->persist($jsonUpdate);
+    $jsonUpdateString = '['. implode(',', $jsonUpdate). ']';
+    $this->persist($jsonUpdateString);
+    return count($jsonUpdate);
   }
 
 
