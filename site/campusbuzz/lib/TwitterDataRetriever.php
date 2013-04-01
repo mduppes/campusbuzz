@@ -136,6 +136,7 @@ class TwitterDataRetriever extends URLDataRetriever
     $this->addParameter('geocode', $coordinate->latitude. ','.
 			$coordinate->longitude. ','.
 			$radius. 'km');
+    $this->addParameter('lang', 'en');
     $data = $this->getData();
     print_r($data);
     if (isset($data) && isset($data["results"])) {
