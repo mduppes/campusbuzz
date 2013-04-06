@@ -32,6 +32,7 @@ class FacebookDataRetrieverTest {
     $fbid = "16761458703";
     $feedItems = Tester::getTester()->facebookController->parseResultsIntoFeedItems($sampleFeed, $config, $fbid);
 
+
     if (count($feedItems) !== 2) {
       print "invalid count\n";
       return false;
@@ -62,7 +63,8 @@ class FacebookDataRetrieverTest {
       return false;
     }
 
-    if ($feedItems[0]->getLabel("pubDate") !== "2013-03-15T01:31:54Z") {
+    // same as startdate for event
+    if ($feedItems[0]->getLabel("pubDate") !== "2013-03-16T02:00:00Z") {
       print "invalid pubDate\n";
       return false;
     }

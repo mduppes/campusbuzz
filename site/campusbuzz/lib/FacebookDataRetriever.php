@@ -109,10 +109,15 @@ class FacebookDataRetriever extends URLDataRetriever
       $newFeedItem->addAndValidateStringLabel("endDate", $eventJsonData["end_time"],
                                               "No end_time for event");
 
+      $newFeedItem->addAndValidateStringLabel("pubDate", $eventJsonData["start_time"],
+                                              "No starttime / pubdate for fb");
+
       $newFeedItem->addAndValidateOptionalStringLabel("content", $eventJsonData["description"],
                                                       "No valid description");
 
       $newFeedItem->addAndValidateOptionalStringLabel("locationName", $eventJsonData["location"], "Not a valid location string for fb event");
+
+
 
       $venueId = $eventJsonData["venue"]["id"];
       $venueJsonData = $this->getPage($venueId);
@@ -120,19 +125,26 @@ class FacebookDataRetriever extends URLDataRetriever
       if (isset($coord)) {
         $newFeedItem->addGeoCoordinate($coord);
       }
+
     } else {
       // not an event
 
-      if (!isset($jsonFeedItem["message"])) {
-        // This is probably a photo with no message, ignore
-        throw new KurogoDataException("Message field is null, ignoring this fb: ". $jsonFeedItem["type"]);
+      $message = isset($jsonFeedItem["message"]) ? $jsonFeedItem["message"] : null;
+
+      if (!isset($message)) {
+        if (isset($jsonFeedItem["story"])) {
+          $message = $jsonFeedItem["story"];
+        } else {
+          // This is probably a photo with no message, ignore
+          throw new KurogoDataException("Message field is null, ignoring this fb: ". $jsonFeedItem["type"]);
+        }
       }
 
-      $newFeedItem->addAndValidateStringLabel("content", $jsonFeedItem["message"],
+      $newFeedItem->addAndValidateStringLabel("content", $message,
                                               "No message for fb");
 
       // Need a title, for now copy content
-      $newFeedItem->addAndValidateStringLabel("title", $jsonFeedItem["message"],
+      $newFeedItem->addAndValidateStringLabel("title", $message,
                                               "Error duplicating text for title");
 
 
@@ -143,6 +155,10 @@ class FacebookDataRetriever extends URLDataRetriever
 
       $newFeedItem->addAndValidateOptionalStringLabel("imageUrl", @$jsonFeedItem["picture"], "Not a valid image url for fb");
 
+      $newFeedItem->addAndValidateStringLabel("pubDate", $jsonFeedItem["updated_time"],
+                                              "No update_time (pubDate) for fb item");
+
+
       $newFeedItem->addAndValidateOptionalStringLabel("locationName", @$jsonFeedItem["place"]["name"], "Not a valid location string for fb");
 
       $geoCoord = $this->extractGeoCoordinate($jsonFeedItem);
@@ -151,8 +167,6 @@ class FacebookDataRetriever extends URLDataRetriever
       }
 
     }
-    $newFeedItem->addAndValidateStringLabel("pubDate", $jsonFeedItem["updated_time"],
-                                            "No created_at for fb");
 
     // change name if this was from a different id
     if ($jsonFeedItem["from"]["id"] != $fbid) {
@@ -179,6 +193,8 @@ class FacebookDataRetriever extends URLDataRetriever
         $feedItems[] = $newFeedItem;
       } catch (Exception $e) {
         print "Failed to populate feed item: ". $e->getMessage(). "\n";
+        print_r($jsonFeedItem);
+        print "\n";
       }
     }
     //print "\n\n============= Obtained Facebook result: \n\n";

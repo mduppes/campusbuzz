@@ -239,7 +239,10 @@ class FeedItem
    * Add a category to this feedItem.
    * @param new string category to add to this item
    */
-  public function addCategory($category, &$feedMap) {
+  public function addCategory($category, &$modifyMap = null) {
+
+    $feedMap = (isset($modifyMap)) ? $modifyMap : $this->dataMap;
+
     switch (@gettype($feedMap["category"])) {
     case "string":
       if ($feedMap["category"] !== $category) {
@@ -256,6 +259,11 @@ class FeedItem
       break;
     default:
       throw new KurogoDataException("Error in category type: ". gettype($feedMap["category"]));
+    }
+    if ($modifyMap == null) {
+      $this->dataMap = $feedMap;
+    } else {
+      $modifyMap = $feedMap;
     }
   }
 

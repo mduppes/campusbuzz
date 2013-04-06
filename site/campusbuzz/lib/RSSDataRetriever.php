@@ -55,8 +55,16 @@ class RSSDataRetriever extends URLDataRetriever
             }
             // Get first result simpleXML element and convert it to string, and also strip html tags
             //print_r($xpathResults);
-            $value = strip_tags((string) $xpathResults[0]);
-            $newFeedItem->addLabel($schemaLabel, $value);
+            if ($schemaLabel == "category") {
+              foreach ($xpathResults as $result) {
+                $value = strip_tags((string) $result);
+                $newFeedItem->addCategory($value);
+              }
+            } else {
+              $value = strip_tags((string) $xpathResults[0]);
+              $newFeedItem->addLabel($schemaLabel, $value);
+            }
+
             //print "   Adding new data: ". $schemaLabel." => ".$value. "\n";
           } else {
             $newFeedItem->addLabel($schemaLabel, null);
@@ -64,6 +72,12 @@ class RSSDataRetriever extends URLDataRetriever
         }
 
         if ($dataSourceConfig->getSourceType() === "RSSEvents") {
+          $url = $newFeedItem->getLabel("url");
+          foreach ($this->_ignoredUBCEventUrls as $ignoredUrlString) {
+            if (strpos($url, $ignoredUrlString) !== false) {
+              throw new KurogoDataException("This source contains an ignored URL: {$ignoredUrlString}");
+            }
+          }
           // further parse date
           $this->parseUBCEvent($newFeedItem);
           //print_r($newFeedItem);
@@ -73,6 +87,8 @@ class RSSDataRetriever extends URLDataRetriever
         $feedItems[] = $newFeedItem;
       } catch (Exception $e) {
         print "Error in parsing feed item. ". $e->getMessage()."\n";
+        print_r($xmlItem);
+        print "\n";
       }
     }
     return $feedItems;
@@ -207,5 +223,8 @@ class RSSDataRetriever extends URLDataRetriever
     $dateTime->setTime($timeHour, $timeMin);
     return $dateTime;
   }
+
+  private $_ignoredUBCEventUrls =
+    array("Okanagan");
 
 }

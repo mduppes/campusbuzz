@@ -112,7 +112,6 @@ class TwitterDataRetrieverTest {
 
     $categories = $feedItems[0]->getLabel("category");
     if ($categories[0] != "Learning") {
-      print_r($categories);
       print "category wrong\n";
       return false;
     }

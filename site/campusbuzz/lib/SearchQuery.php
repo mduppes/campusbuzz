@@ -128,7 +128,7 @@ class SearchQuery {
       $searchParams["sort"] = implode(", ", $sortParams);
     }
 
-    Kurogo::log(1, "search params: ". print_r($searchParams, true), "SearchParams");
+    Kurogo::log(1, "Search params: ". print_r($searchParams, true), "data");
     return $searchParams;
   }
 }

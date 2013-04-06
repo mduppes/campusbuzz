@@ -100,6 +100,8 @@ class TwitterDataRetriever extends URLDataRetriever
         $feedItems[] = $newFeedItem;
       } catch (Exception $e) {
         print "Failed to populate feed item: ". $e->getMessage(). "\n";
+        print_r($jsonFeedItem);
+        print "\n";
       }
     }
     return $feedItems;
@@ -138,7 +140,7 @@ class TwitterDataRetriever extends URLDataRetriever
 			$radius. 'km');
     $this->addParameter('lang', 'en');
     $data = $this->getData();
-    print_r($data);
+
     if (isset($data) && isset($data["results"])) {
       return $data["results"];
     } else {

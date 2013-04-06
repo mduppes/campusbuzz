@@ -67,6 +67,7 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
                                      "queryCount" => array("inc" => 1));
     }
     $this->persist(json_encode($combinedUpdateArray));
+    Kurogo::log(1, json_encode($combinedUpdateArray), 'data');
   }
 
   /**

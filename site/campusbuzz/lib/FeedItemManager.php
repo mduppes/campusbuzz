@@ -22,6 +22,7 @@ class FeedItemManager {
 
   private function _retrieve($dataSourceConfig) {
     print "Retrieving data for ". $dataSourceConfig->getSourceName(). "\n";
+    print "URL or ID: ". $dataSourceConfig->getSourceUrl(). "\n";
     switch($dataSourceConfig->getSourceType()) {
     case 'RSS':
     case 'RSSEvents':
