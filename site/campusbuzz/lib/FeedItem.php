@@ -36,9 +36,33 @@ class FeedItem
   public function isEqual(FeedItem $other) {
     foreach (self::$validParams as $key => $value) {
       // only check for valid parameters
-      if (isset($this->dataMap[$key]) || isset($other->dataMap[$key])) {
-        if ($this->dataMap[$key] !== $other->dataMap[$key]){
-          print "Not Equal: {$key}\n";
+      $thisValue = @$this->dataMap[$key];
+      $otherValue = @$other->dataMap[$key];
+      if (isset($thisValue) || isset($otherValue)) {
+        if ($key == "category") {
+          if (count($thisValue) != count($otherValue)) {
+            print "Number of categories is not equal\n";
+            return false;
+          }
+          foreach ($thisValue as $thisCategory) {
+            if (!in_array($thisCategory, $otherValue)) {
+              print "Category: {$thisCategory} is not equal\n";
+              print_r($thisValue);
+              print_r($otherValue);
+              return false;
+            }
+          }
+        } else if ($key == "locationGeo") {
+          if (!$this->getGeoCoordinate()->isEqual($other->getGeoCoordinate(), 0.000001)) {
+            print "LocationGeo is not correct\n";
+            return false;
+          }
+        } else if ($thisValue !== $otherValue){
+          print "Not Equal: {$key}\nTHIS:\n";
+          print_r($thisValue);
+          print "\nOTHER: \n";
+          print_r($otherValue);
+          print "\n";
           return false;
         }
       }
@@ -232,7 +256,9 @@ class FeedItem
     if (!$this->isValid()) {
       throw new KurogoDataException("Invalid feed item");
     }
-    return json_encode($this->dataMap);
+    $json = json_encode($this->dataMap);
+    //print_r($json);
+    return $json;
   }
 
   /**

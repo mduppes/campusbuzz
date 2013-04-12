@@ -42,6 +42,33 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
   }
 
   /**
+   * Helper function to retrieve a Feed Item by its ID from solr
+   * @param ID of feed item
+   * @return FeedItem or null if it does not exist in Solr
+   */
+  public function queryById($id) {
+    $searchQuery = new SearchQuery();
+    $searchQuery->addKeyword($id, null, "id");
+    $this->setCacheRequest(false);
+    $returnedFeedItems = $this->queryFeedItem($searchQuery);
+    $this->setCacheRequest(true);
+    if (count($returnedFeedItems) == 0 ) {
+      return null;
+    }
+
+    if (count($returnedFeedItems) > 1) {
+      print "More than one feed item found for id: {$id}\n";
+      print_r($feedItem);
+      print "Solr return:\n";
+      print_r($returnedFeedItems);
+      return null;
+    }
+
+    return $returnedFeedItems[0];
+  }
+
+
+  /**
    * Update the categories for the given FeedItem ID's already in solr.
    * @param array of FeedItem ID's to update
    * @param new category to add to this FeedItem
@@ -77,25 +104,22 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
    * @return number of items persisted
    */
   public function persistFeedItems($feedItems, $overwrite = false) {
-
+    $skippedDuplicates = array();
     $jsonUpdate = array();
     foreach ($feedItems as $feedItem) {
       // Create a query which searches by ID and returns if it hit or not
       // Does not return the items itself
       if (!$overwrite) {
-        $searchQuery = SearchQueryFactory::createSearchByIdQuery($feedItem->getLabel("id"));
-        $searchQuery->setMaxItems(0);
-        $existingItem = $this->query($searchQuery);
+        $id = $feedItem->getLabel('id');
+        $existingItem = $this->queryById($id);
 
-        if ($existingItem["response"]["numFound"] > 0) {
-          if ($existingItem["response"]["numFound"] != 1) {
-            print_r($existingItem);
-            throw new KurogoDataException("Returned more than 1 for solr id query");
-          }
+        if (isset($existingItem)) {
+          print "Item already exists, skipping ". $id. "\n";;
+          $skippedDuplicates[] = $existingItem;
           continue;
         }
       } else {
-        print "Updating item in database, id: ". $feedItem->getLabel("id"). "\n";
+        print "Updating item in database, id: ". $id. "\n";
       }
       // Add valid item to persist list
       $jsonUpdate[] = $feedItem->getSolrUpdateJson();
@@ -105,7 +129,7 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
     // trim trailing comma and add closing bracket
     $jsonUpdateString = '['. implode(',', $jsonUpdate). ']';
     $this->persist($jsonUpdateString);
-    return count($jsonUpdate);
+    return $skippedDuplicates;
   }
 
 

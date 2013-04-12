@@ -14,21 +14,10 @@ class FeedItemManagerTest {
 
     $failed = 0;
     foreach ($feedItems as $feedItem) {
-      $searchQuery = new SearchQuery();
-      $searchQuery->addKeyword($feedItem->getLabel("id"), null, "id");
-      $returnedFeedItems = $solrController->queryFeedItem($searchQuery);
-      if (count($returnedFeedItems) != 1 ) {
-        print "Does not return the same item:\n";
-        print "FeedItem:\n";
-        print_r($feedItem);
-        print "Solr return:\n";
-        print_r($returnedFeedItems);
-        return false;
-      }
+      $returnedFeedItem = $solrController->queryById($feedItem->getLabel("id"));
 
-      if (!$feedItem->isEqual($returnedFeedItems[0])) {
-        print "NOT EQUAL: \n";
-        print "pubdate: " . $feedItem->getLabel("pubDate"). " solr: ". $returnedFeedItems[0]->getLabel("pubDate")." \n";
+      if (!$feedItem->isEqual($returnedFeedItem)) {
+        print "pubdate: " . $feedItem->getLabel("pubDate"). " solr: ". $returnedFeedItem->getLabel("pubDate")." \n";
 
         $failed++;
       }

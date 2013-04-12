@@ -65,9 +65,33 @@ class FeedItemManager {
         // Now persist FeedItems into solr
         print "Attempting to persist FeedItems into solr for ". $dataSourceConfig->getSourceName(). "\n";
         try {
-          $feedUpdateCount = $this->feedItemSolrController->persistFeedItems($feedItems);
-          print "Updated {$feedUpdateCount} FeedItems to Solr\n";
-          $totalUpdateCount += $feedUpdateCount;
+          $duplicateFeedItemsSkipped = $this->feedItemSolrController->persistFeedItems($feedItems);
+          $numUpdated = count($feedItems) - count($duplicateFeedItemsSkipped);
+          print "Updated ". $numUpdated. " FeedItems to Solr\n";
+          // Although inefficient, check to see if we get the same result back
+          $numValidUpdates = 0;
+          if ($numUpdated > 0) {
+            foreach ($feedItems as $feedItem) {
+              $id = $feedItem->getLabel("id");
+              foreach ($duplicateFeedItemsSkipped as $skippedItems) {
+                if ($feedItem->isEqual($skippedItems)) {
+                  print "macthing\n";
+                  continue;
+                }
+              }
+              $returnedFeedItem = $this->feedItemSolrController->queryById($id);
+              if (!isset($returnedFeedItem)) {
+                print "No matching id from Solr returned. Did not persist FeedItem: {$id}\n";
+                print_r($feedItem);
+              } else if ($feedItem->isEqual($returnedFeedItem)) {
+                print "Valid update for id: {$id}\n";
+                $numValidUpdates++;
+              }
+            }
+            print "Number of valid updates: {$numValidUpdates} / {$numUpdated}\n";
+          }
+
+          $totalUpdateCount += $numUpdated;
         } catch (Exception $e) {
           print "Error persisting feed for source {$dataSourceConfig->getSourceName()}. ".$e->getMessage(). "\n";
           $error = true;
@@ -160,7 +184,5 @@ class FeedItemManager {
     print "Loaded configs: ". count($this->dataSourceConfigs). " out of ". count($dataSourceConfigsDecoded["feeds"]). "\n";
 
   }
-
-
 
 }

@@ -121,7 +121,6 @@ class TwitterDataRetriever extends URLDataRetriever
     } else {
       $feedMap = $this->getTweetsByUser($config->getSourceUrl());
     }
-
     //print_r($feedMap);
     $feedItems = $this->parseResultsIntoFeedItems($feedMap, $config);
 
