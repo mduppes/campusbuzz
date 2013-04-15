@@ -12,7 +12,7 @@ var news_category={
 'Leisure':4
 };
 /************* Map Related vars **************/
-var watchID;
+
 var locationPin;
 var map;
 // var buzzPinsArray = [];
@@ -34,6 +34,8 @@ var searchRadius= 2000; //in metres
 //geolocation vars
 var browserSupportFlag =  new Boolean();
 var initialLocation;
+var watchID;
+var lastTrackedLocation="";
 
 pieOverlay.prototype = new google.maps.OverlayView();
 
@@ -70,7 +72,6 @@ function initializeMap(){
     browserSupportFlag = true;
     navigator.geolocation.getCurrentPosition(function(position) {
       initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-
       //TODO: send location to server
 
       // check if location is within campus area, yes -> center current loc, no -> set ubc centre
@@ -210,12 +211,24 @@ function loadMapPins (){
 function searchKeyword (that){
   $("#loading").show();
   var searchString= $(that).prev().val();
-  // searchTerm= searchString;
   console.log ("search: "+searchString);
+
+  //get user location
+  var longitude="";
+  var latitude="";
+  if (lastTrackedLocation!=""){
+    longitude=lastTrackedLocation.lng();
+    latitude=lastTrackedLocation.lat();
+  }else{
+    longitude=initialLocation.lng();
+    latitude=initialLocation.lat();
+  }
+
+  console.log ("user search loc: "+ longitude + ", "+latitude)
 
   makeAPICall(
     'POST', 'buzz', 'searchKeyword',
-    {"isOfficial":mode, "keyword": searchString, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
+    {"isOfficial":mode, "keyword": searchString, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius, "userLng": longitude, "userLat": latitude},
     function(response){
       console.log (response);
 
@@ -255,35 +268,6 @@ function searchKeyword (that){
                 break;
               }
           }
-            // if (mode==0){
-            //   //check category for Buzz mode
-            //   if(data.category.indexOf("Life") != -1){
-            //     category=1;
-            //   }else if (data.category.indexOf("Club") != -1){
-            //     category=2;
-            //   }else if (data.category.indexOf("Health") != -1){
-            //     category=3;
-            //   }else if (data.category.indexOf("Leisure") != -1){
-            //     category=4;
-            //   }else{
-            //     //no category
-            //     category=1;
-            //   }
-            // }else{
-            //   //check category for Official mode
-            //   if(data.category.indexOf("News") != -1){
-            //     category=1;
-            //   }else if (data.category.indexOf("Career") != -1){
-            //     category=2;
-            //   }else if (data.category.indexOf("Learning") != -1){
-            //     category=3;
-            //   }else if (data.category.indexOf("Leisure") != -1){
-            //     category=4;
-            //   }else{
-            //     //no category
-            //     category=1;
-            //   }
-            // }
 
             if (category!=null){
               var marker = new google.maps.Marker({

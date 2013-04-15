@@ -24,9 +24,6 @@ class BuzzAPIModule extends APIModule
           // Change this for # of results returned
           $numResultsReturned = 200;
 
-          // for now since everything is official
-          //$isOfficial = true;
-
           // $category, $keywords, etc TODO
           $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon, $radius);
           $mapPinsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
@@ -133,6 +130,10 @@ class BuzzAPIModule extends APIModule
             $lon = $this->getArg('lon', 0);
             $radius= $this->getArg('distance',0); // in metres
 
+            //TODO: save user location
+            $userLng= $this->getArg ('userLng');
+            $userLat= $this->getArg('userLat');
+
             // $category, $keywords, etc TODO
             $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon, $radius);
             $mapPinsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
@@ -227,7 +228,6 @@ class BuzzAPIModule extends APIModule
             $this->setResponseVersion(1);
 
             // Now update query count for all items queried
-
             $feedItemIds = array();
             foreach ($data["response"]["docs"] as $solrResults) {
               $feedItemIds[] = $solrResults["id"];
@@ -237,6 +237,22 @@ class BuzzAPIModule extends APIModule
             $feedItemSolrController->incrementQueryCounts($feedItemIds);
           break;
 
+          case 'sendDetailQueryData':
+            // this is called when user goes to detail view
+            $userLat=$this->getArg('userLat',0);
+            $userLng= $this->getArg('userLng', 0);
+            $category= $this->getArg('category');
+            $neLng= $this->getArg('neLng');
+            $neLat= $this->getArg('neLat');
+            $swLng= $this->getArg('swLng');
+            $swLat= $this->getArg('swLat');
+            $isOfficial=$this->getArg('isOfficial',0);
+            $keyword= $this-> getArg('keyword',0);
+            $sortBy= $this-> getArg ('sort',0);
+
+            //TODO: update solr with user + query data
+
+          break;
     }
   }
 

@@ -120,10 +120,11 @@ class BuzzWebModule extends WebModule
               "swLat"=> $swLat,
               "isOfficial"=> $isOfficial,
               "keyword"=> $keyword,
-              "sort"=> $sortBy,
-              "index"=> $newIndex
+              "sort"=> $sortBy
+              
             );
             $this->assign ('params', json_encode($params));
+            $this->assign ('index', $newIndex);
 
              break;
      }

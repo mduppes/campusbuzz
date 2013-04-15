@@ -129,11 +129,11 @@ function toggleGPS(event){
       $("#gpsButton").removeClass("enable");
       //turn off gps tracking
       navigator.geolocation.clearWatch(watchID);
+      //lastTrackedLocation="";
       clearLocationPin();
       console.log ("Turn off tracking");
 
   }else{
-
       $("#loading").show();
       $("#gpsButton").addClass("enable");
       //turn on gps tracking
@@ -176,9 +176,10 @@ var geo_options = {
 };
 
 function geo_success(position) {
-  // do_something(position.coords.latitude, position.coords.longitude);
   console.log ("position: "+position.coords.latitude, position.coords.longitude);
+  
   var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  lastTrackedLocation=userLatLng;
 
   clearLocationPin();
   locationPin= new google.maps.Marker({
@@ -199,6 +200,7 @@ function geo_success(position) {
  
 function geo_error() {
   alert("Sorry, no position available. Try again later.");
+  lastTrackedLocation="";
   $("#gpsButton").removeClass("enable");
   $("#loading").hide();
 }
@@ -260,7 +262,27 @@ function categoryCloudClickHandler (self){
   args ["keyword"]= $("#searchbar").find("input").val();
   args ["sortBy"]= "time";
   args ["index"] = 0;
-  redirectTo("detail", args);
+
+  //get user location
+  var longitude="";
+  var latitude="";
+  if (lastTrackedLocation!=""){
+    longitude=lastTrackedLocation.lng();
+    latitude=lastTrackedLocation.lat();
+  }else{
+    longitude=initialLocation.lng();
+    latitude=initialLocation.lat();
+  }
+
+  console.log ("user search loc: "+ longitude + ", "+latitude)
+
+  //save data to db
+  makeAPICall(
+    'POST', 'buzz', 'sendDetailQueryData',
+    {"isOfficial":mode, "category": category, "keyword": args ["keyword"], "neLng": args ["neLng"], "neLat":args ["neLng"], "swLng": args ["swLng"], "swLat": args ["swLat"], "sort": args ["sortBy"],"userLng": longitude, "userLat": latitude},
+    function(response){
+      redirectTo("detail", args);
+    });
 }
 
 //detail view only
@@ -271,29 +293,6 @@ $(window).scroll(function(){
     loadMorePosts();
   }
 }); 
-
-function loadMorePosts(){
-  var param= $(".sortinput").data("param");
-
-  var neLng= (param["neLng"]);
-  var neLat= (param["neLat"]);
-  var swLng= (param["swLng"]);
-  var swLat= (param["swLat"]);
-  var isOfficial= (param["isOfficial"]);
-  var keyword= (param["keyword"]);
-  var category= (param["category"]);
-  var index= (param["index"]);
-  var sort= (param["sort"]);
-
-
-  makeAPICall(
-    'POST', 'buzz', 'loadMorePosts', 
-    {"isOfficial":isOfficial, "neLng": neLng, "neLat":neLat, "swLng": swLng, "swLat":swLat, "keyword":keyword, "category":category,"index":index,"sort":sort},
-    function(response){
-      console.log (response); 
-  });
-
-}
 
 
 function sortPosts(that){
@@ -307,8 +306,8 @@ function sortPosts(that){
   var swLat= (param["swLat"]);
   var isOfficial= (param["isOfficial"]);
   var keyword= (param["keyword"]);
-  var index= (param["index"]);
   var category= (param["category"]);
+  var index= $(that).data("index");
 
   var args= Array();
   args["category"]= category;
@@ -324,6 +323,34 @@ function sortPosts(that){
 
 }
 
+function loadMorePosts(){
+  var param= $(".sortinput").data("param");
+
+  var neLng= (param["neLng"]);
+  var neLat= (param["neLat"]);
+  var swLng= (param["swLng"]);
+  var swLat= (param["swLat"]);
+  var isOfficial= (param["isOfficial"]);
+  var keyword= (param["keyword"]);
+  var category= (param["category"]);
+  var index= $(".sortinput").data("index");
+  var sort= (param["sort"]);
+
+  makeAPICall(
+    'POST', 'buzz', 'loadMorePosts', 
+    {"isOfficial":isOfficial, "neLng": neLng, "neLat":neLat, "swLng": swLng, "swLat":swLat, "keyword":keyword, "category":category,"index":index,"sort":sort},
+    function(response){
+      console.log (response); 
+
+      // set new index value
+      var newIndex= index+10;
+      $(".sortInput").data("index", 20);
+      console.log ("new index: "+  $(".sortinput").data("index"));
+      //dynammically append list item
+
+  });
+
+}
 
 
 

@@ -4,7 +4,7 @@
       <div id="category-switcher" class="category-mode">
         <form method="get" action="/{$configModule}/index" id="category-form">
               <div class="formlabel">
-                <select class="sortinput" id="sort" name="sort" onchange="sortPosts(this);" data-param={$params}>
+                <select class="sortinput" id="sort" name="sort" onchange="sortPosts(this);" data-index={$index} data-param={$params}>
                   <option value="sort">Sort Posts By:</option>
                   <option value="time">Time</option>
                   <option value="popularity">Popularity</option>
