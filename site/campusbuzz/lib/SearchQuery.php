@@ -8,6 +8,7 @@ class SearchQuery {
   protected $geoFilters = array();
   protected $returnFields = array();
   protected $rows;
+  protected $startIndex;
   protected $sorts = array();
 
   /**
@@ -56,6 +57,10 @@ class SearchQuery {
     $this->keywordMap[] = array($field, $escapedKeyword);
   }
 
+  public function setStartIndex($index) {
+    $this->startIndex = $index;
+  }
+
   public function setMaxItems($max) {
     $this->rows = $max;
   }
@@ -87,6 +92,11 @@ class SearchQuery {
     // set number of max items to return
     if ($this->rows !== null) {
       $searchParams["rows"] = $this->rows;
+    }
+
+    // set startindex
+    if ($this->startIndex !== null) {
+      $searchParams["start"] = $this->startIndex;
     }
 
     // Add category filters. This is done separately since it is an OR of categories
