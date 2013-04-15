@@ -1,8 +1,8 @@
 var buzz_category={
 'Life': 1,
-'Club':2,
+'Clubs':2,
 'Health':3,
-'Leisure':4
+'Recreation':4
 };
 
 var news_category={
@@ -31,21 +31,17 @@ var pieData = []; // total: 17
 var campusCenter= new google.maps.LatLng(49.26646,-123.250551);
 var searchRadius= 2000; //in metres
 
-//filter category arrays
-var buzzCategoryList= ["Life", "Club", "Health", "Leisure"];
-var newsCategoryList= ["News", "Career", "Learning", "Leisure"];
-
 //geolocation vars
 var browserSupportFlag =  new Boolean();
 var initialLocation;
 
-pieOverlay.prototype = new google.maps.OverlayView(); 
+pieOverlay.prototype = new google.maps.OverlayView();
 
 function initializeMap(){
 
   //set up ui for default buzz mode
   // studentBuzzMode();
-   
+
 
     var mapOptions = {
           center: campusCenter,
@@ -115,7 +111,7 @@ function initializeMap(){
     //create marker clusterer obj
     buzzMarkerCluster = new MarkerClusterer(map, buzzMarkers);
     newsMarkerCluster = new MarkerClusterer(map, newsMarkers);
-  
+
     // event listeners
     google.maps.event.addListener(map, 'dblclick', function(event) {
       // addMarker(event.latLng);
@@ -143,21 +139,21 @@ function initializeMap(){
     });
 
 
-    
+
 }
 
 function loadMapPins (){
   //clear all pins on map
 
   makeAPICall(
-    'GET', 'buzz', 'getMapPins', 
+    'GET', 'buzz', 'getMapPins',
     {"isOfficial":mode, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
     function(response){
       console.log (response);
       //iterate and plot pins
       var json = $.parseJSON(response);
       $(json.docs).each(function(i,data){
-        
+
           var locArray = data.locationGeo.split(',');
           var loc= new google.maps.LatLng(locArray[0],locArray[1]);
           var category;
@@ -176,8 +172,8 @@ function loadMapPins (){
           for(var name in selected_cat_list){
               if (data.category.indexOf(name) != -1)
               {
+                // somewhat inefficient hack to get around all categories getting the default Life category, since this was assigned first
                 category=selected_cat_list[name];
-                break;
               }
           }
 
@@ -185,7 +181,7 @@ function loadMapPins (){
             var marker = new google.maps.Marker({
               position: loc,
               map: map
-            });  
+            });
             marker.set("category", category);
             console.log ("category; "+marker.get("category"));
 
@@ -201,7 +197,7 @@ function loadMapPins (){
               marker.set("isOfficial", true);
             }
             console.log ("official; "+marker.get("isOfficial"));
-          }   
+          }
       });
   });
 
@@ -215,7 +211,7 @@ function searchKeyword (that){
   console.log ("search: "+searchString);
 
   makeAPICall(
-    'POST', 'buzz', 'searchKeyword', 
+    'POST', 'buzz', 'searchKeyword',
     {"isOfficial":mode, "keyword": searchString, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
     function(response){
       console.log (response);
@@ -233,7 +229,7 @@ function searchKeyword (that){
         initializeMap();
 
         $(json.docs).each(function(i,data){
-          
+
             var locArray = data.locationGeo.split(',');
             var loc= new google.maps.LatLng(locArray[0],locArray[1]);
             var category;
@@ -289,7 +285,7 @@ function searchKeyword (that){
               var marker = new google.maps.Marker({
                 position: loc,
                 map: map
-              });  
+              });
               marker.set("category", category);
               console.log ("category; "+marker.get("category"));
 
@@ -305,7 +301,7 @@ function searchKeyword (that){
                 marker.set("isOfficial", true);
               }
               console.log ("official; "+marker.get("isOfficial"));
-            }   
+            }
         });
       }
     });
@@ -373,7 +369,7 @@ pieOverlay.prototype.onAdd = function() {
     google.maps.event.trigger(me, 'click');
     console.log ("expand bubbles!");
     //expand the bubbles
-    
+
   });
 }
 
@@ -440,10 +436,10 @@ function drawPin (pieData, container){
 
     container.appendChild(background);
 
-    
+
     //loop thru proportionArr to draw slices
     for (var i=0;i<proportionArr.length; i++)
-    {   
+    {
         degree= proportionArr[i];
         console.log ("degree "+i+": "+degree);
 
@@ -456,7 +452,7 @@ function drawPin (pieData, container){
             slice.style.width = diameter+'px';
             slice.style.borderRadius= radius+'px';
             slice.style.clip= "rect(0px,"+diameter+"px, "+ diameter+"px, "+ radius+"px)";
-            
+
             var pie = document.createElement('div');
             pie.style.position= 'absolute';
             pie.style.clip= "rect(0px, "+radius+"px, "+diameter+"px, 0px)";
@@ -503,14 +499,14 @@ function drawPin (pieData, container){
         slice.style.width = diameter+'px';
         slice.style.borderRadius= radius+'px';
         slice.style.clip= "rect(0px,"+diameter+"px, "+ diameter+"px, "+ radius+"px)";
-            
+
         var pie = document.createElement('div');
         pie.style.position= 'absolute';
         pie.style.clip= "rect(0px, "+radius+"px, "+diameter+"px, 0px)";
         pie.style.height = diameter+'px';
         pie.style.width = diameter+'px';
         pie.style.borderRadius= radius+'px';
-            
+
 
         slice.appendChild(pie);
         container.appendChild(slice);
@@ -539,17 +535,17 @@ function drawPin (pieData, container){
         //pie.style.transform = "rotate("+proportionArr[i]+"deg)"
         pie.style.webkitTransform = "rotate("+degree+"deg)";
         slice.appendChild(pie);
-        container.appendChild(slice);        
+        container.appendChild(slice);
     }
 
     //display total # tag, place at center of container
-    var num = document.createElement('div');    
+    var num = document.createElement('div');
     num.innerHTML = total;
     num.setAttribute("class", "numText");
     num.style.padding= radius/2+"px";
     num.style.fontSize= radius*0.7;
     container.appendChild(num);
-    
+
 
     container.style.opacity= 0.8;
     // document.body.appendChild(container);
@@ -616,7 +612,7 @@ function expandSlideMenu(event){
         addClass(menu, "expand");
         addClass(button, "expand");
     }
-    
+
 }
 
 ////// switching modes (student buzz OR campus news) -cng
@@ -717,7 +713,7 @@ function studentBuzzMode(){
     initializeMap();
     //draw piechart pins on map
     loadMapPins();
-    
+
 }
 
 ////// Show/hide search bar
@@ -742,7 +738,7 @@ function expandSearchBar(event){
     }else{
         addClass(search, "expand");
     }
-    
+
 }
 
 /////////// go to detail view
