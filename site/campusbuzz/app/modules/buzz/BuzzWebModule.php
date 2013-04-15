@@ -1,5 +1,5 @@
 <?php
-
+include 'chromephp-master/ChromePhp.php';
 class BuzzWebModule extends WebModule
 {
   protected $id='buzz';
@@ -33,25 +33,23 @@ class BuzzWebModule extends WebModule
           $isOfficial=$this->getArg('isOfficial',0);
           $keyword= $this-> getArg('keyword',0);
           $sortBy= $this-> getArg ('sortBy',0);
-
-          //create search params array
-          $params= array(
-            "category" => $category,
-            "neLng" => $neLng,
-            "neLat"=> $neLat,
-            "swLng"=> $swLng,
-            "swLat"=> $swLat,
-            "isOfficial"=> $isOfficial,
-            "keyword"=> $keyword
-          );
+          $index= $this-> getArg('index');
+          
 
           // Change this for # of results returned
-          $numResultsReturned = 50;
+          if ($index==0){
+            //first time loading
+            $numResultsReturned = 10;
+          }else{
+            $numResultsReturned = $index;
+          }
+          
           
           // bbox search
           $getPostsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($neLng, $neLat, $swLng, $swLat);
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("category", $category));
+          $getPostsSearchQuery->setMaxItems($numResultsReturned);
           if ($keyword != "")
             $getPostsSearchQuery->addKeyword($keyword);
 
@@ -84,6 +82,7 @@ class BuzzWebModule extends WebModule
 
           $posts = json_encode($data["response"]);
           $json= json_decode ($posts, true);
+          ChromePhp::log('JSON: '.$posts);
             //$posts= $this->getArg('response');
             //$posts= json_decode($this->getArg('response'));
             $postList= array();
@@ -109,7 +108,23 @@ class BuzzWebModule extends WebModule
             }
 
             $this->assign('postList', $postList);
+
+            $newIndex= $numResultsReturned;
+            ChromePhp::log('index: '.$newIndex);
+            //create search params array
+            $params= array(
+              "category" => $category,
+              "neLng" => $neLng,
+              "neLat"=> $neLat,
+              "swLng"=> $swLng,
+              "swLat"=> $swLat,
+              "isOfficial"=> $isOfficial,
+              "keyword"=> $keyword,
+              "sort"=> $sortBy,
+              "index"=> $newIndex
+            );
             $this->assign ('params', json_encode($params));
+
              break;
      }
   }

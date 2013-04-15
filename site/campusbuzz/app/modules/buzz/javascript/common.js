@@ -42,6 +42,7 @@ var initialLocation;
 pieOverlay.prototype = new google.maps.OverlayView(); 
 
 
+
 function initializeMap(){
 
   //set up ui for default buzz mode
@@ -228,6 +229,7 @@ function searchKeyword (that){
       if (json["numFound"]==0){
 
         $(that).prev().val("").attr('placeholder', "No Results, search again.");
+        $("#loading").hide();
       }else{
 
         // $(that).prev().val("").attr('placeholder', json["numFound"]+" results.");

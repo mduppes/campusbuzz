@@ -71,59 +71,7 @@ function filterOutCategory (categoryList){
     });
 }
 
-function categoryCloudClickHandler (self){
-	// query item according to filter selected
 
-  //get category type! 
-	var className= self.className;
-  console.log ("my click class: "+className);
-
-  var category="";
-
-  if (mode==0){
-    //check category for Buzz mode
-    if(className.indexOf("rightBottom") != -1){
-              category="Life";
-    }else if (className.indexOf("leftBottom") != -1){
-              category="Club";
-    }else if (className.indexOf("rightTop") != -1){
-              category="Health";
-    }else if (className.indexOf("leftTop") != -1){
-              category="Leisure";
-    }
-  }else{
-    //check category for Official mode
-    if(className.indexOf("rightBottom") != -1){
-              category="News";
-    }else if (className.indexOf("leftBottom") != -1){
-              category="Career";
-    }else if (className.indexOf("rightTop") != -1){
-              category="Learning";
-    }else if (className.indexOf("leftTop") != -1){
-              category="Leisure";
-    }
-  }
-
-  //get search bounds
-  var bounds= $(self).closest($(".cluster")).data("bound");
-  console.log (category);
-  console.log (bounds.getNorthEast().lng().toFixed(8));
-  console.log (bounds.getNorthEast().lat().toFixed(8));
-  console.log (bounds.getSouthWest().lng().toFixed(8));
-  console.log (bounds.getSouthWest().lat().toFixed(8));
-
-
-  var args= Array();
-  args["category"]= category;
-  args["isOfficial"]= mode;
-  args ["neLng"]= bounds.getNorthEast().lng().toFixed(8); //round up to 8th decimal to fix bounding box inaccuracy issue
-  args ["neLat"]= bounds.getNorthEast().lat().toFixed(8);
-  args ["swLng"]= bounds.getSouthWest().lng().toFixed(8);
-  args ["swLat"]= bounds.getSouthWest().lat().toFixed(8);
-  args ["keyword"]= $("#searchbar").find("input").val();
-  args ["sortBy"]= "time";
-  redirectTo("detail", args);
-}
 
 function displayClouds(that){
 
@@ -170,33 +118,6 @@ function filterCategory(obj){
     initializeMap();
     filterOutCategory(newsCategoryList);
   }
-}
-
-
-function sortPosts(that){
-  var selected= $(that).val();
-  var param= $(that).data("param");
-  $(that).val("popularity"); //set to point to popularity.. 
-
-  var neLng= (param["neLng"]);
-  var neLat= (param["neLat"]);
-  var swLng= (param["swLng"]);
-  var swLat= (param["swLat"]);
-  var isOfficial= (param["isOfficial"]);
-  var keyword= (param["keyword"]);
-  var category= (param["category"]);
-
-  var args= Array();
-  args["category"]= category;
-  args["isOfficial"]= isOfficial;
-  args ["neLng"]= neLng;
-  args ["neLat"]= neLat;
-  args ["swLng"]= swLng;
-  args ["swLat"]= swLat;
-  args ["keyword"]= keyword;
-  args ["sortBy"]= selected;
-  redirectTo("detail", args);
-
 }
 
 
@@ -287,10 +208,121 @@ function clearLocationPin(){
     locationPin.setMap(null);
 }
 
+function categoryCloudClickHandler (self){
+  // query item according to filter selected
+
+  //get category type! 
+  var className= self.className;
+  console.log ("my click class: "+className);
+
+  var category="";
+
+  if (mode==0){
+    //check category for Buzz mode
+    if(className.indexOf("rightBottom") != -1){
+              category="Life";
+    }else if (className.indexOf("leftBottom") != -1){
+              category="Club";
+    }else if (className.indexOf("rightTop") != -1){
+              category="Health";
+    }else if (className.indexOf("leftTop") != -1){
+              category="Leisure";
+    }
+  }else{
+    //check category for Official mode
+    if(className.indexOf("rightBottom") != -1){
+              category="News";
+    }else if (className.indexOf("leftBottom") != -1){
+              category="Career";
+    }else if (className.indexOf("rightTop") != -1){
+              category="Learning";
+    }else if (className.indexOf("leftTop") != -1){
+              category="Leisure";
+    }
+  }
+
+  //get search bounds
+  var bounds= $(self).closest($(".cluster")).data("bound");
+  console.log (category);
+  console.log (bounds.getNorthEast().lng().toFixed(8));
+  console.log (bounds.getNorthEast().lat().toFixed(8));
+  console.log (bounds.getSouthWest().lng().toFixed(8));
+  console.log (bounds.getSouthWest().lat().toFixed(8));
 
 
+  var args= Array();
+  args["category"]= category;
+  args["isOfficial"]= mode;
+  args ["neLng"]= bounds.getNorthEast().lng().toFixed(8); //round up to 8th decimal to fix bounding box inaccuracy issue
+  args ["neLat"]= bounds.getNorthEast().lat().toFixed(8);
+  args ["swLng"]= bounds.getSouthWest().lng().toFixed(8);
+  args ["swLat"]= bounds.getSouthWest().lat().toFixed(8);
+  args ["keyword"]= $("#searchbar").find("input").val();
+  args ["sortBy"]= "time";
+  args ["index"] = 0;
+  redirectTo("detail", args);
+}
+
+//detail view only
+
+$(window).scroll(function(){
+  if ($(window).scrollTop() == $(document).height() - $(window).height()){
+    console.log ("bottom!");
+    loadMorePosts();
+  }
+}); 
+
+function loadMorePosts(){
+  var param= $(".sortinput").data("param");
+
+  var neLng= (param["neLng"]);
+  var neLat= (param["neLat"]);
+  var swLng= (param["swLng"]);
+  var swLat= (param["swLat"]);
+  var isOfficial= (param["isOfficial"]);
+  var keyword= (param["keyword"]);
+  var category= (param["category"]);
+  var index= (param["index"]);
+  var sort= (param["sort"]);
 
 
+  makeAPICall(
+    'POST', 'buzz', 'loadMorePosts', 
+    {"isOfficial":isOfficial, "neLng": neLng, "neLat":neLat, "swLng": swLng, "swLat":swLat, "keyword":keyword, "category":category,"index":index,"sort":sort},
+    function(response){
+      console.log (response); 
+  });
+
+}
+
+
+function sortPosts(that){
+  var selected= $(that).val();
+  var param= $(that).data("param");
+  $(that).val("popularity"); //set to point to popularity.. 
+
+  var neLng= (param["neLng"]);
+  var neLat= (param["neLat"]);
+  var swLng= (param["swLng"]);
+  var swLat= (param["swLat"]);
+  var isOfficial= (param["isOfficial"]);
+  var keyword= (param["keyword"]);
+  var index= (param["index"]);
+  var category= (param["category"]);
+
+  var args= Array();
+  args["category"]= category;
+  args["isOfficial"]= isOfficial;
+  args ["neLng"]= neLng;
+  args ["neLat"]= neLat;
+  args ["swLng"]= swLng;
+  args ["swLat"]= swLat;
+  args ["keyword"]= keyword;
+  args ["sortBy"]= selected;
+  args ["index"] = index;
+  redirectTo("detail", args);
+
+}
 
 
 

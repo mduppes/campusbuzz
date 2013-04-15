@@ -172,6 +172,71 @@ class BuzzAPIModule extends APIModule
             $feedItemSolrController->incrementQueryCounts($feedItemIds);
 
           break;
+
+          case 'loadMorePosts':
+            $isOfficial=$this->getArg('isOfficial',0);
+            $keyword= $this->getArg('keyword', 0);
+            $neLng = $this->getArg('neLng', 0);
+            $neLat= $this->getArg('neLat', 0);
+            $swLng= $this->getArg('swLng',0);
+            $swLat = $this->getArg('swLat', 0);
+            $category = $this->getArg('category', 0);
+            $index= $this->getArg('index',0); 
+            $sort= $this->getArg('sort',0);
+
+            $numResultsReturned = 10;
+
+            // $category, $keywords, etc TODO
+            $loadPostQuery = SearchQueryFactory::createBoundingBoxSearchQuery($neLng, $neLat, $swLng, $swLat);
+            $loadPostQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
+            $loadPostQuery->addFilter(new FieldQueryFilter("category", $category));
+            $loadPostQuery->setMaxItems($numResultsReturned);
+            $loadPostQuery->setStartIndex($index);
+
+            if ($keyword != "")
+              $loadPostQuery->addKeyword($keyword);
+
+            //sort by most recent/popularity
+            if ($sort=="time"){
+              $loadPostQuery->addSort(new SearchSort("pubDate", false));
+            }else{
+              $loadPostQuery->addSort(new SearchSort("queryCount", false));
+            }
+            // Fields we want returned from solr
+            $loadPostQuery->addReturnField("title");
+            $loadPostQuery->addReturnField("id");
+            $loadPostQuery->addReturnField("name");
+            $loadPostQuery->addReturnField("sourceType");
+            $loadPostQuery->addReturnField("url");
+            $loadPostQuery->addReturnField("imageUrl");
+            $loadPostQuery->addReturnField("pubDate");
+            $loadPostQuery->addReturnField("locationName");
+            $loadPostQuery->addReturnField("content");
+           
+
+            // Get and convert solr response to php object
+            $data = $feedItemSolrController->query($loadPostQuery);
+
+            if (!isset($data["response"])) {
+              throw new KurogoDataException("Error, not a valid response.");
+            }
+
+            $results = json_encode($data["response"]);
+
+            $this->setResponse($results);
+            $this->setResponseVersion(1);
+
+            // Now update query count for all items queried
+
+            $feedItemIds = array();
+            foreach ($data["response"]["docs"] as $solrResults) {
+              $feedItemIds[] = $solrResults["id"];
+            }
+
+            // Batch update query count by one for results shown to user
+            $feedItemSolrController->incrementQueryCounts($feedItemIds);
+          break;
+
     }
   }
 
