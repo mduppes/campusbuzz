@@ -8,6 +8,8 @@ class FeedItem
   protected $config;
   protected $createdFrom;
 
+  private $duplicate = false;
+
   protected function __construct() {}
 
   public static $validParams =
@@ -28,12 +30,20 @@ class FeedItem
           "testing" => array("boolean")
           );
 
+  public function isDuplicate() {
+    return $this->duplicate;
+  }
+
+  public function setDuplicate() {
+    $this->duplicate = true;
+  }
+
   /**
    * Checks for content equality in the feedItem.
    * Does not check the config or createdFrom fields.
    * @return true if $other has the same contents as $this
    */
-  public function isEqual(FeedItem $other) {
+  public function isEqual(FeedItem $other, $print = false) {
     foreach (self::$validParams as $key => $value) {
       // only check for valid parameters
       $thisValue = @$this->dataMap[$key];
@@ -41,28 +51,36 @@ class FeedItem
       if (isset($thisValue) || isset($otherValue)) {
         if ($key == "category") {
           if (count($thisValue) != count($otherValue)) {
-            print "Number of categories is not equal\n";
+            if ($print) {
+              print "Number of categories is not equal\n";
+            }
             return false;
           }
           foreach ($thisValue as $thisCategory) {
             if (!in_array($thisCategory, $otherValue)) {
-              print "Category: {$thisCategory} is not equal\n";
-              print_r($thisValue);
-              print_r($otherValue);
+              if ($print) {
+                print "Category: {$thisCategory} is not equal\n";
+                print_r($thisValue);
+                print_r($otherValue);
+              }
               return false;
             }
           }
         } else if ($key == "locationGeo") {
           if (!$this->getGeoCoordinate()->isEqual($other->getGeoCoordinate(), 0.000001)) {
-            print "LocationGeo is not correct\n";
+            if ($print) {
+              print "LocationGeo is not correct\n";
+            }
             return false;
           }
         } else if ($thisValue !== $otherValue){
-          print "Not Equal: {$key}\nTHIS:\n";
-          print_r($thisValue);
-          print "\nOTHER: \n";
-          print_r($otherValue);
-          print "\n";
+          if ($print) {
+            print "Not Equal: {$key}\nTHIS:\n";
+            print_r($thisValue);
+            print "\nOTHER: \n";
+            print_r($otherValue);
+            print "\n";
+          }
           return false;
         }
       }

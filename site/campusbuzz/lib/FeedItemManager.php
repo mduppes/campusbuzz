@@ -72,20 +72,21 @@ class FeedItemManager {
           $numValidUpdates = 0;
           if ($numUpdated > 0) {
             foreach ($feedItems as $feedItem) {
-              $id = $feedItem->getLabel("id");
-              foreach ($duplicateFeedItemsSkipped as $skippedItems) {
-                if ($feedItem->isEqual($skippedItems)) {
-                  print "macthing\n";
-                  continue;
-                }
+              // skip duplicates
+              if ($feedItem->isDuplicate()) {
+                continue;
               }
+
+              $id = $feedItem->getLabel("id");
               $returnedFeedItem = $this->feedItemSolrController->queryById($id);
               if (!isset($returnedFeedItem)) {
                 print "No matching id from Solr returned. Did not persist FeedItem: {$id}\n";
                 print_r($feedItem);
-              } else if ($feedItem->isEqual($returnedFeedItem)) {
+              } else if ($feedItem->isEqual($returnedFeedItem, true)) {
                 print "Valid update for id: {$id}\n";
                 $numValidUpdates++;
+              } else {
+                print "Invalid update for id: {$id}, what is returned from solr does not match\n";
               }
             }
             print "Number of valid updates: {$numValidUpdates} / {$numUpdated}\n";

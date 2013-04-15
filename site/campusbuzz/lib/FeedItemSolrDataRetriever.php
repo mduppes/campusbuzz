@@ -115,6 +115,7 @@ class FeedItemSolrDataRetriever extends SolrDataRetriever {
 
         if (isset($existingItem)) {
           print "Item already exists, skipping ". $id. "\n";;
+          $feedItem->setDuplicate();
           $skippedDuplicates[] = $existingItem;
           continue;
         }
