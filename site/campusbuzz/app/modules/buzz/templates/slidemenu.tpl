@@ -13,6 +13,6 @@
     <button class= "newsCategory" id="newsLeisure" type="button" onclick="filterCategory(this)">Leisure</button>
   </div>
 
-  	<input id="pulltab" type="button" onclick="expandSlideMenu(event)"  value="Filter By Categories" />
+  	<input id="pulltab" type="button" onclick="expandSlideMenu(event)"  value="Filter Categories" />
   <div>
 </div>

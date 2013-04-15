@@ -41,11 +41,12 @@ var initialLocation;
 
 pieOverlay.prototype = new google.maps.OverlayView(); 
 
+
 function initializeMap(){
 
   //set up ui for default buzz mode
   // studentBuzzMode();
-   
+
 
     var mapOptions = {
           center: campusCenter,
@@ -117,30 +118,30 @@ function initializeMap(){
     newsMarkerCluster = new MarkerClusterer(map, newsMarkers);
   
     // event listeners
-    google.maps.event.addListener(map, 'dblclick', function(event) {
-      // addMarker(event.latLng);
+    // google.maps.event.addListener(map, 'dblclick', function(event) {
+    //   // addMarker(event.latLng);
 
-      //fill in pieData randomly
-      for (var i=0;i<4; i++){
+    //   //fill in pieData randomly
+    //   for (var i=0;i<4; i++){
 
-        pieData.push(Math.round(Math.random() * 20));
-      }
+    //     pieData.push(Math.round(Math.random() * 20));
+    //   }
 
-      //test custom overlay
-      var swBound = event.latLng;
-      var neBound = new google.maps.LatLng(49.400471, -123.005608);
-      var bounds = new google.maps.LatLngBounds(swBound, neBound);
-      var overlay = new pieOverlay(pieData, bounds, map);
+    //   //test custom overlay
+    //   var swBound = event.latLng;
+    //   var neBound = new google.maps.LatLng(49.400471, -123.005608);
+    //   var bounds = new google.maps.LatLngBounds(swBound, neBound);
+    //   var overlay = new pieOverlay(pieData, bounds, map);
 
-      //check which layer to push
-      // if (mode==0)
-      //   buzzPinsArray.push(overlay);
-      // else
-      //   newsPinsArray.push(overlay);
+    //   //check which layer to push
+    //   // if (mode==0)
+    //   //   buzzPinsArray.push(overlay);
+    //   // else
+    //   //   newsPinsArray.push(overlay);
 
-      pieData=[];
+    //   pieData=[];
 
-    });
+    // });
 
 
     
@@ -203,13 +204,14 @@ function loadMapPins (){
             console.log ("official; "+marker.get("isOfficial"));
           }   
       });
+      $("#loading").hide();
   });
 
 }
 
 
 function searchKeyword (that){
-
+  $("#loading").show();
   var searchString= $(that).prev().val();
   // searchTerm= searchString;
   console.log ("search: "+searchString);
@@ -307,6 +309,7 @@ function searchKeyword (that){
               console.log ("official; "+marker.get("isOfficial"));
             }   
         });
+      $("#loading").hide();
       }
     });
 
@@ -622,7 +625,7 @@ function expandSlideMenu(event){
 ////// switching modes (student buzz OR campus news) -cng
 
 function campusNewsMode(){
-
+    $("#loading").show();
     hideSearchbar();
     $("#gpsButton").removeClass("enable");
     //button state
@@ -670,7 +673,7 @@ function campusNewsMode(){
 }
 
 function studentBuzzMode(){
-
+    $("#loading").show();
     //close search bar
     hideSearchbar();
     $("#gpsButton").removeClass("enable");
@@ -713,10 +716,11 @@ function studentBuzzMode(){
     // showOverlays(buzzPinsArray);
     //hide news overlays
     // clearOverlays(newsPinsArray);
-
+    
     initializeMap();
     //draw piechart pins on map
     loadMapPins();
+    
     
 }
 

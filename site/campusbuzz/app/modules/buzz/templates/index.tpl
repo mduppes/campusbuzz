@@ -25,3 +25,7 @@
 {include file="findInclude:modules/buzz/templates/slidemenu.tpl"}
 
 {include file="findInclude:modules/map/templates/fullscreenfooter.tpl" hideFooterLinks=true}
+
+<div id="loading">
+  <p><img src="/modules/buzz/images/ajax-loader.gif" /> Please Wait...</p>
+</div>
