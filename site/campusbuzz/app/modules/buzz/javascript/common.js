@@ -1,4 +1,19 @@
+var buzz_category={
+'Life': 1,
+'Club':2,
+'Health':3,
+'Leisure':4
+};
+
+var news_category={
+'News': 1,
+'Career':2,
+'Learning':3,
+'Leisure':4
+};
 /************* Map Related vars **************/
+var watchID;
+var locationPin;
 var map;
 // var buzzPinsArray = [];
 // var newsPinsArray = [];
@@ -30,7 +45,7 @@ function initializeMap(){
 
   //set up ui for default buzz mode
   // studentBuzzMode();
-
+   
 
     var mapOptions = {
           center: campusCenter,
@@ -58,8 +73,10 @@ function initializeMap(){
     navigator.geolocation.getCurrentPosition(function(position) {
       initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 
+      //TODO: send location to server
+
       // check if location is within campus area, yes -> center current loc, no -> set ubc centre
-      // map.setCenter(initialLocation);
+      //map.setCenter(initialLocation);
     }, function() {
       handleNoGeolocation(browserSupportFlag);
     });
@@ -147,32 +164,21 @@ function loadMapPins (){
           console.log ("data's loc; "+locArray[0]+ ", "+locArray[1]);
           console.log ("google's loc; "+loc.lat()+ ", "+loc.lng());
 
+
+          var selected_cat_list;
           if (mode==0){
-            //check category for Buzz mode
-            if(data.category.indexOf("Life") != -1){
-              category=1;
-            }else if (data.category.indexOf("Club") != -1){
-              category=2;
-            }else if (data.category.indexOf("Health") != -1){
-              category=3;
-            }else if (data.category.indexOf("Leisure") != -1){
-              category=4;
-            }else{
-              category=1;
-            }
+            selected_cat_list= buzz_category;
           }else{
-            //check category for Official mode
-            if(data.category.indexOf("News") != -1){
-              category=1;
-            }else if (data.category.indexOf("Career") != -1){
-              category=2;
-            }else if (data.category.indexOf("Learning") != -1){
-              category=3;
-            }else if (data.category.indexOf("Leisure") != -1){
-              category=4;
-            }else{
-              category=1;
-            }
+            selected_cat_list= news_category;
+          }
+
+          // assign item's category as first matching category in cat_list
+          for(var name in selected_cat_list){
+              if (data.category.indexOf(name) != -1)
+              {
+                category=selected_cat_list[name];
+                break;
+              }
           }
 
           if (category!=null){
@@ -233,35 +239,51 @@ function searchKeyword (that){
             var category;
             console.log ("search data's category; "+data.category);
 
-            if (mode==0){
-              //check category for Buzz mode
-              if(data.category.indexOf("Life") != -1){
-                category=1;
-              }else if (data.category.indexOf("Club") != -1){
-                category=2;
-              }else if (data.category.indexOf("Health") != -1){
-                category=3;
-              }else if (data.category.indexOf("Leisure") != -1){
-                category=4;
-              }else{
-                //no category
-                category=1;
+
+          var selected_cat_list;
+          if (mode==0){
+            selected_cat_list= buzz_category;
+          }else{
+            selected_cat_list= news_category;
+          }
+
+          // assign item's category as first matching category in cat_list
+          for(var name in selected_cat_list){
+              if (data.category.indexOf(name) != -1)
+              {
+                category=selected_cat_list[name];
+                break;
               }
-            }else{
-              //check category for Official mode
-              if(data.category.indexOf("News") != -1){
-                category=1;
-              }else if (data.category.indexOf("Career") != -1){
-                category=2;
-              }else if (data.category.indexOf("Learning") != -1){
-                category=3;
-              }else if (data.category.indexOf("Leisure") != -1){
-                category=4;
-              }else{
-                //no category
-                category=1;
-              }
-            }
+          }
+            // if (mode==0){
+            //   //check category for Buzz mode
+            //   if(data.category.indexOf("Life") != -1){
+            //     category=1;
+            //   }else if (data.category.indexOf("Club") != -1){
+            //     category=2;
+            //   }else if (data.category.indexOf("Health") != -1){
+            //     category=3;
+            //   }else if (data.category.indexOf("Leisure") != -1){
+            //     category=4;
+            //   }else{
+            //     //no category
+            //     category=1;
+            //   }
+            // }else{
+            //   //check category for Official mode
+            //   if(data.category.indexOf("News") != -1){
+            //     category=1;
+            //   }else if (data.category.indexOf("Career") != -1){
+            //     category=2;
+            //   }else if (data.category.indexOf("Learning") != -1){
+            //     category=3;
+            //   }else if (data.category.indexOf("Leisure") != -1){
+            //     category=4;
+            //   }else{
+            //     //no category
+            //     category=1;
+            //   }
+            // }
 
             if (category!=null){
               var marker = new google.maps.Marker({
@@ -602,6 +624,7 @@ function expandSlideMenu(event){
 function campusNewsMode(){
 
     hideSearchbar();
+    $("#gpsButton").removeClass("enable");
     //button state
     var button = document.getElementById("newstoggle");
     addClass(button, "pressed");
@@ -650,6 +673,7 @@ function studentBuzzMode(){
 
     //close search bar
     hideSearchbar();
+    $("#gpsButton").removeClass("enable");
 
     //button state
     var button = document.getElementById("buzztoggle");

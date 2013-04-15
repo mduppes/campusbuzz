@@ -1,6 +1,5 @@
 <?php
 
-
 class SearchQuery {
 
   protected $keywordMap = array();
