@@ -34,6 +34,10 @@ html, body ,#map_canvas{
    	opacity: 0.85;
    	box-shadow:  2px 1px 3px 3px rgba(0,0,0,.1);
 }
+#gpsButton.enable{
+  opacity: 0.8;
+  box-shadow: 1px 1px 3px 5px rgba(0,120,255,.41); 
+}
 
 #gpsButton:active,
 #gpsButton:focus{   

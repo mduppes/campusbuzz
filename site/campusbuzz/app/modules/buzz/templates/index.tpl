@@ -18,7 +18,7 @@
     </form>  
 </div>
 
-<div id="gpsButton" >
+<div id="gpsButton" onclick="toggleGPS(event)">
 	<img src="/modules/buzz/images/gps.png"> </img>
 </div>
 

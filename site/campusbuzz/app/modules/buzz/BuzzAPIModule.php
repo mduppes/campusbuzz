@@ -1,5 +1,4 @@
 <?php
-
 class BuzzAPIModule extends APIModule
 {
   protected $id='buzz';
@@ -23,7 +22,7 @@ class BuzzAPIModule extends APIModule
           $radius= $this->getArg('distance',0); // in metres
 
           // Change this for # of results returned
-          $numResultsReturned = 50;
+          $numResultsReturned = 200;
 
           // for now since everything is official
           //$isOfficial = true;
@@ -70,6 +69,8 @@ class BuzzAPIModule extends APIModule
           break;
 
         case 'filterOut':
+
+            $numResultsReturned = 200;
             $isOfficial=$this->getArg('isOfficial',0);
             $categoryArray= $this->getArg('categoryList', 0);
             $lat = $this->getArg('lat', 0);
@@ -79,12 +80,19 @@ class BuzzAPIModule extends APIModule
             // $category, $keywords, etc TODO
             $filterSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon, $radius);
             $filterSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
-
+            $filterSearchQuery->setMaxItems($numResultsReturned);
             //loop through array to filter out categories
-            foreach ($categoryArray as $category){
-              $filterSearchQuery->addCategory($category);
-              // $filterSearchQuery->addFilter(new FieldQueryFilter("category", $category));
+            $categoryList = "'";
+
+
+            $temp= explode(",", $categoryArray);
+            foreach ($temp as $category){
+              $token= '"'.$category.'",';
+              $categoryList .= $token;
             }
+            $categoryList=substr($categoryList, 0, -1);
+            $categoryList .= "'";
+            $filterSearchQuery->addCategory($categoryList);
               
             // Fields we want returned from solr
             $filterSearchQuery->addReturnField("title");

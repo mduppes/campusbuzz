@@ -11,6 +11,8 @@ class BuzzWebModule extends WebModule
     $this->addInternalJavascript("/modules/buzz/javascript/markerclusterer.js");
     $this->addInternalJavascript("/modules/buzz/javascript/markerclusterer.js");
     $this->addInternalJavascript("/modules/buzz/javascript/mapEvents.js");
+    // $this->addExternalJavascript("http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js");
+    // $this->addExternalCSS("http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css");
 
     $this->controller = DataRetriever::factory('TwitterDataRetriever', array());
 
@@ -87,12 +89,17 @@ class BuzzWebModule extends WebModule
             $postList= array();
 
             foreach ($json["docs"] as $postData) {
+              //timezone conversion
+              $tz = new DateTimeZone('America/Vancouver');
+              $date = new DateTime($postData['pubDate']);
+              $date->setTimeZone($tz);
+
                 $post= array(
                     'title'=> $postData['title'],
                     'id'=> $postData['id'],
                     'name'=> $postData['name'],
                     'sourceType'=> $postData['sourceType'],
-                    'pubDate'=> $postData['pubDate'],
+                    'pubDate'=> $date->format('l F j Y g:i:s A'),
                     'url'=> $postData['url'],
                     'imageUrl'=> $postData['imageUrl'],
                     'locationName'=> $postData['locationName'],
