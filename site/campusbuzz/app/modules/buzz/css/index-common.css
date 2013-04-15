@@ -507,3 +507,23 @@ div#buzzbutton > input[type="button"]:hover{
 	left:0px;
 	top:50px;
 }
+
+/***loading screen***/
+#loading{
+  display:    none;
+  position:   fixed;
+  z-index:    1000;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
+  background: rgba( 0, 0, 0, .2 ) 
+                50% 50% 
+                no-repeat;
+}
+
+#loading > p {
+  position: relative;
+  top:50%;
+  left:35%;
+}

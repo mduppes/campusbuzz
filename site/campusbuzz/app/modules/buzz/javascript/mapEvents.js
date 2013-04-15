@@ -66,6 +66,7 @@ function filterOutCategory (categoryList){
             console.log ("official; "+marker.get("isOfficial"));
           }   
       });
+      $("#loading").hide();
       //end of handler
     });
 }
@@ -135,7 +136,7 @@ function displayClouds(that){
 
 //filter categories from slide out menu
 function filterCategory(obj){
-
+  $("#loading").show();
   var className=obj.className;
   var id= obj.id;
   console.log ("category: "+id);
@@ -196,7 +197,6 @@ function sortPosts(that){
   args ["sortBy"]= selected;
   redirectTo("detail", args);
 
-  //can it use apicall??
 }
 
 
@@ -212,6 +212,8 @@ function toggleGPS(event){
       console.log ("Turn off tracking");
 
   }else{
+
+      $("#loading").show();
       $("#gpsButton").addClass("enable");
       //turn on gps tracking
       console.log ("Turn on tracking");
@@ -233,6 +235,7 @@ function toggleGPS(event){
           alert("You are not currently on UBC campus");
           $("#gpsButton").removeClass("enable");
         }
+        $("#loading").hide();
       }, geo_error, {timeout:10000});
       
     }
@@ -276,6 +279,7 @@ function geo_success(position) {
 function geo_error() {
   alert("Sorry, no position available. Try again later.");
   $("#gpsButton").removeClass("enable");
+  $("#loading").hide();
 }
 
 function clearLocationPin(){
