@@ -42,6 +42,9 @@ pieOverlay.prototype = new google.maps.OverlayView();
 
 
 function initializeMap(){
+  //turn off gps tracking
+  $("#gpsButton").removeClass("enable");
+  navigator.geolocation.clearWatch(watchID);
 
   //set up ui for default buzz mode
   // studentBuzzMode();

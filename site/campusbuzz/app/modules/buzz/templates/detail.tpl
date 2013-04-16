@@ -18,12 +18,13 @@
 
   <!-- <p class="smallprint">{$postList} </p> -->
   {foreach $postList as $item}
-    {if !isset($item['separator'])}
-      <li{if $item['img']} class="icon"{/if}>
+    
+      <li>
         <div class= "ribbon">
-        <div class="rectangle">{$item['pubDate']}</div>
         <div class="r-triangle-top"></div>
         <div class="r-triangle-bottom"></div>
+        <div class="rectangle">{$item['pubDate']}</div>
+        
         </div>
 
         <table class="content" border="0">
@@ -35,8 +36,9 @@
               <img class= "thumbnail" src="/modules/buzz/images/placeholder.png"/>
             {/if}
           </td>
+
           <td>
-            {include file="findInclude:modules/buzz/templates/listItem.tpl"}
+            <a class="title" href={$item['url']}>{$item['title']}</a>
           </td>
         </tr>
         </table>
@@ -53,14 +55,15 @@
         Posted By: {$item['name']} @ {$item['locationName']}
         </span>
       </li>
-    {/if}
   {/foreach}
+
   {if count($postList) == 0}
     {block name="noResults"}
       <li>{"NO_RESULTS"|getLocalizedString}</li>
     {/block}
   {/if}
 </ul>
+<div id="scrollText">Scroll Down To Load 10 More Posts. </div>
 
 </div>
 {include file="findInclude:common/templates/footer.tpl"}

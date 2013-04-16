@@ -74,12 +74,9 @@ function filterOutCategory (categoryList){
 
 
 function displayClouds(that){
-
   //change visibility of clouds
   addClass(that.cloud_, "show");
   removeClass(that.cloud_, "hidden");
-
-  
 }
 
 //filter categories from slide out menu
@@ -201,7 +198,9 @@ function geo_success(position) {
 function geo_error() {
   alert("Sorry, no position available. Try again later.");
   lastTrackedLocation="";
-  $("#gpsButton").removeClass("enable");
+  // clearLocationPin();
+  // $("#gpsButton").removeClass("enable");
+  // navigator.geolocation.clearWatch(watchID);
   $("#loading").hide();
 }
 
@@ -333,7 +332,7 @@ function loadMorePosts(){
   var isOfficial= (param["isOfficial"]);
   var keyword= (param["keyword"]);
   var category= (param["category"]);
-  var index= $(".sortinput").data("index");
+  var index= $(".sortinput").attr("data-index");
   var sort= (param["sort"]);
 
   makeAPICall(
@@ -341,26 +340,64 @@ function loadMorePosts(){
     {"isOfficial":isOfficial, "neLng": neLng, "neLat":neLat, "swLng": swLng, "swLat":swLat, "keyword":keyword, "category":category,"index":index,"sort":sort},
     function(response){
       console.log (response); 
-
       // set new index value
-      var newIndex= index+10;
-      $(".sortInput").data("index", 20);
-      console.log ("new index: "+  $(".sortinput").data("index"));
-      //dynammically append list item
+      var newIndex= parseInt(index)+10;
+      console.log($('#sort').data('index'));
+      $('#sort').attr('data-index', newIndex);
+      console.log($('#sort').attr('data-index'));
+      //console.log ("new index: "+ $(".sortinput").attr("data-index"));
+      
+
+      var json = $.parseJSON(response);
+      var textToInsert = [];
+      if (newIndex>=json.numFound){
+        console.log("no more posts");
+        $("#scrollText").text("No More Posts.");
+        return;
+      }
+
+      $(json.docs).each(function(i,data){
+
+          var title = data.title;
+          var url= data.url;
+          var name= data.name;
+          var content= data.content;
+          var imageUrl= data.imageUrl;
+          var pubDate= data.pubDate;
+          var locationName= data.locationName;
+          var sourceType= data.sourceType;
+          //dynammically append list item
+          textToInsert[i++]  = '<li>';
+          textToInsert[i++] = '<div class= "ribbon"><div class="r-triangle-top"></div><div class="r-triangle-bottom"></div><div class="rectangle">';
+          textToInsert[i++] = pubDate;
+          textToInsert[i++] = '</div></div>';
+
+          textToInsert[i++]  = '<table class="content" border="0"><tr><td class="imageCell">';
+          if(imageUrl!=""){
+            textToInsert[i++] = '<img class= "thumbnail postImage" src='+imageUrl+'></img>';
+          }else{
+            textToInsert[i++] = '<img class= "thumbnail" src="/modules/buzz/images/placeholder.png"/>';
+          }
+          textToInsert[i++] = '</td>';
+
+          textToInsert[i++] = '<td><a class="title" href='+imageUrl+'>'+title+'</a></td>';
+          textToInsert[i++] = '</td></tr></table>';
+
+          if(sourceType=="TwitterGeoSearch"||sourceType=="Twitter"){
+            textToInsert[i++] = '<img class= "icon" src="/modules/buzz/images/icons/twitter_icon.png"/>';
+          }else if (sourceType=="Facebook"){
+            textToInsert[i++] = '<img class= "icon" src="/modules/buzz/images/icons/facebook-icon.png"/>';
+          }else{
+            textToInsert[i++] = '<img class= "icon" src="/modules/buzz/images/icons/feed-icon.png"/>';
+          }
+
+          textToInsert[i++] = '<span class="smallprint authorField">Posted By: ';
+          textToInsert[i++] = name+'@'+locationName;
+          textToInsert[i++] = '</span></li>';
+          $(".results").append(textToInsert.join(''));
+          textToInsert = []
+      });
+      
 
   });
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

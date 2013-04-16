@@ -110,7 +110,6 @@ class BuzzWebModule extends WebModule
             $this->assign('postList', $postList);
 
             $newIndex= $numResultsReturned;
-            ChromePhp::log('index: '.$newIndex);
             //create search params array
             $params= array(
               "category" => $category,
