@@ -12,7 +12,11 @@ var news_category={
 'Leisure':4
 };
 /************* Map Related vars **************/
-
+//geolocation vars
+var browserSupportFlag =  new Boolean();
+var initialLocation;
+var watchID;
+var lastTrackedLocation="";
 var locationPin;
 var map;
 // var buzzPinsArray = [];
@@ -31,11 +35,10 @@ var pieData = []; // total: 17
 var campusCenter= new google.maps.LatLng(49.26646,-123.250551);
 var searchRadius= 2000; //in metres
 
-//geolocation vars
-var browserSupportFlag =  new Boolean();
-var initialLocation;
-var watchID;
-var lastTrackedLocation="";
+//filter category arrays
+var buzzCategoryList= ["Life", "Club", "Health", "Leisure"];
+var newsCategoryList= ["News", "Career", "Learning", "Leisure"];
+
 
 pieOverlay.prototype = new google.maps.OverlayView();
 
