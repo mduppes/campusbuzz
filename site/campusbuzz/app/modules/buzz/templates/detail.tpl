@@ -46,6 +46,11 @@
             {else}
               <a class="title" href={$item['url']}>{$item['title']}</a>
             {/if}
+
+            {if $item['sourceType']=="RSSEvents"}
+              <div class="date_text">Start Time: {$item['startDate']}</div>
+              <div class="date_text">End Time: {$item['endDate']}</div>
+            {/if}
           </td>
         </tr>
         </table>
@@ -56,6 +61,8 @@
           <img class= "icon" src="/modules/buzz/images/icons/facebook-icon.png"/>
           {elseif $item['sourceType']=="RSS"}
           <img class= "icon" src="/modules/buzz/images/icons/feed-icon.png"/>
+          {else if $item['sourceType']=="RSSEvents"}
+          <img class= "icon" src="/modules/buzz/images/icons/event-icon.png"/>
         {/if}
 
         <span class="smallprint authorField">
@@ -70,7 +77,7 @@
     {/block}
   {/if}
 </ul>
-<div id="scrollText">Scroll Down To Load 10 More Posts. </div>
+<div id="scrollText" style="color: white; padding-left: 20%;">Scroll To Load 10 More Posts... </div>
 
 </div>
 {include file="findInclude:common/templates/footer.tpl"}

@@ -196,11 +196,11 @@ function geo_success(position) {
 }
  
 function geo_error() {
-  alert("Sorry, no position available. Try again later.");
+  alert("Sorry, no position available. Turn on your GPS and try again later.");
   lastTrackedLocation="";
-  // clearLocationPin();
-  // $("#gpsButton").removeClass("enable");
-  // navigator.geolocation.clearWatch(watchID);
+  clearLocationPin();
+  $("#gpsButton").removeClass("enable");
+  navigator.geolocation.clearWatch(watchID);
   $("#loading").hide();
 }
 
@@ -214,7 +214,6 @@ function categoryCloudClickHandler (self){
 
   //get category type! 
   var className= self.className;
-  console.log ("my click class: "+className);
 
   var category="";
 
@@ -368,6 +367,8 @@ function loadMorePosts(){
           var content= data.content;
           var imageUrl= data.imageUrl;
           var pubDate= data.pubDate;
+          var startDate= data.startDate;
+          var endDate= data.endDate;
           var locationName= data.locationName;
           var sourceType= data.sourceType;
 
@@ -376,18 +377,26 @@ function loadMorePosts(){
             content=content.substring(0,100)+"...";
           }
 
+          
+
           //date conversion
-          d=new Date (pubDate);
-          console.log ("pub time"+pubDate);
-          var m=['January','February','March','April','May','June','July','August','September','October','November','December'];
-          var D=['Sunday','Monday','Tueday','Wednesday','Thurday','Friday','Saturday'];
+          var d=new Date (pubDate);
+          var m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          var D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
           var year=d.getFullYear();
           var month=m[d.getMonth()];
           var date=d.getDate();
           var day=D[d.getDay()];
           var localDate=day+' '+month+' '+date+' '+year+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
 
-          //localDate=pubDate.getDay()+pubDate.getMonth()+pubDate.getTime();
+          if (startDate!=""){
+            var sd=new Date (startDate);
+            //var sd_convert= D[sd.getDay()]+" "+m[sd.getMonth]+" "+sd.getYear+ " "+sd.getHours()+ ":"+sd.getMinutes();
+          }
+          if (endDate!=""){
+            var ed=new Date (endDate);
+            //var ed_convert= D[ed.getDay()]+" "+m[ed.getMonth]+" "+ed.getYear+ " "+ed.getHours()+ ":"+ed.getMinutes();
+          }
 
           //dynammically append list item
           textToInsert[i++]  = '<li>';
@@ -403,17 +412,25 @@ function loadMorePosts(){
           }
           textToInsert[i++] = '</td>';
           if (title!=content && content!="")
-            textToInsert[i++] = '<td><a class="title" href='+url+'>'+title+'</a><div class="smallprint">'+content+'</div></td>';
+            textToInsert[i++] = '<td><a class="title" href='+url+'>'+title+'</a><div class="smallprint">'+content+'</div>';
           else
-            textToInsert[i++] = '<td><a class="title" href='+url+'>'+title+'</a></td>';
+            textToInsert[i++] = '<td><a class="title" href='+url+'>'+title+'</a>';
+
+          if(sourceType=="RSSEvents"){
+            textToInsert[i++] = '<div class="date_text">Start Time: '+sd_convert+'</div>';
+            textToInsert[i++] = '<div class="date_text">End Time: '+ed_convert+'</div>';
+          }
           textToInsert[i++] = '</td></tr></table>';
+
 
           if(sourceType=="TwitterGeoSearch"||sourceType=="Twitter"){
             textToInsert[i++] = '<img class= "icon" src="/modules/buzz/images/icons/twitter_icon.png"/>';
           }else if (sourceType=="Facebook"){
             textToInsert[i++] = '<img class= "icon" src="/modules/buzz/images/icons/facebook-icon.png"/>';
-          }else{
+          }else if (sourceType=="RSS"){
             textToInsert[i++] = '<img class= "icon" src="/modules/buzz/images/icons/feed-icon.png"/>';
+          }else{
+            textToInsert[i++] = '<img class= "icon" src="/modules/buzz/images/icons/event-icon.png"/>';
           }
 
           textToInsert[i++] = '<span class="smallprint authorField">Posted By: ';

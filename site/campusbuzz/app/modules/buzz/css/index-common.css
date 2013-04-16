@@ -51,9 +51,9 @@ body { height: 100%; margin: 0px; padding: 0px; overflow: hidden;}
 /**** search bar *****/
 #searchbar {
 	position: fixed;
-  	left: -300px;
+  	left: -250px;
   	top: 90px;
-  	width: 350px;
+  	width: 300px;
   	-webkit-transition-duration: 0.3s;
   	-moz-transition-duration: 0.3s;
   	-o-transition-duration: 0.3s;

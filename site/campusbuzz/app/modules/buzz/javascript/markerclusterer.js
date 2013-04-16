@@ -1278,21 +1278,30 @@ ClusterIcon.prototype.onAdd = function() {
         {
             case 0:
                 addClass (pie, "slice_life");
-                cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/student.png')";
+                if (mode==0)
+                  cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/student.png')";
+                else
+                  cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/news.png')";
                 cloud.style.top = (pos.y-50)+ 'px';
                 cloud.style.left= (pos.x-50)+ 'px';
                 addClass(cloud, "rightBottom");
                 break;
             case 1:
                 addClass (pie, "slice_club");
-                cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/clubs.png')";
+                if (mode==0)
+                  cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/clubs.png')";
+                else
+                  cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/career.png')";
                 cloud.style.top = (pos.y-50)+ 'px';
                 cloud.style.left= (pos.x+50)+ 'px';
                 addClass(cloud, "leftBottom");
                 break;
             case 2:
                 addClass (pie, "slice_health");
-                cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/health.png')";
+                if (mode==0)
+                  cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/health.png')";
+                else
+                  cloud.style.backgroundImage="url('/modules/buzz/images/map_icons/learning.png')";
                 cloud.style.top = (pos.y+50)+ 'px';
                 cloud.style.left= (pos.x-50)+ 'px';
                 addClass(cloud, "rightTop");

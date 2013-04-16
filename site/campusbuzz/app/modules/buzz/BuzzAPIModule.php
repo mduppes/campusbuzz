@@ -211,6 +211,8 @@ class BuzzAPIModule extends APIModule
             $loadPostQuery->addReturnField("url");
             $loadPostQuery->addReturnField("imageUrl");
             $loadPostQuery->addReturnField("pubDate");
+            $loadPostQuery->addReturnField("startDate");
+            $loadPostQuery->addReturnField("endDate");
             $loadPostQuery->addReturnField("locationName");
             $loadPostQuery->addReturnField("content");
            

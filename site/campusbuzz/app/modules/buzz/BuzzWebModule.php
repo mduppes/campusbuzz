@@ -70,7 +70,8 @@ class BuzzWebModule extends WebModule
           $getPostsSearchQuery->addReturnField("imageUrl");
           $getPostsSearchQuery->addReturnField("pubDate");
           $getPostsSearchQuery->addReturnField("locationName");
-          // $getPostsSearchQuery->addReturnField("endDate");
+          $getPostsSearchQuery->addReturnField("startDate");
+          $getPostsSearchQuery->addReturnField("endDate");
           $getPostsSearchQuery->addReturnField("content");
            
            // Get and convert solr response to php object
@@ -93,6 +94,14 @@ class BuzzWebModule extends WebModule
               $date = new DateTime($postData['pubDate']);
               $date->setTimeZone($tz);
 
+              if (isset($postData['startDate'])){
+                $startDate = new DateTime($postData['startDate']);
+                $startDate->setTimeZone($tz);
+              }
+              if (isset($postData['startDate'])){
+                $endDate = new DateTime($postData['endDate']);
+                $endDate->setTimeZone($tz);
+              }
               $content="";
               if (isset($postData['content'])){
                 $content= trim($postData['content'],"\t\n\r\0");
@@ -105,11 +114,12 @@ class BuzzWebModule extends WebModule
                     'id'=> $postData['id'],
                     'name'=> $postData['name'],
                     'sourceType'=> $postData['sourceType'],
-                    'pubDate'=> $date->format('l F j Y g:i:s A'),
+                    'pubDate'=> $date->format('D M j Y g:i:s A'),
                     'url'=> $postData['url'],
                     'imageUrl'=> $postData['imageUrl'],
                     'locationName'=> $postData['locationName'],
-                    //'url'=> $this->buildBreadcrumbURL('detail', array('id'=>$tweetData['id_str']))
+                    'startDate'=> $startDate->format('D M j H:i'),
+                    'endDate'=> $endDate->format('D M j H:i')
                 );
                 $postList[] = $post;
             }

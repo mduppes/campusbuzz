@@ -79,17 +79,19 @@ function initializeMap(){
     navigator.geolocation.getCurrentPosition(function(position) {
       initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
       //TODO: send location to server
-
+      console.log("location:"+initialLocation);
       // check if location is within campus area, yes -> center current loc, no -> set ubc centre
       //map.setCenter(initialLocation);
     }, function() {
-      handleNoGeolocation(browserSupportFlag);
+      alert("error location!");
+      //handleNoGeolocation(browserSupportFlag);
     });
   }
   // Browser doesn't support Geolocation
   else {
     browserSupportFlag = false;
     handleNoGeolocation(browserSupportFlag);
+    alert("error location!");
   }
 
   function handleNoGeolocation(errorFlag) {
