@@ -1,25 +1,29 @@
 /* used in map view - custom controls overlaying google maps, detail - controls below map image */
 
 /*** map canvas -cng ***/
-html, body ,#map_canvas{
-	height: 100%; 
-	margin: 0; 
-	padding: 0 
+html { height: 100% }
+body { height: 100%; margin: 0px; padding: 0px }
+
+#map_container{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 10px 0 10px;
+  clear: both;
 }
 
 #map_canvas{
-	/*position: relative;*/
-	top: 0;
-	left:0;
-	width: 100%;
-	min-height: 500px;
+  width: 100%;
+  height:85%;
+  min-height: 320px;
 }
+
 /**** gps button *****/
 #gpsButton {
 	position: fixed;
   	left: 0%;
   	top: 180px;
-  	width:13%;
+  	/*width:13%;*/
   	height: 50px;
   	background-color: #E1e1e1;
   	border-radius: 0 10px 10px 0 ;
@@ -29,7 +33,7 @@ html, body ,#map_canvas{
 
 #gpsButton >img {
 	padding: 2px;
-  	width:90%;
+  	/*width:90%;*/
   	height: 90%;
    	opacity: 0.85;
    	box-shadow:  2px 1px 3px 3px rgba(0,0,0,.1);
@@ -46,9 +50,9 @@ html, body ,#map_canvas{
 /**** search bar *****/
 #searchbar {
 	position: fixed;
-  	left: -87%;
+  	left: -300px;
   	top: 90px;
-  	width: 100%;
+  	width: 350px;
   	-webkit-transition-duration: 0.3s;
   	-moz-transition-duration: 0.3s;
   	-o-transition-duration: 0.3s;
@@ -65,7 +69,7 @@ html, body ,#map_canvas{
 	right:0;
 	overflow: visible;
     position: relative;
-    width:13%; 
+    /*width:13%; */
     height:50px;
     border-radius: 0 10px 10px 0 ;
     cursor: pointer;
@@ -85,11 +89,11 @@ html, body ,#map_canvas{
 	margin-top: 5px;
 	margin-bottom: 5px;
 	float: right;
-    height: 20px;
+    height: 40px;
     padding: 10px 5px;
     width:60%;
     float: left;    
-    font: bold 15px 'lucida sans', 'trebuchet MS', 'Tahoma';
+    font: bold 13px 'lucida sans', 'trebuchet MS', 'Tahoma';
     border: 0;
     background: #eee;
     border-radius: 3px 0 0 3px;      
@@ -123,7 +127,7 @@ html, body ,#map_canvas{
     cursor: pointer;
     height: 40px;
     width: 20%;
-    font: bold 15px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
+    font: bold 12px/30px 'lucida sans', 'trebuchet MS', 'Tahoma';
     color: #fff;
     text-transform: uppercase;
     /*background: #d83c3c;*/

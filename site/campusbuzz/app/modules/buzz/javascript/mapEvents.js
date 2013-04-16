@@ -269,9 +269,11 @@ function categoryCloudClickHandler (self){
     longitude=lastTrackedLocation.lng();
     latitude=lastTrackedLocation.lat();
   }else{
-    if (initialLocation!=""){
+    if (initialLocation!=null){
       longitude=initialLocation.lng();
       latitude=initialLocation.lat();
+    }else{
+      console.log ("initialLocation is null");
     }
   }
 
@@ -368,10 +370,29 @@ function loadMorePosts(){
           var pubDate= data.pubDate;
           var locationName= data.locationName;
           var sourceType= data.sourceType;
+
+          if (content!=""){
+            content=$.trim(content);
+            content=content.substring(0,100)+"...";
+          }
+
+          //date conversion
+          d=new Date (pubDate);
+          console.log ("pub time"+pubDate);
+          var m=['January','February','March','April','May','June','July','August','September','October','November','December'];
+          var D=['Sunday','Monday','Tueday','Wednesday','Thurday','Friday','Saturday'];
+          var year=d.getFullYear();
+          var month=m[d.getMonth()];
+          var date=d.getDate();
+          var day=D[d.getDay()];
+          var localDate=day+' '+month+' '+date+' '+year+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+
+          //localDate=pubDate.getDay()+pubDate.getMonth()+pubDate.getTime();
+
           //dynammically append list item
           textToInsert[i++]  = '<li>';
           textToInsert[i++] = '<div class= "ribbon"><div class="r-triangle-top"></div><div class="r-triangle-bottom"></div><div class="rectangle">';
-          textToInsert[i++] = pubDate;
+          textToInsert[i++] = localDate;
           textToInsert[i++] = '</div></div>';
 
           textToInsert[i++]  = '<table class="content" border="0"><tr><td class="imageCell">';

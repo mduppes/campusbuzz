@@ -1,10 +1,21 @@
+<div id="mapContainer">	
+
 {include file="findInclude:common/templates/header.tpl"}
 
-{include file="findInclude:modules/buzz/templates/togglebar.tpl"}
 
-	
+<div id = "togglebar">
+	<div id="buzzbutton">
+		<input id = "buzztoggle" class= "togglebutton" type="button" onclick="studentBuzzMode()"  value="Student Buzz" />
+		<div id="buzztip"/>
+	</div>
+	<div id="newsbutton">
+		<input  id = "newstoggle" class= "togglebutton" type="button" onclick="campusNewsMode()"   value="Campus News"} />
+		<div id="newstip" />
+	</div>
+</div>
+
 <div id="map_canvas" >
-<img onload= "studentBuzzMode()" src="/modules/buzz/images/loader_img.png"> </img>
+		<img onload= "studentBuzzMode()" src="/modules/buzz/images/loader_img.png"> </img>
 </div>
 
 <div id="searchbar">
@@ -12,7 +23,6 @@
         <input type="text" placeholder="Search by keywords..." required>
         <button type="button" onclick="searchKeyword(this)">Search</button>
         <div id="searchButton" onclick="expandSearchBar(event)">
-			<!-- <input type="button" onclick="expandSearchBar()" value={"SEARCH_TITLE"|getLocalizedString} /> -->
 			<img src="/modules/buzz/images/search.png"> </img>
 		</div>
     </form>  
@@ -28,4 +38,6 @@
 
 <div id="loading">
   <p><img src="/modules/buzz/images/ajax-loader.gif" /> Please Wait...</p>
+</div>
+
 </div>
