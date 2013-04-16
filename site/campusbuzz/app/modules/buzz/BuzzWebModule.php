@@ -94,13 +94,17 @@ class BuzzWebModule extends WebModule
               $date = new DateTime($postData['pubDate']);
               $date->setTimeZone($tz);
 
+              $startDateString="";
+              $endDateString="";
               if (isset($postData['startDate'])){
                 $startDate = new DateTime($postData['startDate']);
                 $startDate->setTimeZone($tz);
+                $startDateString= $startDate->format('D M j H:i');
               }
               if (isset($postData['startDate'])){
                 $endDate = new DateTime($postData['endDate']);
                 $endDate->setTimeZone($tz);
+                $endDateString= $endDate->format('D M j H:i');
               }
               $content="";
               if (isset($postData['content'])){
@@ -118,8 +122,8 @@ class BuzzWebModule extends WebModule
                     'url'=> $postData['url'],
                     'imageUrl'=> $postData['imageUrl'],
                     'locationName'=> $postData['locationName'],
-                    'startDate'=> $startDate->format('D M j H:i'),
-                    'endDate'=> $endDate->format('D M j H:i')
+                    'startDate'=> $startDateString,
+                    'endDate'=> $endDateString
                 );
                 $postList[] = $post;
             }
