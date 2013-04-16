@@ -269,8 +269,10 @@ function categoryCloudClickHandler (self){
     longitude=lastTrackedLocation.lng();
     latitude=lastTrackedLocation.lat();
   }else{
-    longitude=initialLocation.lng();
-    latitude=initialLocation.lat();
+    if (initialLocation!=""){
+      longitude=initialLocation.lng();
+      latitude=initialLocation.lat();
+    }
   }
 
   console.log ("user search loc: "+ longitude + ", "+latitude)
@@ -379,8 +381,10 @@ function loadMorePosts(){
             textToInsert[i++] = '<img class= "thumbnail" src="/modules/buzz/images/placeholder.png"/>';
           }
           textToInsert[i++] = '</td>';
-
-          textToInsert[i++] = '<td><a class="title" href='+imageUrl+'>'+title+'</a></td>';
+          if (title!=content && content!="")
+            textToInsert[i++] = '<td><a class="title" href='+url+'>'+title+'</a><div class="smallprint">'+content+'</div></td>';
+          else
+            textToInsert[i++] = '<td><a class="title" href='+url+'>'+title+'</a></td>';
           textToInsert[i++] = '</td></tr></table>';
 
           if(sourceType=="TwitterGeoSearch"||sourceType=="Twitter"){

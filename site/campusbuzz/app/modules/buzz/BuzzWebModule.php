@@ -93,8 +93,15 @@ class BuzzWebModule extends WebModule
               $date = new DateTime($postData['pubDate']);
               $date->setTimeZone($tz);
 
+              $content="";
+              if (isset($postData['content'])){
+                $content= trim($postData['content'],"\t\n\r\0");
+                $content=substr($content, 0, 100)."...";
+              }
+
                 $post= array(
                     'title'=> $postData['title'],
+                    'content'=> $content,
                     'id'=> $postData['id'],
                     'name'=> $postData['name'],
                     'sourceType'=> $postData['sourceType'],

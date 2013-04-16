@@ -38,7 +38,14 @@
           </td>
 
           <td>
-            <a class="title" href={$item['url']}>{$item['title']}</a>
+            {if $item['title'] != $item['content']}
+              <a  href={$item['url']}>{$item['title']}</a>
+              {if isset($item['content'])}
+                <div class="smallprint">{$item['content']}</div>
+              {/if}
+            {else}
+              <a class="title" href={$item['url']}>{$item['title']}</a>
+            {/if}
           </td>
         </tr>
         </table>
