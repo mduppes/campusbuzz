@@ -1,5 +1,5 @@
 <?php
-include 'chromephp-master/ChromePhp.php';
+//include 'chromephp-master/ChromePhp.php';
 class BuzzWebModule extends WebModule
 {
   protected $id='buzz';
@@ -34,7 +34,7 @@ class BuzzWebModule extends WebModule
           $keyword= $this-> getArg('keyword',0);
           $sortBy= $this-> getArg ('sortBy',0);
           $index= $this-> getArg('index');
-          
+
 
           // Change this for # of results returned
           if ($index==0){
@@ -43,8 +43,8 @@ class BuzzWebModule extends WebModule
           }else{
             $numResultsReturned = $index;
           }
-          
-          
+
+
           // bbox search
           $getPostsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($neLng, $neLat, $swLng, $swLat);
           $getPostsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
@@ -59,7 +59,7 @@ class BuzzWebModule extends WebModule
           }else{
             $getPostsSearchQuery->addSort(new SearchSort("queryCount", false));
           }
-          
+
 
           // Fields we want returned from solr
           $getPostsSearchQuery->addReturnField("title");
@@ -73,7 +73,7 @@ class BuzzWebModule extends WebModule
           $getPostsSearchQuery->addReturnField("startDate");
           $getPostsSearchQuery->addReturnField("endDate");
           $getPostsSearchQuery->addReturnField("content");
-           
+
            // Get and convert solr response to php object
           $data = $feedItemSolrController->query($getPostsSearchQuery);
 
@@ -83,7 +83,7 @@ class BuzzWebModule extends WebModule
 
           $posts = json_encode($data["response"]);
           $json= json_decode ($posts, true);
-          ChromePhp::log('JSON: '.$posts);
+          //ChromePhp::log('JSON: '.$posts);
             //$posts= $this->getArg('response');
             //$posts= json_decode($this->getArg('response'));
             $postList= array();
@@ -141,7 +141,7 @@ class BuzzWebModule extends WebModule
               "isOfficial"=> $isOfficial,
               "keyword"=> $keyword,
               "sort"=> $sortBy
-              
+
             );
             $this->assign ('params', json_encode($params));
             $this->assign ('index', $newIndex);
