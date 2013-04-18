@@ -6,15 +6,15 @@ function filterOutCategory (categoryList){
     console.log ("categories in filter: "+ categoryList[i]);
 
   makeAPICall(
-    'POST', 'buzz', 'filterOut', 
+    'POST', 'buzz', 'filterOut',
     {"isOfficial":mode,  "categoryList": categoryList, "lon": campusCenter.lng(), "lat":campusCenter.lat(), "distance": searchRadius},
     function(response){
-      
+
       console.log (response);
       //iterate and plot pins
       var json = $.parseJSON(response);
       $(json.docs).each(function(i,data){
-        
+
           var locArray = data.locationGeo.split(',');
           var loc= new google.maps.LatLng(locArray[0],locArray[1]);
           var category;
@@ -48,7 +48,7 @@ function filterOutCategory (categoryList){
             var marker = new google.maps.Marker({
               position: loc,
               map: map
-            });  
+            });
             marker.set("category", category);
             console.log ("category; "+marker.get("category"));
 
@@ -64,7 +64,7 @@ function filterOutCategory (categoryList){
               marker.set("isOfficial", true);
             }
             console.log ("official; "+marker.get("isOfficial"));
-          }   
+          }
       });
       $("#loading").hide();
       //end of handler
@@ -143,19 +143,19 @@ function toggleGPS(event){
       var ne= new google.maps.LatLng(49.28091, -123.22540);
       var campusBounds= new google.maps.LatLngBounds(sw, ne);
 
-      //check if location is within campus 
+      //check if location is within campus
       navigator.geolocation.getCurrentPosition(function(position){
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         console.log ("initial pos: "+ initialLocation);
         if (campusBounds.contains(initialLocation)){
-          watchID = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options); 
+          watchID = navigator.geolocation.watchPosition(geo_success, geo_error, geo_options);
         }else{
           alert("You are not currently on UBC campus");
           $("#gpsButton").removeClass("enable");
         }
         $("#loading").hide();
       }, geo_error, {timeout:10000});
-      
+
     }
     // Browser doesn't support Geolocation
     else {
@@ -163,18 +163,18 @@ function toggleGPS(event){
       handleNoGeolocation(browserSupportFlag);
       alert("Geolocation is not supported by your browser");
     }
-  } 
+  }
 }
 
 var geo_options = {
-  enableHighAccuracy: true, 
-  maximumAge        : 100000, 
+  enableHighAccuracy: true,
+  maximumAge        : 100000,
   timeout           : 27000
 };
 
 function geo_success(position) {
   console.log ("position: "+position.coords.latitude, position.coords.longitude);
-  
+
   var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   lastTrackedLocation=userLatLng;
 
@@ -182,7 +182,7 @@ function geo_success(position) {
   locationPin= new google.maps.Marker({
           map: map,
           position: userLatLng,
-          icon:{  
+          icon:{
             path: google.maps.SymbolPath.CIRCLE,
             fillOpacity: 0.8,
             strokeWeight: 2,
@@ -194,7 +194,7 @@ function geo_success(position) {
 
   map.panTo(userLatLng);
 }
- 
+
 function geo_error() {
   alert("Sorry, no position available. Turn on your GPS and try again later.");
   lastTrackedLocation="";
@@ -212,7 +212,7 @@ function clearLocationPin(){
 function categoryCloudClickHandler (self){
   // query item according to filter selected
 
-  //get category type! 
+  //get category type!
   var className= self.className;
 
   var category="";
@@ -222,11 +222,11 @@ function categoryCloudClickHandler (self){
     if(className.indexOf("rightBottom") != -1){
               category="Life";
     }else if (className.indexOf("leftBottom") != -1){
-              category="Club";
+              category="Clubs";
     }else if (className.indexOf("rightTop") != -1){
               category="Health";
     }else if (className.indexOf("leftTop") != -1){
-              category="Leisure";
+              category="Recreation";
     }
   }else{
     //check category for Official mode
@@ -296,13 +296,13 @@ $(window).scroll(function(){
     console.log ("bottom!");
     loadMorePosts();
   }
-}); 
+});
 
 
 function sortPosts(that){
   var selected= $(that).val();
   var param= $(that).data("param");
-  $(that).val("popularity"); //set to point to popularity.. 
+  $(that).val("popularity"); //set to point to popularity..
 
   var neLng= (param["neLng"]);
   var neLat= (param["neLat"]);
@@ -341,21 +341,21 @@ function loadMorePosts(){
   var sort= (param["sort"]);
 
   makeAPICall(
-    'POST', 'buzz', 'loadMorePosts', 
+    'POST', 'buzz', 'loadMorePosts',
     {"isOfficial":isOfficial, "neLng": neLng, "neLat":neLat, "swLng": swLng, "swLat":swLat, "keyword":keyword, "category":category,"index":index,"sort":sort},
     function(response){
-      console.log (response); 
+      console.log (response);
       // set new index value
       var newIndex= parseInt(index)+10;
       console.log($('#sort').data('index'));
       $('#sort').attr('data-index', newIndex);
       console.log($('#sort').attr('data-index'));
       //console.log ("new index: "+ $(".sortinput").attr("data-index"));
-      
+
 
       var json = $.parseJSON(response);
       var textToInsert = [];
-      
+
 
       $(json.docs).each(function(i,data){
 
@@ -376,7 +376,7 @@ function loadMorePosts(){
             content=content.substring(0,100)+"...";
           }
 
-          
+
 
           //date conversion
           var d=new Date (pubDate);
@@ -443,7 +443,7 @@ function loadMorePosts(){
         console.log("no more posts");
         $("#scrollText").text("No More Posts.");
       }
-      
+
 
   });
 }
