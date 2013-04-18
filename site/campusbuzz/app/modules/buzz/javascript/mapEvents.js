@@ -249,14 +249,18 @@ function categoryCloudClickHandler (self){
   console.log (bounds.getSouthWest().lng().toFixed(8));
   console.log (bounds.getSouthWest().lat().toFixed(8));
 
+  function toFixed( number, precision ) {
+    var multiplier = Math.pow( 10, precision );
+    return Math.round( number * multiplier ) / multiplier;
+}
 
   var args= Array();
   args["category"]= category;
   args["isOfficial"]= mode;
-  args ["neLng"]= bounds.getNorthEast().lng().toFixed(8); //round up to 8th decimal to fix bounding box inaccuracy issue
-  args ["neLat"]= bounds.getNorthEast().lat().toFixed(8);
-  args ["swLng"]= bounds.getSouthWest().lng().toFixed(8);
-  args ["swLat"]= bounds.getSouthWest().lat().toFixed(8);
+  args ["neLng"]= (bounds.getNorthEast().lng()+0.0005).toFixed(8); //round up to 8th decimal to fix bounding box inaccuracy issue
+  args ["neLat"]= (bounds.getNorthEast().lat()+0.0005).toFixed(8);
+  args ["swLng"]= (bounds.getSouthWest().lng()-0.0005).toFixed(8);
+  args ["swLat"]= (bounds.getSouthWest().lat()-0.0005).toFixed(8);
   args ["keyword"]= $("#searchbar").find("input").val();
   args ["sortBy"]= "time";
   args ["index"] = 0;
@@ -275,8 +279,6 @@ function categoryCloudClickHandler (self){
       console.log ("initialLocation is null");
     }
   }
-
-  console.log ("user search loc: "+ longitude + ", "+latitude)
 
   //save data to db
   makeAPICall(
@@ -353,14 +355,11 @@ function loadMorePosts(){
 
       var json = $.parseJSON(response);
       var textToInsert = [];
-      if (newIndex>=json.numFound){
-        console.log("no more posts");
-        $("#scrollText").text("No More Posts.");
-        return;
-      }
+      
 
       $(json.docs).each(function(i,data){
 
+          console.log("extra item!");
           var title = data.title;
           var url= data.url;
           var name= data.name;
@@ -439,6 +438,11 @@ function loadMorePosts(){
           $(".results").append(textToInsert.join(''));
           textToInsert = []
       });
+
+      if (newIndex>=json.numFound){
+        console.log("no more posts");
+        $("#scrollText").text("No More Posts.");
+      }
       
 
   });

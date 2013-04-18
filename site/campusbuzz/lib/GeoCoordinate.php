@@ -33,7 +33,7 @@ class GeoCoordinate
 
   public function __construct($lat, $long) {
     if (!is_numeric($lat) || !is_numeric($long)) {
-      throw new KurogoDataException("Invalid non numeric coordinates: {$lat}, {$lon}.");
+      throw new KurogoDataException("Invalid non numeric coordinates: {$lat}, {$long}.");
     }
 
     $this->latitude = $lat;
