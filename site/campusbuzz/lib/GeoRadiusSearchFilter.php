@@ -17,12 +17,16 @@ class GeoRadiusSearchFilter {
     $filterString .= "}";
 
     return $filterString;
-
   }
 
-  public function __construct($geoCoordinate, $radius, $field = 'locationGeo') {
+  /**
+   * @param GeoCoordinate of center
+   * @param radius in meters around center
+   * @param the solr field name that this query searches on
+   */
+  public function __construct(GeoCoordinate $geoCoordinate, $radius, $field = 'locationGeo') {
     $this->geoCoordinate = $geoCoordinate;
-    $this->radius = SearchQuery::escapeSolrValue($radius);
+    $this->radius = SearchQuery::escapeSolrValue($radius) / 1000;
     $this->field = $field;
   }
 
