@@ -62,7 +62,7 @@ class SearchQueryTest {
     $lat = 49.2612541;
     $lon = -123.234205;
 
-    $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon , 1);
+    $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon , 1000);
     $data = Tester::getTester()->feedItemSolrController->query($mapPinsSearchQuery);
     if ($data["response"]["numFound"] !== 1) {
       print "Solr not returning expected number of items:\n";
@@ -70,7 +70,7 @@ class SearchQueryTest {
       return false;
     }
 
-    $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon , 3);
+    $mapPinsSearchQuery = SearchQueryFactory::createGeoRadiusSearchQuery($lat, $lon , 3000);
     $data = Tester::getTester()->feedItemSolrController->query($mapPinsSearchQuery);
     if ($data["response"]["numFound"] !== 4) {
       print "Solr not returning expected number of items:\n";
