@@ -228,8 +228,12 @@ function searchKeyword (that){
     longitude=lastTrackedLocation.lng();
     latitude=lastTrackedLocation.lat();
   }else{
-    longitude=initialLocation.lng();
-    latitude=initialLocation.lat();
+    if (initialLocation!=null){
+      longitude=initialLocation.lng();
+      latitude=initialLocation.lat();
+    }else{
+      console.log ("initialLocation is null");
+    }
   }
 
   console.log ("user search loc: "+ longitude + ", "+latitude)
@@ -656,7 +660,7 @@ function campusNewsMode(){
     // showOverlays(newsPinsArray);
     //hide buzz overlays
     // clearOverlays(buzzPinsArray);
-
+    $(".newsCategory").removeClass("filterOut");
     initializeMap();
     //draw piechart pins on map
     loadMapPins();
@@ -664,6 +668,9 @@ function campusNewsMode(){
 
 function studentBuzzMode(){
     $("#loading").show();
+
+    //clear all filters
+
     //close search bar
     hideSearchbar();
     $("#gpsButton").removeClass("enable");
@@ -706,7 +713,7 @@ function studentBuzzMode(){
     // showOverlays(buzzPinsArray);
     //hide news overlays
     // clearOverlays(newsPinsArray);
-
+    $(".buzzCategory").removeClass("filterOut");
     initializeMap();
     //draw piechart pins on map
     loadMapPins();
