@@ -105,6 +105,14 @@ class UserResponse {
       throw new KurogoDataException("Error, not a valid response.");
     }
 
+    foreach($data["response"]["docs"] as &$doc) {
+      if (isset($doc["content"]) && $doc["content"] == $doc["title"]) {
+        $doc["content"] = "";
+      } else {
+        $doc["content"] = substr($doc["content"], 0, 200);
+      }
+    }
+
     $results = json_encode($data["response"]);
 
     // Now update query count for all items queried

@@ -52,14 +52,27 @@ class BuzzAPIModule extends APIModule
             $lon = $this->getArg('lon', 0);
             $radius= $this->getArg('distance',0); // in metres
 
-            //TODO: save user location
-            $userLng= $this->getArg ('userLng');
-            $userLat= $this->getArg('userLat');
-
             $solrResult = UserResponse::getGeoRadiusResponse($feedItemSolrController, $lat, $lon, $radius, $isOfficial, $numResults, $keyword, null);
 
             $this->setResponse($solrResult);
             $this->setResponseVersion(1);
+
+            // save user data to solr, reverse bug
+            $userLat= $this->getArg ('userLng', 0);
+            $userLng= $this->getArg('userLat', 0);
+
+            $searchCoord = new GeoCoordinate($lat, $lon);
+
+            $userCoord = null;
+            if (isset($userLng) && isset($userLat)) {
+              $userCoord = new GeoCoordinate($userLng, $userLat);
+            }
+
+            $category = '';
+            $searchMode = "searchKeyword";
+            QueryLogger::getQueryLogger()->logUserData($isOfficial, $keyword, $category, $searchCoord, $userCoord, $searchMode);
+
+
           break;
 
           case 'loadMorePosts':
@@ -84,8 +97,8 @@ class BuzzAPIModule extends APIModule
 
           case 'sendDetailQueryData':
             // this is called when user goes to detail view
-            $userLat=$this->getArg('userLat',0);
-            $userLng= $this->getArg('userLng', 0);
+            $userLng=$this->getArg('userLat',0);
+            $userLat= $this->getArg('userLng', 0);
             $category= $this->getArg('category');
             $neLng= $this->getArg('neLng');
             $neLat= $this->getArg('neLat');
@@ -97,7 +110,17 @@ class BuzzAPIModule extends APIModule
 
             //TODO: update solr with user + query data
 
-          break;
+            $searchLat = ($neLat + $swLat) / 2;
+            $searchLon = ($neLng + $swLng) / 2;
+            $searchCoord = new GeoCoordinate($searchLat, $searchLon);
+
+            $userCoord = null;
+            if (isset($userLng) && isset($userLat)) {
+              $userCoord = new GeoCoordinate($userLng, $userLat);
+            }
+            $searchMode = "detailsView";
+            QueryLogger::getQueryLogger()->logUserData($isOfficial, $keyword, $category, $searchCoord, $userCoord, $searchMode);
+            break;
     }
   }
 
