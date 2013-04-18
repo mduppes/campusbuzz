@@ -18,8 +18,6 @@ class BuzzWebModule extends WebModule
 
     $feedItemSolrController = DataRetriever::factory('FeedItemSolrDataRetriever', array());
 
-
-
      switch ($this->page)
      {
         case 'index':
@@ -35,7 +33,6 @@ class BuzzWebModule extends WebModule
           $sortBy= $this-> getArg ('sortBy',0);
           $index= $this-> getArg('index');
 
-
           // Change this for # of results returned
           if ($index==0){
             //first time loading
@@ -44,44 +41,8 @@ class BuzzWebModule extends WebModule
             $numResultsReturned = $index;
           }
 
+          $posts = UserResponse::getBoundingBoxResponse($feedItemSolrController, $neLng, $neLat, $swLng, $swLat, $isOfficial, $index, $numResultsReturned, $keyword, $category, $sortBy);
 
-          // bbox search
-          $getPostsSearchQuery = SearchQueryFactory::createBoundingBoxSearchQuery($neLng, $neLat, $swLng, $swLat);
-          $getPostsSearchQuery->addFilter(new FieldQueryFilter("officialSource", $isOfficial));
-          $getPostsSearchQuery->addFilter(new FieldQueryFilter("category", $category));
-          $getPostsSearchQuery->setMaxItems($numResultsReturned);
-          if ($keyword != "")
-            $getPostsSearchQuery->addKeyword($keyword);
-
-          //sort by most recent/popularity
-          if ($sortBy=="time"){
-            $getPostsSearchQuery->addSort(new SearchSort("pubDate", false));
-          }else{
-            $getPostsSearchQuery->addSort(new SearchSort("queryCount", false));
-          }
-
-
-          // Fields we want returned from solr
-          $getPostsSearchQuery->addReturnField("title");
-          $getPostsSearchQuery->addReturnField("id");
-          $getPostsSearchQuery->addReturnField("name");
-          $getPostsSearchQuery->addReturnField("sourceType");
-          $getPostsSearchQuery->addReturnField("url");
-          $getPostsSearchQuery->addReturnField("imageUrl");
-          $getPostsSearchQuery->addReturnField("pubDate");
-          $getPostsSearchQuery->addReturnField("locationName");
-          $getPostsSearchQuery->addReturnField("startDate");
-          $getPostsSearchQuery->addReturnField("endDate");
-          $getPostsSearchQuery->addReturnField("content");
-
-           // Get and convert solr response to php object
-          $data = $feedItemSolrController->query($getPostsSearchQuery);
-
-          if (!isset($data["response"])) {
-            throw new KurogoDataException("Error, not a valid response.");
-          }
-
-          $posts = json_encode($data["response"]);
           $json= json_decode ($posts, true);
           //ChromePhp::log('JSON: '.$posts);
             //$posts= $this->getArg('response');

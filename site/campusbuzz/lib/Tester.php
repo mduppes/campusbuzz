@@ -11,7 +11,8 @@ class Tester {
           "SearchQueryTest",
           "LocationMapperTest",
           "CategorizerTest",
-          "FeedItemManagerTest");
+          "FeedItemManagerTest",
+          "UserResponseTest");
 
   // Solr Controllers
   public $feedItemSolrController;

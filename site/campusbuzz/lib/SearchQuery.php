@@ -102,7 +102,7 @@ class SearchQuery {
     // Add category filters. This is done separately since it is an OR of categories
     if (!empty($this->categories)) {
       $categoryParams = implode(" OR ", $this->categories);
-      $searchParams["fq"] = "(". $categoryParams. ")";
+      $searchParams["fq"] = "category:(". $categoryParams. ")";
     }
 
     // Add filters
