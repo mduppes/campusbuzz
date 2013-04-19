@@ -32,6 +32,7 @@ function filterOutCategory (categoryList){
           for (var i in categoryList){
               var name= categoryList[i];
               cat_list[name]= selected_cat_list[name];
+              console.log ("filtering category: "+ name);
           }
 
           // assign item's category as first matching category in cat_list
@@ -374,9 +375,9 @@ function loadMorePosts(){
           if (content!=""){
             content=$.trim(content);
             content=content.substring(0,100)+"...";
-          }else{
-            if (title.length > 150)
-              title=title.substring(0,150)+"...";
+          }
+          if (title.length > 150)
+            title=title.substring(0,150)+"...";
           }
 
 

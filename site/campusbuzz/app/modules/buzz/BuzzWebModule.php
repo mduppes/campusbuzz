@@ -72,10 +72,10 @@ class BuzzWebModule extends WebModule
               if (isset($postData['content'])){
                 $content= trim($postData['content'],"\t\n\r\0");
                 $content=substr($content, 0, 100)."...";
-              }else{
-                if (strlen($title)>150)
-                  $title=substr($title, 0, 150)."...";
               }
+
+              if (strlen($title)>150)
+                  $title=substr($title, 0, 150)."...";
               
 
                 $post= array(
