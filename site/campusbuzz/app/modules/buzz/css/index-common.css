@@ -489,6 +489,7 @@ div#buzzbutton > input[type="button"]:hover{
 /***Clouds**/
 .cloud{
 	position: absolute;
+  z-index: 9999;
 	height:50px;
 	width:50px;
 	background-color: white;

@@ -374,6 +374,9 @@ function loadMorePosts(){
           if (content!=""){
             content=$.trim(content);
             content=content.substring(0,100)+"...";
+          }else{
+            if (title.length > 150)
+              title=title.substring(0,150)+"...";
           }
 
 
@@ -416,8 +419,8 @@ function loadMorePosts(){
             textToInsert[i++] = '<td><a class="title" href='+url+'>'+title+'</a>';
 
           if(sourceType=="RSSEvents"){
-            textToInsert[i++] = '<div class="date_text">Start Time: '+sd_convert+'</div>';
-            textToInsert[i++] = '<div class="date_text">End Time: '+ed_convert+'</div>';
+            textToInsert[i++] = '<div class="date_text">Start Time: '+sd+'</div>';
+            textToInsert[i++] = '<div class="date_text">End Time: '+ed+'</div>';
           }
           textToInsert[i++] = '</td></tr></table>';
 
