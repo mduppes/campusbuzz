@@ -36,7 +36,7 @@ var campusCenter= new google.maps.LatLng(49.26646,-123.250551);
 var searchRadius= 2000; //in metres
 
 //filter category arrays
-var buzzCategoryList= ["Life", "Clubs", "Health", "Recreation"];
+var buzzCategoryList= ["Life", "Club", "Health", "Leisure"];
 var newsCategoryList= ["News", "Career", "Learning", "Leisure"];
 
 

@@ -31,7 +31,7 @@ function filterOutCategory (categoryList){
           var cat_list = {};
           for (var i in categoryList){
               var name= categoryList[i];
-              cat_list[name]= selected_cat_list[n
+              cat_list[name]= selected_cat_list[name];
           }
 
           // assign item's category as first matching category in cat_list
