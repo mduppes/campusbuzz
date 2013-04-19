@@ -66,6 +66,10 @@ select {
    width:25%;
 }
 
+.contentCell{
+   width:75%;
+}
+
 .r-triangle-top {
    border-color: #e5592e transparent transparent;
    border-style:solid;
