@@ -116,7 +116,7 @@
    <!-- Bounding Box, Radius -->
    <field name="searchMode" type="string" indexed="true" stored="true"/>
    <field name="testing" type="boolean" indexed="true" stored="true" required="false"/>
-
+   <field name="createDate" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
    <!-- Main body of document extracted by SolrCell.
         NOTE: This field is not indexed by default, since it is also copied to "text"
         using copyField below. This is to save space. Use this field for returning and
