@@ -68,13 +68,18 @@ class BuzzWebModule extends WebModule
                 $endDateString= $endDate->format('D M j H:i');
               }
               $content="";
+              $title= $postData['title'];
               if (isset($postData['content'])){
                 $content= trim($postData['content'],"\t\n\r\0");
                 $content=substr($content, 0, 100)."...";
+              }else{
+                if (strlen($title)>150)
+                  $title=substr($title, 0, 150)."...";
               }
+              
 
                 $post= array(
-                    'title'=> $postData['title'],
+                    'title'=> $title,
                     'content'=> $content,
                     'id'=> $postData['id'],
                     'name'=> $postData['name'],
