@@ -262,7 +262,7 @@ body { height: 100%; margin: 0px; padding: 0px; overflow: hidden;}
   top:0;
 	background: #5ade76 url(/modules/buzz/images/icons/buzz-life.png) no-repeat left;
 }
-#buzzClub{
+#buzzClubs{
   right:0;
   top:0;
 	background: #dfa85a url(/modules/buzz/images/icons/buzz-club.png) no-repeat left;
@@ -272,7 +272,7 @@ body { height: 100%; margin: 0px; padding: 0px; overflow: hidden;}
   bottom:0;
 	background: #f95f59 url(/modules/buzz/images/icons/buzz-health.png) no-repeat left;
 }
-#buzzLeisure{
+#buzzRecreation{
   right:0;
   bottom:0;
 	background: #5f9ece url(/modules/buzz/images/icons/buzz-leisure.png) no-repeat left;

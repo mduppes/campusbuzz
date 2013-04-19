@@ -154,7 +154,7 @@ function toggleGPS(event){
           $("#gpsButton").removeClass("enable");
         }
         $("#loading").hide();
-      }, geo_error, {timeout:10000});
+      }, geo_error, {timeout:30000});
 
     }
     // Browser doesn't support Geolocation

@@ -37,7 +37,7 @@
             {/if}
           </td>
 
-          <td>
+          <td class="contentCell">
             {if $item['title'] != $item['content']}
               <a  href={$item['url']}>{$item['title']}</a>
               {if isset($item['content'])}
